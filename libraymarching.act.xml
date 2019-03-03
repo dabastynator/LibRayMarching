@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns="http://schemas.autodesk.com/netfabb/automaticcomponenttoolkit/2018" 
+	libraryname="Ray Marching Library" namespace="LibRayMarching" copyright="PrimeDevelopers" year="2019" basename="libraymarching"
+	version="0.9.0">
+	<license>
+		<line value="All rights reserved." />
+	</license>
+	
+	<bindings>
+		<binding language="Cpp" indentation="tabs" />
+		<binding language="CppDynamic" indentation="tabs" />
+		<binding language="Pascal" indentation="4spaces" />
+		<binding language="Python" indentation="tabs" />
+	</bindings>
+	<implementations>
+		<implementation language="Cpp" indentation="tabs"/>
+	</implementations>
+	
+	<errors>
+		<error name="NOTIMPLEMENTED" code="1" description="functionality not implemented" />
+		<error name="INVALIDPARAM" code="2" description="an invalid parameter was passed" />
+		<error name="INVALIDCAST" code="3" description="a type cast failed" />
+		<error name="BUFFERTOOSMALL" code="4" description="a provided buffer is too small" />
+		<error name="GENERICEXCEPTION" code="5" description="a generic exception occurred" />
+		<error name="COULDNOTLOADLIBRARY" code="6" description="the library could not be loaded" />
+		<error name="COULDNOTFINDLIBRARYEXPORT" code="7" description="a required exported symbol could not be found in the library" />
+		<error name="INCOMPATIBLEBINARYVERSION" code="8" description="the version of the binary interface does not match the bindings interface" />
+		<error name="INDEXOUTOFBOUNDS" code="9" description="a given index is out of bounds" />
+	</errors>
+	
+	<struct name="Vector">
+		<member name="x" type="double" />
+		<member name="y" type="double" />
+		<member name="z" type="double" />
+	</struct>
+	
+	<functiontype name="ProgressCallback" description="Callback to report calculation progress and query whether it should be aborted">
+		<param name="ProgressPercentage" type="single" pass="in" description="How far has the calculation progressed?"/>
+		<param name="ShouldAbort" type="bool" pass="out" description="Should the calculation be aborted?"/>
+	</functiontype>
+
+	<!-- Material for renderable primitives -->
+	<class name="Material">
+		<method name="GetColor" description="Returns the current color">
+			<param name="Color" type="struct" class="Vector" pass="return" description="The current color of this Material" />
+		</method>
+		<method name="SetColor" description="Set the current color">
+			<param name="Color" type="struct" class="Vector" pass="in" description="The color of this Material" />
+		</method>
+
+		<method name="GetAmbient" description="Get the ambient factor">
+			<param name="Ambient" type="double" pass="return" description="The ambient factor of this Material" />
+		</method>
+		<method name="SetAmbient" description="Set the ambient factor">
+			<param name="Ambient" type="double" pass="in" description="The ambient factor of this Material" />
+		</method>
+
+		<method name="GetDiffuse" description="Get the diffuse factor">
+			<param name="Diffuse" type="double" pass="return" description="The diffuse factor of this Material" />
+		</method>
+		<method name="SetDiffuse" description="Set the diffuse factor">
+			<param name="Diffuse" type="double" pass="in" description="The diffuse factor of this Material" />
+		</method>
+
+		<method name="GetSpecular" description="Get the specular factor">
+			<param name="Specular" type="double" pass="return" description="The specular factor of this Material" />
+		</method>
+		<method name="SetSpecular" description="Set the specular factor">
+			<param name="Specular" type="double" pass="in" description="The specular factor of this Material" />
+		</method>
+
+		<method name="GetSpecularAlpha" description="Get the specular alpha factor">
+			<param name="SpecularAlpha" type="double" pass="return" description="The specular alpha factor of this Material" />
+		</method>
+		<method name="SetSpecularAlpha" description="Set the specular alpha factor">
+			<param name="SpecularAlpha" type="double" pass="in" description="The specular alpha factor of this Material" />
+		</method>
+
+		<method name="GetReflection" description="Get the reflection factor">
+			<param name="Reflection" type="double" pass="return" description="The reflection factor of this Material" />
+		</method>
+		<method name="SetReflection" description="Set the specular alpha factor">
+			<param name="Reflection" type="double" pass="in" description="The reflection factor of this Material" />
+		</method>
+	</class>
+
+	<!-- The matrix defines positioning, rotation and scaling for primitives -->
+	<class name="Matrix">
+		<method name="Identity" description="Reset this matrix to identity">
+		</method>
+
+		<method name="Translate" description="Translate this matrix by given movement vector">
+			<param name="Translation" type="struct" class="Vector" pass="in" description="Movement vector" />
+		</method>
+		<method name="Rotate" description="Rotate this matrix by given axis and angle">
+			<param name="Axis" type="struct" class="Vector" pass="in" description="Rotation axis" />
+			<param name="Radian" type="double" pass="in" description="Rotation angle in radian" />
+		</method>
+		<method name="Scale" description="Scale this matrix by given vector">
+			<param name="Scale" type="struct" class="Vector" pass="in" description="Scale vector for each component" />
+		</method>
+	</class>
+
+	<!-- A primitive is a renderable -->
+	<class name="Primitive">
+		<method name="GetMatrix" description="Returns the matrix of this primitive">
+			<param name="Matrix" type="handle" class="Matrix" pass="return" description="Matrix of this primitive" />
+		</method>
+		<method name="GetMaterial" description="Returns the material of this primitive">
+			<param name="Material" type="handle" class="Material" pass="return" description="Material of this primitive" />
+		</method>
+	</class>
+	
+	<!-- Sphere -->
+	<class name="Sphere" parent="Primitive">
+		<method name="GetRadius" description="Get the current radius">
+			<param name="Radius" type="double" pass="return" description="The radius" />
+		</method>
+		<method name="SetRadius" description="Set the current radius">
+			<param name="Radius" type="double" pass="in" description="The raidus" />
+		</method>
+	</class>
+
+	<!-- Capsule -->
+	<class name="Capsule" parent="Primitive">
+		<method name="GetRadius" description="Get the current radius">
+			<param name="Radius" type="double" pass="return" description="The radius" />
+		</method>
+		<method name="SetRadius" description="Set the current radius">
+			<param name="Radius" type="double" pass="in" description="The raidus" />
+		</method>
+		<method name="GetPoint1" description="Get the current point 1">
+			<param name="Point1" type="struct" class="Vector" pass="return" description="Point 1" />
+		</method>
+		<method name="SetPoint1" description="Set the current point 1">
+			<param name="Point1" type="struct" class="Vector" pass="in" description="Point 1" />
+		</method>
+		<method name="GetPoint2" description="Get the current point 2">
+			<param name="Point2" type="struct" class="Vector" pass="return" description="Point 2" />
+		</method>
+		<method name="SetPoint2" description="Set the current point 2">
+			<param name="Point2" type="struct" class="Vector" pass="in" description="Point 2" />
+		</method>
+	</class>
+
+	<!-- Plane -->
+	<class name="Plane" parent="Primitive">
+		<method name="GetOrigin" description="Get the current origin">
+			<param name="Origin" type="struct" class="Vector" pass="return" description="Origin" />
+		</method>
+		<method name="SetOrigin" description="Set the current origin">
+			<param name="Origin" type="struct" class="Vector" pass="in" description="Origin" />
+		</method>
+		<method name="GetNormal" description="Get the current normal">
+			<param name="Normal" type="struct" class="Vector" pass="return" description="Normal" />
+		</method>
+		<method name="SetNormal" description="Set the current normal">
+			<param name="Normal" type="struct" class="Vector" pass="in" description="Normal" />
+		</method>
+	</class>
+
+	<!-- Box -->
+	<class name="Box" parent="Primitive">
+		<method name="GetDimensions" description="Get the size in x, y and z dimension">
+			<param name="Dimensions" type="struct" class="Vector" pass="return" description="Size in x, y and z dimension" />
+		</method>
+		<method name="SetDimensions" description="Set the size in x, y and z dimension">
+			<param name="Dimensions" type="struct" class="Vector" pass="in" description="Size in x, y and z dimension" />
+		</method>
+	</class>
+
+	<!-- Light -->
+	<class name="Light">
+		<method name="GetColor" description="Returns the current color of this light">
+			<param name="Color" type="struct" class="Vector" pass="return" description="The current color" />
+		</method>
+		<method name="SetColor" description="Set the current color of this light">
+			<param name="Color" type="struct" class="Vector" pass="in" description="The color" />
+		</method>
+
+		<method name="GetPosition" description="Returns the current color of this light">
+			<param name="Position" type="struct" class="Vector" pass="return" description="The current position" />
+		</method>
+		<method name="SetPosition" description="Set the current color this light">
+			<param name="Position" type="struct" class="Vector" pass="in" description="The position" />
+		</method>
+
+	</class>
+
+	<!-- Scene -->
+	<class name="Scene">
+		<method name="GetPrimitiveCount" description="Get number of primitives">
+			<param name="Count" type="uint32" pass="return" description="Number of primitives" />
+		</method>
+		<method name="GetPrimitive" description="Get primitive at given index">
+			<param name="Index" type="uint32" pass="in" description="Index" />
+			<param name="Light" type="handle" class="Primitive" pass="return" description="Primitive at given index" />
+		</method>
+		<method name="DeletePrimitive" description="Delete primitive at given index">
+			<param name="Index" type="uint32" pass="in" description="Index" />
+		</method>
+
+		<method name="AddSphere" description="Create new sphere">
+			<param name="Radius" type="double" pass="in" description="Radius of the sphere" />
+			<param name="Sphere" type="handle" class="Sphere" pass="return" description="New sphere" />
+		</method>
+
+		<method name="AddCapsule" description="Create new capsule">
+			<param name="Radius" type="double" pass="in" description="Radius of the capsule" />
+			<param name="Point1" type="struct" class="Vector" pass="in" description="Point 1" />
+			<param name="Point2" type="struct" class="Vector" pass="in" description="Point 2" />
+			<param name="Capsule" type="handle" class="Capsule" pass="return" description="New capsule" />
+		</method>
+
+		<method name="AddBox" description="Create new sphere">
+			<param name="Dimensions" type="struct" class="Vector" pass="in" description="Dimensions of the box" />
+			<param name="Box" type="handle" class="Box" pass="return" description="New box" />
+		</method>
+
+		<method name="AddPlane" description="Create new plane">
+			<param name="Origin" type="struct" class="Vector" pass="in" description="Origin of the plane" />
+			<param name="Normal" type="struct" class="Vector" pass="in" description="Normal of the plane" />
+			<param name="Plane" type="handle" class="Plane" pass="return" description="New plane" />
+		</method>
+	</class>
+
+	<!-- Camera -->
+	<class name="Camera">
+		<method name="SetScreenSize" description="Set the screen size">
+			<param name="Width" type="uint32" pass="in" description="Width of the screen" />
+			<param name="Height" type="uint32" pass="in" description="Height of the screen" />
+		</method>
+		<method name="SetViewport" description="Set viewport by given view vectors and FOV">
+			<param name="Eye" type="struct" class="Vector" pass="in" description="Position of the eye" />
+			<param name="Dir" type="struct" class="Vector" pass="in" description="Direction of the view" />
+			<param name="Up" type="struct" class="Vector" pass="in" description="Direction of up vector" />
+			<param name="FOV" type="double" pass="in" description="Field of view angle in radian" />
+		</method>
+	</class>
+
+	<!-- The ray marching holds a scene and renders it to a pixel buffer array -->
+	<class name="RayMarching">
+		<method name="GetLightCount" description="Get number of lights">
+			<param name="Count" type="uint32" pass="return" description="Number of lights" />
+		</method>
+		<method name="GetLight" description="Get light at given index">
+			<param name="Index" type="uint32" pass="in" description="Index" />
+			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
+		</method>
+		<method name="AddLight" description="Add new light">
+			<param name="Color" type="struct" class="Vector" pass="in" description="Color for the new light" />
+			<param name="Position" type="struct" class="Vector" pass="in" description="Position for the new light" />
+			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
+		</method>
+		<method name="DeleteLight" description="Delete light at given index">
+			<param name="Index" type="uint32" pass="in" description="Index" />
+		</method>
+
+		<method name="GetScene" description="Returns the current scene">
+			<param name="Scene" type="handle" class="Scene" pass="return" description="Current scene" />
+		</method>
+		<method name="GetCamera" description="Returns the current camera">
+			<param name="Camera" type="handle" class="Camera" pass="return" description="Current camera" />
+		</method>
+
+		<method name="RenderScene" description="Renders the current scene">
+		</method>
+
+		<method name="RenderPixel" description="Renders one single pixel">
+			<param name="X" type="double" pass="in" description="X position of the pixel" />
+			<param name="Y" type="double" pass="in" description="Y position of the pixel" />
+			<param name="Color" type="uint32" pass="return" description="RGBA value of the pixel" />
+		</method>
+
+		<method name="SetProgressCallback" description="Sets the progress callback function">
+			<param name="ProgressCallback" type="functiontype" class="ProgressCallback" pass="in" description="The progress callback" />
+		</method>
+	</class>
+	
+	<global releasemethod="ReleaseInstance" versionmethod="GetLibraryVersion" journalmethod="SetJournal">
+		<method name="ReleaseInstance" description="Releases the memory of an Instance">
+			<param name="Instance" type="handle" class="BaseClass" pass="in" description="Instance Handle" />
+		</method>
+
+		<method name="GetLibraryVersion" description = "retrieves the current version of the library.">
+			<param name="Major" type="uint32" pass="out" description="returns the major version of the library" />
+			<param name="Minor" type="uint32" pass="out" description="returns the minor version of the library" />
+			<param name="Micro" type="uint32" pass="out" description="returns the micro version of the library" />
+		</method>
+		
+		<method name="CreateRayMarching" description="Creates a new ray marching instance">
+			<param name="Instance" type="handle" class="RayMarching" pass="return" description="New raymarching instance" />
+		</method>
+				
+		<method name="SetJournal" description="Handles Library Journaling">
+			<param name="FileName" type="string" pass="in" description="Journal FileName" />
+		</method>
+	</global>
+</component>
