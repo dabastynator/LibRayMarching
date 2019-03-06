@@ -29,15 +29,13 @@ namespace Impl {
  Forward declarations of class interfaces
 */
 class ILibRayMarchingMaterial;
-class ILibRayMarchingMatrix;
 class ILibRayMarchingPrimitive;
 class ILibRayMarchingSphere;
 class ILibRayMarchingCapsule;
 class ILibRayMarchingPlane;
 class ILibRayMarchingBox;
 class ILibRayMarchingLight;
-class ILibRayMarchingScene;
-class ILibRayMarchingCamera;
+class ILibRayMarchingPrimitiveGroup;
 class ILibRayMarchingRayMarching;
 
 
@@ -133,55 +131,40 @@ public:
 
 
 /*************************************************************************************************************************
- Class interface for LibRayMarchingMatrix 
-**************************************************************************************************************************/
-
-class ILibRayMarchingMatrix : public virtual ILibRayMarchingBaseClass {
-public:
-	/**
-	* IMatrix::Identity - Reset this matrix to identity
-	*/
-	virtual void Identity () = 0;
-
-	/**
-	* IMatrix::Translate - Translate this matrix by given movement vector
-	* @param[in] Translation - Movement vector
-	*/
-	virtual void Translate (const sLibRayMarchingVector Translation) = 0;
-
-	/**
-	* IMatrix::Rotate - Rotate this matrix by given axis and angle
-	* @param[in] Axis - Rotation axis
-	* @param[in] dRadian - Rotation angle in radian
-	*/
-	virtual void Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian) = 0;
-
-	/**
-	* IMatrix::Scale - Scale this matrix by given vector
-	* @param[in] Scale - Scale vector for each component
-	*/
-	virtual void Scale (const sLibRayMarchingVector Scale) = 0;
-
-};
-
-
-/*************************************************************************************************************************
  Class interface for LibRayMarchingPrimitive 
 **************************************************************************************************************************/
 
 class ILibRayMarchingPrimitive : public virtual ILibRayMarchingBaseClass {
 public:
 	/**
-	* IPrimitive::GetMatrix - Returns the matrix of this primitive
-	* @return Matrix of this primitive
+	* IPrimitive::IdentityPosition - Reset the position matrix to identity
 	*/
-	virtual ILibRayMarchingMatrix * GetMatrix () = 0;
+	virtual void IdentityPosition () = 0;
 
 	/**
-	* IPrimitive::GetMaterial - Returns the material of this primitive
-	* @return Material of this primitive
+	* IPrimitive::Translate - Translate the primitive matrix by given movement vector
+	* @param[in] Translation - Movement vector
 	*/
-	virtual ILibRayMarchingMaterial * GetMaterial () = 0;
+	virtual void Translate (const sLibRayMarchingVector Translation) = 0;
+
+	/**
+	* IPrimitive::Rotate - Rotate the primitive matrix by given axis and angle
+	* @param[in] Axis - Rotation axis
+	* @param[in] dRadian - Rotation angle in radian
+	*/
+	virtual void Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian) = 0;
+
+	/**
+	* IPrimitive::Scale - Scale the primitive matrix by given vector
+	* @param[in] Scale - Scale vector for each component
+	*/
+	virtual void Scale (const sLibRayMarchingVector Scale) = 0;
+
+	/**
+	* IPrimitive::AssignMaterial - Copies given material for this primitive
+	* @param[in] pMaterial - Material for this primitive
+	*/
+	virtual void AssignMaterial (ILibRayMarchingMaterial* pMaterial) = 0;
 
 };
 
@@ -340,85 +323,35 @@ public:
 
 
 /*************************************************************************************************************************
- Class interface for LibRayMarchingScene 
+ Class interface for LibRayMarchingPrimitiveGroup 
 **************************************************************************************************************************/
 
-class ILibRayMarchingScene : public virtual ILibRayMarchingBaseClass {
+class ILibRayMarchingPrimitiveGroup : public virtual ILibRayMarchingBaseClass, public virtual ILibRayMarchingPrimitive {
 public:
 	/**
-	* IScene::GetPrimitiveCount - Get number of primitives
+	* IPrimitiveGroup::GetPrimitiveCount - Get number of primitives
 	* @return Number of primitives
 	*/
 	virtual LibRayMarching_uint32 GetPrimitiveCount () = 0;
 
 	/**
-	* IScene::GetPrimitive - Get primitive at given index
+	* IPrimitiveGroup::GetPrimitive - Get primitive at given index
 	* @param[in] nIndex - Index
 	* @return Primitive at given index
 	*/
 	virtual ILibRayMarchingPrimitive * GetPrimitive (const LibRayMarching_uint32 nIndex) = 0;
 
 	/**
-	* IScene::DeletePrimitive - Delete primitive at given index
+	* IPrimitiveGroup::AddPrimitive - Add primitive for this group
+	* @param[in] pPrimitive - Primitive for this group
+	*/
+	virtual void AddPrimitive (ILibRayMarchingPrimitive* pPrimitive) = 0;
+
+	/**
+	* IPrimitiveGroup::RemovePrimitive - Remove primitive at given index
 	* @param[in] nIndex - Index
 	*/
-	virtual void DeletePrimitive (const LibRayMarching_uint32 nIndex) = 0;
-
-	/**
-	* IScene::AddSphere - Create new sphere
-	* @param[in] dRadius - Radius of the sphere
-	* @return New sphere
-	*/
-	virtual ILibRayMarchingSphere * AddSphere (const LibRayMarching_double dRadius) = 0;
-
-	/**
-	* IScene::AddCapsule - Create new capsule
-	* @param[in] dRadius - Radius of the capsule
-	* @param[in] Point1 - Point 1
-	* @param[in] Point2 - Point 2
-	* @return New capsule
-	*/
-	virtual ILibRayMarchingCapsule * AddCapsule (const LibRayMarching_double dRadius, const sLibRayMarchingVector Point1, const sLibRayMarchingVector Point2) = 0;
-
-	/**
-	* IScene::AddBox - Create new sphere
-	* @param[in] Dimensions - Dimensions of the box
-	* @return New box
-	*/
-	virtual ILibRayMarchingBox * AddBox (const sLibRayMarchingVector Dimensions) = 0;
-
-	/**
-	* IScene::AddPlane - Create new plane
-	* @param[in] Origin - Origin of the plane
-	* @param[in] Normal - Normal of the plane
-	* @return New plane
-	*/
-	virtual ILibRayMarchingPlane * AddPlane (const sLibRayMarchingVector Origin, const sLibRayMarchingVector Normal) = 0;
-
-};
-
-
-/*************************************************************************************************************************
- Class interface for LibRayMarchingCamera 
-**************************************************************************************************************************/
-
-class ILibRayMarchingCamera : public virtual ILibRayMarchingBaseClass {
-public:
-	/**
-	* ICamera::SetScreenSize - Set the screen size
-	* @param[in] nWidth - Width of the screen
-	* @param[in] nHeight - Height of the screen
-	*/
-	virtual void SetScreenSize (const LibRayMarching_uint32 nWidth, const LibRayMarching_uint32 nHeight) = 0;
-
-	/**
-	* ICamera::SetViewport - Set viewport by given view vectors and FOV
-	* @param[in] Eye - Position of the eye
-	* @param[in] Dir - Direction of the view
-	* @param[in] Up - Direction of up vector
-	* @param[in] dFOV - Field of view angle in radian
-	*/
-	virtual void SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV) = 0;
+	virtual void RemovePrimitive (const LibRayMarching_uint32 nIndex) = 0;
 
 };
 
@@ -444,11 +377,9 @@ public:
 
 	/**
 	* IRayMarching::AddLight - Add new light
-	* @param[in] Color - Color for the new light
-	* @param[in] Position - Position for the new light
-	* @return Light at given index
+	* @param[in] pLight - Light
 	*/
-	virtual ILibRayMarchingLight * AddLight (const sLibRayMarchingVector Color, const sLibRayMarchingVector Position) = 0;
+	virtual void AddLight (ILibRayMarchingLight* pLight) = 0;
 
 	/**
 	* IRayMarching::DeleteLight - Delete light at given index
@@ -457,16 +388,45 @@ public:
 	virtual void DeleteLight (const LibRayMarching_uint32 nIndex) = 0;
 
 	/**
-	* IRayMarching::GetScene - Returns the current scene
-	* @return Current scene
+	* IRayMarching::GetPrimitiveCount - Get number of primitives
+	* @return Number of primitives
 	*/
-	virtual ILibRayMarchingScene * GetScene () = 0;
+	virtual LibRayMarching_uint32 GetPrimitiveCount () = 0;
 
 	/**
-	* IRayMarching::GetCamera - Returns the current camera
-	* @return Current camera
+	* IRayMarching::GetPrimitive - Get primitive at given index
+	* @param[in] nIndex - Index
+	* @return Primitive at given index
 	*/
-	virtual ILibRayMarchingCamera * GetCamera () = 0;
+	virtual ILibRayMarchingPrimitive * GetPrimitive (const LibRayMarching_uint32 nIndex) = 0;
+
+	/**
+	* IRayMarching::AddPrimitive - Add primitive
+	* @param[in] pPrimitive - Primitive
+	*/
+	virtual void AddPrimitive (ILibRayMarchingPrimitive* pPrimitive) = 0;
+
+	/**
+	* IRayMarching::RemovePrimitive - Remove primitive at given index
+	* @param[in] nIndex - Index
+	*/
+	virtual void RemovePrimitive (const LibRayMarching_uint32 nIndex) = 0;
+
+	/**
+	* IRayMarching::SetScreenSize - Set the screen size
+	* @param[in] nWidth - Width of the screen
+	* @param[in] nHeight - Height of the screen
+	*/
+	virtual void SetScreenSize (const LibRayMarching_uint32 nWidth, const LibRayMarching_uint32 nHeight) = 0;
+
+	/**
+	* IRayMarching::SetViewport - Set viewport by given view vectors and FOV
+	* @param[in] Eye - Position of the eye
+	* @param[in] Dir - Direction of the view
+	* @param[in] Up - Direction of up vector
+	* @param[in] dFOV - Field of view angle in radian
+	*/
+	virtual void SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV) = 0;
 
 	/**
 	* IRayMarching::RenderScene - Renders the current scene
@@ -516,10 +476,49 @@ public:
 	static ILibRayMarchingRayMarching * CreateRayMarching ();
 
 	/**
-	* Ilibraymarching::SetJournal - Handles Library Journaling
-	* @param[in] sFileName - Journal FileName
+	* Ilibraymarching::CreateLight - Create new light
+	* @param[in] Color - Color for the new light
+	* @param[in] Position - Position for the new light
+	* @return Light at given index
 	*/
-	static void SetJournal (const std::string & sFileName);
+	static ILibRayMarchingLight * CreateLight (const sLibRayMarchingVector Color, const sLibRayMarchingVector Position);
+
+	/**
+	* Ilibraymarching::CreateSphere - Create new sphere
+	* @param[in] dRadius - Radius of the sphere
+	* @return New sphere
+	*/
+	static ILibRayMarchingSphere * CreateSphere (const LibRayMarching_double dRadius);
+
+	/**
+	* Ilibraymarching::CreateCapsule - Create new capsule
+	* @param[in] dRadius - Radius of the capsule
+	* @param[in] Point1 - Point 1
+	* @param[in] Point2 - Point 2
+	* @return New capsule
+	*/
+	static ILibRayMarchingCapsule * CreateCapsule (const LibRayMarching_double dRadius, const sLibRayMarchingVector Point1, const sLibRayMarchingVector Point2);
+
+	/**
+	* Ilibraymarching::CreateBox - Create new sphere
+	* @param[in] Dimensions - Dimensions of the box
+	* @return New box
+	*/
+	static ILibRayMarchingBox * CreateBox (const sLibRayMarchingVector Dimensions);
+
+	/**
+	* Ilibraymarching::CreatePlane - Create new plane
+	* @param[in] Origin - Origin of the plane
+	* @param[in] Normal - Normal of the plane
+	* @return New plane
+	*/
+	static ILibRayMarchingPlane * CreatePlane (const sLibRayMarchingVector Origin, const sLibRayMarchingVector Normal);
+
+	/**
+	* Ilibraymarching::CreateMaterial - Create new material
+	* @return New Material
+	*/
+	static ILibRayMarchingMaterial * CreateMaterial ();
 
 };
 

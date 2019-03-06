@@ -143,66 +143,53 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getreflecti
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setreflection(LibRayMarching_Material pMaterial, LibRayMarching_double dReflection);
 
 /*************************************************************************************************************************
- Class definition for Matrix
-**************************************************************************************************************************/
-
-/**
-* Reset this matrix to identity
-*
-* @param[in] pMatrix - Matrix instance.
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_matrix_identity(LibRayMarching_Matrix pMatrix);
-
-/**
-* Translate this matrix by given movement vector
-*
-* @param[in] pMatrix - Matrix instance.
-* @param[in] pTranslation - Movement vector
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_matrix_translate(LibRayMarching_Matrix pMatrix, const sLibRayMarchingVector * pTranslation);
-
-/**
-* Rotate this matrix by given axis and angle
-*
-* @param[in] pMatrix - Matrix instance.
-* @param[in] pAxis - Rotation axis
-* @param[in] dRadian - Rotation angle in radian
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_matrix_rotate(LibRayMarching_Matrix pMatrix, const sLibRayMarchingVector * pAxis, LibRayMarching_double dRadian);
-
-/**
-* Scale this matrix by given vector
-*
-* @param[in] pMatrix - Matrix instance.
-* @param[in] pScale - Scale vector for each component
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_matrix_scale(LibRayMarching_Matrix pMatrix, const sLibRayMarchingVector * pScale);
-
-/*************************************************************************************************************************
  Class definition for Primitive
 **************************************************************************************************************************/
 
 /**
-* Returns the matrix of this primitive
+* Reset the position matrix to identity
 *
 * @param[in] pPrimitive - Primitive instance.
-* @param[out] pMatrix - Matrix of this primitive
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_getmatrix(LibRayMarching_Primitive pPrimitive, LibRayMarching_Matrix * pMatrix);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_identityposition(LibRayMarching_Primitive pPrimitive);
 
 /**
-* Returns the material of this primitive
+* Translate the primitive matrix by given movement vector
 *
 * @param[in] pPrimitive - Primitive instance.
-* @param[out] pMaterial - Material of this primitive
+* @param[in] pTranslation - Movement vector
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_getmaterial(LibRayMarching_Primitive pPrimitive, LibRayMarching_Material * pMaterial);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_translate(LibRayMarching_Primitive pPrimitive, const sLibRayMarchingVector * pTranslation);
+
+/**
+* Rotate the primitive matrix by given axis and angle
+*
+* @param[in] pPrimitive - Primitive instance.
+* @param[in] pAxis - Rotation axis
+* @param[in] dRadian - Rotation angle in radian
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_rotate(LibRayMarching_Primitive pPrimitive, const sLibRayMarchingVector * pAxis, LibRayMarching_double dRadian);
+
+/**
+* Scale the primitive matrix by given vector
+*
+* @param[in] pPrimitive - Primitive instance.
+* @param[in] pScale - Scale vector for each component
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_scale(LibRayMarching_Primitive pPrimitive, const sLibRayMarchingVector * pScale);
+
+/**
+* Copies given material for this primitive
+*
+* @param[in] pPrimitive - Primitive instance.
+* @param[in] pMaterial - Material for this primitive
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_assignmaterial(LibRayMarching_Primitive pPrimitive, LibRayMarching_Material pMaterial);
 
 /*************************************************************************************************************************
  Class definition for Sphere
@@ -387,105 +374,45 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_light_getposition(Li
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_light_setposition(LibRayMarching_Light pLight, const sLibRayMarchingVector * pPosition);
 
 /*************************************************************************************************************************
- Class definition for Scene
+ Class definition for PrimitiveGroup
 **************************************************************************************************************************/
 
 /**
 * Get number of primitives
 *
-* @param[in] pScene - Scene instance.
+* @param[in] pPrimitiveGroup - PrimitiveGroup instance.
 * @param[out] pCount - Number of primitives
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_getprimitivecount(LibRayMarching_Scene pScene, LibRayMarching_uint32 * pCount);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_getprimitivecount(LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 * pCount);
 
 /**
 * Get primitive at given index
 *
-* @param[in] pScene - Scene instance.
+* @param[in] pPrimitiveGroup - PrimitiveGroup instance.
 * @param[in] nIndex - Index
-* @param[out] pLight - Primitive at given index
+* @param[out] pPrimitive - Primitive at given index
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_getprimitive(LibRayMarching_Scene pScene, LibRayMarching_uint32 nIndex, LibRayMarching_Primitive * pLight);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_getprimitive(LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 nIndex, LibRayMarching_Primitive * pPrimitive);
 
 /**
-* Delete primitive at given index
+* Add primitive for this group
 *
-* @param[in] pScene - Scene instance.
+* @param[in] pPrimitiveGroup - PrimitiveGroup instance.
+* @param[in] pPrimitive - Primitive for this group
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_addprimitive(LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_Primitive pPrimitive);
+
+/**
+* Remove primitive at given index
+*
+* @param[in] pPrimitiveGroup - PrimitiveGroup instance.
 * @param[in] nIndex - Index
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_deleteprimitive(LibRayMarching_Scene pScene, LibRayMarching_uint32 nIndex);
-
-/**
-* Create new sphere
-*
-* @param[in] pScene - Scene instance.
-* @param[in] dRadius - Radius of the sphere
-* @param[out] pSphere - New sphere
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_addsphere(LibRayMarching_Scene pScene, LibRayMarching_double dRadius, LibRayMarching_Sphere * pSphere);
-
-/**
-* Create new capsule
-*
-* @param[in] pScene - Scene instance.
-* @param[in] dRadius - Radius of the capsule
-* @param[in] pPoint1 - Point 1
-* @param[in] pPoint2 - Point 2
-* @param[out] pCapsule - New capsule
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_addcapsule(LibRayMarching_Scene pScene, LibRayMarching_double dRadius, const sLibRayMarchingVector * pPoint1, const sLibRayMarchingVector * pPoint2, LibRayMarching_Capsule * pCapsule);
-
-/**
-* Create new sphere
-*
-* @param[in] pScene - Scene instance.
-* @param[in] pDimensions - Dimensions of the box
-* @param[out] pBox - New box
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_addbox(LibRayMarching_Scene pScene, const sLibRayMarchingVector * pDimensions, LibRayMarching_Box * pBox);
-
-/**
-* Create new plane
-*
-* @param[in] pScene - Scene instance.
-* @param[in] pOrigin - Origin of the plane
-* @param[in] pNormal - Normal of the plane
-* @param[out] pPlane - New plane
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_scene_addplane(LibRayMarching_Scene pScene, const sLibRayMarchingVector * pOrigin, const sLibRayMarchingVector * pNormal, LibRayMarching_Plane * pPlane);
-
-/*************************************************************************************************************************
- Class definition for Camera
-**************************************************************************************************************************/
-
-/**
-* Set the screen size
-*
-* @param[in] pCamera - Camera instance.
-* @param[in] nWidth - Width of the screen
-* @param[in] nHeight - Height of the screen
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_camera_setscreensize(LibRayMarching_Camera pCamera, LibRayMarching_uint32 nWidth, LibRayMarching_uint32 nHeight);
-
-/**
-* Set viewport by given view vectors and FOV
-*
-* @param[in] pCamera - Camera instance.
-* @param[in] pEye - Position of the eye
-* @param[in] pDir - Direction of the view
-* @param[in] pUp - Direction of up vector
-* @param[in] dFOV - Field of view angle in radian
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_camera_setviewport(LibRayMarching_Camera pCamera, const sLibRayMarchingVector * pEye, const sLibRayMarchingVector * pDir, const sLibRayMarchingVector * pUp, LibRayMarching_double dFOV);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_removeprimitive(LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 nIndex);
 
 /*************************************************************************************************************************
  Class definition for RayMarching
@@ -514,12 +441,10 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getlight
 * Add new light
 *
 * @param[in] pRayMarching - RayMarching instance.
-* @param[in] pColor - Color for the new light
-* @param[in] pPosition - Position for the new light
-* @param[out] pLight - Light at given index
+* @param[in] pLight - Light
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_addlight(LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pColor, const sLibRayMarchingVector * pPosition, LibRayMarching_Light * pLight);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_addlight(LibRayMarching_RayMarching pRayMarching, LibRayMarching_Light pLight);
 
 /**
 * Delete light at given index
@@ -531,22 +456,63 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_addlight
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_deletelight(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex);
 
 /**
-* Returns the current scene
+* Get number of primitives
 *
 * @param[in] pRayMarching - RayMarching instance.
-* @param[out] pScene - Current scene
+* @param[out] pCount - Number of primitives
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getscene(LibRayMarching_RayMarching pRayMarching, LibRayMarching_Scene * pScene);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getprimitivecount(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 * pCount);
 
 /**
-* Returns the current camera
+* Get primitive at given index
 *
 * @param[in] pRayMarching - RayMarching instance.
-* @param[out] pCamera - Current camera
+* @param[in] nIndex - Index
+* @param[out] pPrimitive - Primitive at given index
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getcamera(LibRayMarching_RayMarching pRayMarching, LibRayMarching_Camera * pCamera);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getprimitive(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex, LibRayMarching_Primitive * pPrimitive);
+
+/**
+* Add primitive
+*
+* @param[in] pRayMarching - RayMarching instance.
+* @param[in] pPrimitive - Primitive
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_addprimitive(LibRayMarching_RayMarching pRayMarching, LibRayMarching_Primitive pPrimitive);
+
+/**
+* Remove primitive at given index
+*
+* @param[in] pRayMarching - RayMarching instance.
+* @param[in] nIndex - Index
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_removeprimitive(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex);
+
+/**
+* Set the screen size
+*
+* @param[in] pRayMarching - RayMarching instance.
+* @param[in] nWidth - Width of the screen
+* @param[in] nHeight - Height of the screen
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_setscreensize(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nWidth, LibRayMarching_uint32 nHeight);
+
+/**
+* Set viewport by given view vectors and FOV
+*
+* @param[in] pRayMarching - RayMarching instance.
+* @param[in] pEye - Position of the eye
+* @param[in] pDir - Direction of the view
+* @param[in] pUp - Direction of up vector
+* @param[in] dFOV - Field of view angle in radian
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_setviewport(LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pEye, const sLibRayMarchingVector * pDir, const sLibRayMarchingVector * pUp, LibRayMarching_double dFOV);
 
 /**
 * Renders the current scene
@@ -607,12 +573,61 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_getlibraryversion(Li
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createraymarching(LibRayMarching_RayMarching * pInstance);
 
 /**
-* Handles Library Journaling
+* Create new light
 *
-* @param[in] pFileName - Journal FileName
+* @param[in] pColor - Color for the new light
+* @param[in] pPosition - Position for the new light
+* @param[out] pLight - Light at given index
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_setjournal(const char * pFileName);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createlight(const sLibRayMarchingVector * pColor, const sLibRayMarchingVector * pPosition, LibRayMarching_Light * pLight);
+
+/**
+* Create new sphere
+*
+* @param[in] dRadius - Radius of the sphere
+* @param[out] pSphere - New sphere
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createsphere(LibRayMarching_double dRadius, LibRayMarching_Sphere * pSphere);
+
+/**
+* Create new capsule
+*
+* @param[in] dRadius - Radius of the capsule
+* @param[in] pPoint1 - Point 1
+* @param[in] pPoint2 - Point 2
+* @param[out] pCapsule - New capsule
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createcapsule(LibRayMarching_double dRadius, const sLibRayMarchingVector * pPoint1, const sLibRayMarchingVector * pPoint2, LibRayMarching_Capsule * pCapsule);
+
+/**
+* Create new sphere
+*
+* @param[in] pDimensions - Dimensions of the box
+* @param[out] pBox - New box
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createbox(const sLibRayMarchingVector * pDimensions, LibRayMarching_Box * pBox);
+
+/**
+* Create new plane
+*
+* @param[in] pOrigin - Origin of the plane
+* @param[in] pNormal - Normal of the plane
+* @param[out] pPlane - New plane
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createplane(const sLibRayMarchingVector * pOrigin, const sLibRayMarchingVector * pNormal, LibRayMarching_Plane * pPlane);
+
+/**
+* Create new material
+*
+* @param[out] pMaterial - New Material
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_creatematerial(LibRayMarching_Material * pMaterial);
 
 }
 

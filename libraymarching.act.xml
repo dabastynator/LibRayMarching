@@ -84,30 +84,22 @@
 		</method>
 	</class>
 
-	<!-- The matrix defines positioning, rotation and scaling for primitives -->
-	<class name="Matrix">
-		<method name="Identity" description="Reset this matrix to identity">
+	<!-- A primitive is a renderable -->
+	<class name="Primitive">
+		<method name="IdentityPosition" description="Reset the position matrix to identity">
 		</method>
-
-		<method name="Translate" description="Translate this matrix by given movement vector">
+		<method name="Translate" description="Translate the primitive matrix by given movement vector">
 			<param name="Translation" type="struct" class="Vector" pass="in" description="Movement vector" />
 		</method>
-		<method name="Rotate" description="Rotate this matrix by given axis and angle">
+		<method name="Rotate" description="Rotate the primitive matrix by given axis and angle">
 			<param name="Axis" type="struct" class="Vector" pass="in" description="Rotation axis" />
 			<param name="Radian" type="double" pass="in" description="Rotation angle in radian" />
 		</method>
-		<method name="Scale" description="Scale this matrix by given vector">
+		<method name="Scale" description="Scale the primitive matrix by given vector">
 			<param name="Scale" type="struct" class="Vector" pass="in" description="Scale vector for each component" />
 		</method>
-	</class>
-
-	<!-- A primitive is a renderable -->
-	<class name="Primitive">
-		<method name="GetMatrix" description="Returns the matrix of this primitive">
-			<param name="Matrix" type="handle" class="Matrix" pass="return" description="Matrix of this primitive" />
-		</method>
-		<method name="GetMaterial" description="Returns the material of this primitive">
-			<param name="Material" type="handle" class="Material" pass="return" description="Material of this primitive" />
+		<method name="AssignMaterial" description="Copies given material for this primitive">
+			<param name="Material" type="handle" class="Material" pass="in" description="Material for this primitive" />
 		</method>
 	</class>
 	
@@ -187,54 +179,20 @@
 
 	</class>
 
-	<!-- Scene -->
-	<class name="Scene">
+	<!-- PrimitiveGroup -->
+	<class name="PrimitiveGroup" parent="Primitive">
 		<method name="GetPrimitiveCount" description="Get number of primitives">
 			<param name="Count" type="uint32" pass="return" description="Number of primitives" />
 		</method>
 		<method name="GetPrimitive" description="Get primitive at given index">
 			<param name="Index" type="uint32" pass="in" description="Index" />
-			<param name="Light" type="handle" class="Primitive" pass="return" description="Primitive at given index" />
+			<param name="Primitive" type="handle" class="Primitive" pass="return" description="Primitive at given index" />
 		</method>
-		<method name="DeletePrimitive" description="Delete primitive at given index">
+		<method name="AddPrimitive" description="Add primitive for this group">
+			<param name="Primitive" type="handle" class="Primitive" pass="in" description="Primitive for this group" />
+		</method>
+		<method name="RemovePrimitive" description="Remove primitive at given index">
 			<param name="Index" type="uint32" pass="in" description="Index" />
-		</method>
-
-		<method name="AddSphere" description="Create new sphere">
-			<param name="Radius" type="double" pass="in" description="Radius of the sphere" />
-			<param name="Sphere" type="handle" class="Sphere" pass="return" description="New sphere" />
-		</method>
-
-		<method name="AddCapsule" description="Create new capsule">
-			<param name="Radius" type="double" pass="in" description="Radius of the capsule" />
-			<param name="Point1" type="struct" class="Vector" pass="in" description="Point 1" />
-			<param name="Point2" type="struct" class="Vector" pass="in" description="Point 2" />
-			<param name="Capsule" type="handle" class="Capsule" pass="return" description="New capsule" />
-		</method>
-
-		<method name="AddBox" description="Create new sphere">
-			<param name="Dimensions" type="struct" class="Vector" pass="in" description="Dimensions of the box" />
-			<param name="Box" type="handle" class="Box" pass="return" description="New box" />
-		</method>
-
-		<method name="AddPlane" description="Create new plane">
-			<param name="Origin" type="struct" class="Vector" pass="in" description="Origin of the plane" />
-			<param name="Normal" type="struct" class="Vector" pass="in" description="Normal of the plane" />
-			<param name="Plane" type="handle" class="Plane" pass="return" description="New plane" />
-		</method>
-	</class>
-
-	<!-- Camera -->
-	<class name="Camera">
-		<method name="SetScreenSize" description="Set the screen size">
-			<param name="Width" type="uint32" pass="in" description="Width of the screen" />
-			<param name="Height" type="uint32" pass="in" description="Height of the screen" />
-		</method>
-		<method name="SetViewport" description="Set viewport by given view vectors and FOV">
-			<param name="Eye" type="struct" class="Vector" pass="in" description="Position of the eye" />
-			<param name="Dir" type="struct" class="Vector" pass="in" description="Direction of the view" />
-			<param name="Up" type="struct" class="Vector" pass="in" description="Direction of up vector" />
-			<param name="FOV" type="double" pass="in" description="Field of view angle in radian" />
 		</method>
 	</class>
 
@@ -248,19 +206,35 @@
 			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
 		</method>
 		<method name="AddLight" description="Add new light">
-			<param name="Color" type="struct" class="Vector" pass="in" description="Color for the new light" />
-			<param name="Position" type="struct" class="Vector" pass="in" description="Position for the new light" />
-			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
+			<param name="Light" type="handle" class="Light" pass="in" description="Light" />
 		</method>
 		<method name="DeleteLight" description="Delete light at given index">
 			<param name="Index" type="uint32" pass="in" description="Index" />
 		</method>
 
-		<method name="GetScene" description="Returns the current scene">
-			<param name="Scene" type="handle" class="Scene" pass="return" description="Current scene" />
+		<method name="GetPrimitiveCount" description="Get number of primitives">
+			<param name="Count" type="uint32" pass="return" description="Number of primitives" />
 		</method>
-		<method name="GetCamera" description="Returns the current camera">
-			<param name="Camera" type="handle" class="Camera" pass="return" description="Current camera" />
+		<method name="GetPrimitive" description="Get primitive at given index">
+			<param name="Index" type="uint32" pass="in" description="Index" />
+			<param name="Primitive" type="handle" class="Primitive" pass="return" description="Primitive at given index" />
+		</method>
+		<method name="AddPrimitive" description="Add primitive">
+			<param name="Primitive" type="handle" class="Primitive" pass="in" description="Primitive" />
+		</method>
+		<method name="RemovePrimitive" description="Remove primitive at given index">
+			<param name="Index" type="uint32" pass="in" description="Index" />
+		</method>
+
+		<method name="SetScreenSize" description="Set the screen size">
+			<param name="Width" type="uint32" pass="in" description="Width of the screen" />
+			<param name="Height" type="uint32" pass="in" description="Height of the screen" />
+		</method>
+		<method name="SetViewport" description="Set viewport by given view vectors and FOV">
+			<param name="Eye" type="struct" class="Vector" pass="in" description="Position of the eye" />
+			<param name="Dir" type="struct" class="Vector" pass="in" description="Direction of the view" />
+			<param name="Up" type="struct" class="Vector" pass="in" description="Direction of up vector" />
+			<param name="FOV" type="double" pass="in" description="Field of view angle in radian" />
 		</method>
 
 		<method name="RenderScene" description="Renders the current scene">
@@ -277,7 +251,7 @@
 		</method>
 	</class>
 	
-	<global releasemethod="ReleaseInstance" versionmethod="GetLibraryVersion" journalmethod="SetJournal">
+	<global releasemethod="ReleaseInstance" versionmethod="GetLibraryVersion">
 		<method name="ReleaseInstance" description="Releases the memory of an Instance">
 			<param name="Instance" type="handle" class="BaseClass" pass="in" description="Instance Handle" />
 		</method>
@@ -291,9 +265,38 @@
 		<method name="CreateRayMarching" description="Creates a new ray marching instance">
 			<param name="Instance" type="handle" class="RayMarching" pass="return" description="New raymarching instance" />
 		</method>
+
+		<method name="CreateLight" description="Create new light">
+			<param name="Color" type="struct" class="Vector" pass="in" description="Color for the new light" />
+			<param name="Position" type="struct" class="Vector" pass="in" description="Position for the new light" />
+			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
+		</method>
+
+		<method name="CreateSphere" description="Create new sphere">
+			<param name="Radius" type="double" pass="in" description="Radius of the sphere" />
+			<param name="Sphere" type="handle" class="Sphere" pass="return" description="New sphere" />
+		</method>
+
+		<method name="CreateCapsule" description="Create new capsule">
+			<param name="Radius" type="double" pass="in" description="Radius of the capsule" />
+			<param name="Point1" type="struct" class="Vector" pass="in" description="Point 1" />
+			<param name="Point2" type="struct" class="Vector" pass="in" description="Point 2" />
+			<param name="Capsule" type="handle" class="Capsule" pass="return" description="New capsule" />
+		</method>
+
+		<method name="CreateBox" description="Create new sphere">
+			<param name="Dimensions" type="struct" class="Vector" pass="in" description="Dimensions of the box" />
+			<param name="Box" type="handle" class="Box" pass="return" description="New box" />
+		</method>
+
+		<method name="CreatePlane" description="Create new plane">
+			<param name="Origin" type="struct" class="Vector" pass="in" description="Origin of the plane" />
+			<param name="Normal" type="struct" class="Vector" pass="in" description="Normal of the plane" />
+			<param name="Plane" type="handle" class="Plane" pass="return" description="New plane" />
+		</method>
 				
-		<method name="SetJournal" description="Handles Library Journaling">
-			<param name="FileName" type="string" pass="in" description="Journal FileName" />
+		<method name="CreateMaterial" description="Create new material">
+			<param name="Material" type="handle" class="Material" pass="return" description="New Material" />
 		</method>
 	</global>
 </component>

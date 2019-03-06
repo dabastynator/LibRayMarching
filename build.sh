@@ -10,7 +10,8 @@ case $1 in
 act)
 	cd $ScriptPath
 	act libraymarching.act.xml
-	cp $ACTResult/Implementations/Cpp/Interfaces/libraymarching* source/
+	cp $ACTResult/Implementations/Cpp/Interfaces/libraymarching* interface/
+	cp $ACTResult/Bindings/Python/LibRayMarching.py example/
 ;;
 compile)
 	mkdir -p $Build

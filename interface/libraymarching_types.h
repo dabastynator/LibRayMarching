@@ -85,15 +85,13 @@ typedef void * LibRayMarchingHandle;
 
 typedef LibRayMarchingHandle LibRayMarching_BaseClass;
 typedef LibRayMarchingHandle LibRayMarching_Material;
-typedef LibRayMarchingHandle LibRayMarching_Matrix;
 typedef LibRayMarchingHandle LibRayMarching_Primitive;
 typedef LibRayMarchingHandle LibRayMarching_Sphere;
 typedef LibRayMarchingHandle LibRayMarching_Capsule;
 typedef LibRayMarchingHandle LibRayMarching_Plane;
 typedef LibRayMarchingHandle LibRayMarching_Box;
 typedef LibRayMarchingHandle LibRayMarching_Light;
-typedef LibRayMarchingHandle LibRayMarching_Scene;
-typedef LibRayMarchingHandle LibRayMarching_Camera;
+typedef LibRayMarchingHandle LibRayMarching_PrimitiveGroup;
 typedef LibRayMarchingHandle LibRayMarching_RayMarching;
 
 /*************************************************************************************************************************
