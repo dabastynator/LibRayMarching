@@ -22,8 +22,8 @@ namespace LibRayMarching
 		Vector operator*(const Vector& vec) const;
 	};
 
-	Matrix Rotate(const Vector& axis, const double& angle_radian);
-	Matrix Translate(const Vector& translation);
-	Matrix Scale(const Vector& scale);
-	Matrix Scale(const double& scale);
+	Matrix MatrixRotate(const Vector& axis, const double& angle_radian);
+	Matrix MatrixTranslate(const Vector& translation);
+	Matrix MatrixScale(const Vector& scale);
+	Matrix MatrixScale(const double& scale);
 }

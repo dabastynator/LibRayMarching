@@ -100,7 +100,16 @@ Matrix Matrix::operator*=(const Matrix& mx)
 	return *this;
 }
 
-Matrix Rotate(const Vector& axis, const double& angle_radian)
+Vector Matrix::operator*(const Vector& vec) const
+{
+	return Vector(
+		vec.x * field[0] + vec.y * field[4] + vec.z * field[8]  + field[12],
+		vec.x * field[1] + vec.y * field[5] + vec.z * field[9]  + field[13],
+		vec.x * field[2] + vec.y * field[6] + vec.z * field[10] + field[14]
+	);
+}
+
+Matrix LibRayMarching::MatrixRotate(const Vector& axis, const double& angle_radian)
 {
 	double s = std::sin(angle_radian);
 	double c = std::cos(angle_radian);
@@ -120,7 +129,7 @@ Matrix Rotate(const Vector& axis, const double& angle_radian)
 	return mx;
 }
 
-Matrix Translate(const Vector& translation)
+Matrix LibRayMarching::MatrixTranslate(const Vector& translation)
 {
 	Matrix result;
 	result.field[12] = translation.x;
@@ -129,7 +138,7 @@ Matrix Translate(const Vector& translation)
 	return result;
 }
 
-Matrix Scale(const Vector& scale)
+Matrix LibRayMarching::MatrixScale(const Vector& scale)
 {
 	Matrix result;
 	result.field[0]  = scale.x;
@@ -138,7 +147,7 @@ Matrix Scale(const Vector& scale)
 	return result;
 }
 
-Matrix Scale(const double& scale)
+Matrix LibRayMarching::MatrixScale(const double& scale)
 {
 	Matrix result;
 	result.field[0]  = scale;
