@@ -10,7 +10,7 @@ Abstract: This is a stub class definition of CLibRayMarchingPrimitive
 
 #include "libraymarching_primitive.hpp"
 #include "libraymarching_interfaceexception.hpp"
-
+#include "libraymarching_utils.hpp"
 // Include custom headers here.
 
 
@@ -22,26 +22,25 @@ using namespace LibRayMarching::Impl;
 
 void CLibRayMarchingPrimitive::IdentityPosition ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_ModelToWorld = Matrix();
 }
 
 void CLibRayMarchingPrimitive::Translate (const sLibRayMarchingVector Translation)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_ModelToWorld *= MatrixTranslate(LibVecToVector(Translation));
 }
 
 void CLibRayMarchingPrimitive::Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_ModelToWorld *= MatrixRotate(LibVecToVector(Axis), dRadian);
 }
 
 void CLibRayMarchingPrimitive::Scale (const sLibRayMarchingVector Scale)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_ModelToWorld *= MatrixScale(LibVecToVector(Scale));
 }
 
-void CLibRayMarchingPrimitive::AssignMaterial (ILibRayMarchingMaterial* pMaterial)
+void CLibRayMarchingPrimitive::SetMaterial (const sLibRayMarchingMaterial Material)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_Material = Material;
 }
-

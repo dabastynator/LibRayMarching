@@ -20,8 +20,6 @@ Interface version: 0.9.0
 #include "libraymarching_sphere.hpp"
 #include "libraymarching_capsule.hpp"
 #include "libraymarching_plane.hpp"
-#include "libraymarching_material.hpp"
-#include "libraymarching_light.hpp"
 #include "libraymarching_raymarching.hpp"
 
 using namespace LibRayMarching::Impl;
@@ -43,11 +41,6 @@ ILibRayMarchingRayMarching * CLibRayMarchingWrapper::CreateRayMarching ()
 	return new CLibRayMarchingRayMarching();
 }
 
-ILibRayMarchingLight * CLibRayMarchingWrapper::CreateLight (const sLibRayMarchingVector Color, const sLibRayMarchingVector Position)
-{
-	return new CLibRayMarchingLight();
-}
-
 ILibRayMarchingSphere * CLibRayMarchingWrapper::CreateSphere (const LibRayMarching_double dRadius)
 {
 	return new CLibRayMarchingSphere();
@@ -66,9 +59,4 @@ ILibRayMarchingBox * CLibRayMarchingWrapper::CreateBox (const sLibRayMarchingVec
 ILibRayMarchingPlane * CLibRayMarchingWrapper::CreatePlane (const sLibRayMarchingVector Origin, const sLibRayMarchingVector Normal)
 {
 	return new CLibRayMarchingPlane();
-}
-
-ILibRayMarchingMaterial * CLibRayMarchingWrapper::CreateMaterial ()
-{
-	return new CLibRayMarchingMaterial();
 }

@@ -43,6 +43,8 @@ protected:
 	* Put protected members here.
 	*/
 
+	double m_Radius;
+
 public:
 
 	/**

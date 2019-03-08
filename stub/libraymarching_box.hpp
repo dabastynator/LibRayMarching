@@ -16,6 +16,7 @@ Abstract: This is the class declaration of CLibRayMarchingBox
 
 // Parent classes
 #include "libraymarching_primitive.hpp"
+#include "vector.h"
 #pragma warning( push)
 #pragma warning( disable : 4250)
 
@@ -42,6 +43,7 @@ protected:
 	/**
 	* Put protected members here.
 	*/
+	Vector m_Dimension;
 
 public:
 

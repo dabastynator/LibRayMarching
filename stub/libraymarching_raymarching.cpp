@@ -25,12 +25,12 @@ LibRayMarching_uint32 CLibRayMarchingRayMarching::GetLightCount ()
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
 
-ILibRayMarchingLight * CLibRayMarchingRayMarching::GetLight (const LibRayMarching_uint32 nIndex)
+void CLibRayMarchingRayMarching::GetLight (const LibRayMarching_uint32 nIndex, sLibRayMarchingVector & sPosition, sLibRayMarchingVector & sColor)
 {
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
 
-void CLibRayMarchingRayMarching::AddLight (ILibRayMarchingLight* pLight)
+void CLibRayMarchingRayMarching::AddLight (const sLibRayMarchingVector Position, const sLibRayMarchingVector Color)
 {
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
@@ -42,22 +42,23 @@ void CLibRayMarchingRayMarching::DeleteLight (const LibRayMarching_uint32 nIndex
 
 LibRayMarching_uint32 CLibRayMarchingRayMarching::GetPrimitiveCount ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return m_Primitives.size();
 }
 
 ILibRayMarchingPrimitive * CLibRayMarchingRayMarching::GetPrimitive (const LibRayMarching_uint32 nIndex)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return m_Primitives.at(nIndex);
 }
 
 void CLibRayMarchingRayMarching::AddPrimitive (ILibRayMarchingPrimitive* pPrimitive)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	CLibRayMarchingPrimitive* pPrimitiveImpl = dynamic_cast < CLibRayMarchingPrimitive* >(pPrimitive);
+	m_Primitives.push_back(pPrimitiveImpl);
 }
 
 void CLibRayMarchingRayMarching::RemovePrimitive (const LibRayMarching_uint32 nIndex)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_Primitives.erase(m_Primitives.begin() + nIndex);
 }
 
 void CLibRayMarchingRayMarching::SetScreenSize (const LibRayMarching_uint32 nWidth, const LibRayMarching_uint32 nHeight)
@@ -82,6 +83,6 @@ LibRayMarching_uint32 CLibRayMarchingRayMarching::RenderPixel (const LibRayMarch
 
 void CLibRayMarchingRayMarching::SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_ProgressCallback = pProgressCallback;
 }
 

@@ -13,9 +13,8 @@ Abstract: This is the class declaration of CLibRayMarchingCapsule
 #define __LIBRAYMARCHING_LIBRAYMARCHINGCAPSULE
 
 #include "libraymarching_interfaces.hpp"
-
-// Parent classes
 #include "libraymarching_primitive.hpp"
+#include "vector.h"
 #pragma warning( push)
 #pragma warning( disable : 4250)
 
@@ -42,6 +41,10 @@ protected:
 	/**
 	* Put protected members here.
 	*/
+
+	Vector m_Point1;
+	Vector m_Point2;
+	double m_Radius;
 
 public:
 

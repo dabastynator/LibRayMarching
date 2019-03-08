@@ -22,11 +22,11 @@ using namespace LibRayMarching::Impl;
 
 LibRayMarching_double CLibRayMarchingSphere::GetRadius ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return m_Radius;
 }
 
 void CLibRayMarchingSphere::SetRadius (const LibRayMarching_double dRadius)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_Radius = dRadius;
 }
 

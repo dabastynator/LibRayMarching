@@ -13,9 +13,8 @@ Abstract: This is the class declaration of CLibRayMarchingPlane
 #define __LIBRAYMARCHING_LIBRAYMARCHINGPLANE
 
 #include "libraymarching_interfaces.hpp"
-
-// Parent classes
 #include "libraymarching_primitive.hpp"
+#include "vector.h"
 #pragma warning( push)
 #pragma warning( disable : 4250)
 
@@ -42,6 +41,9 @@ protected:
 	/**
 	* Put protected members here.
 	*/
+
+	Vector m_Origin;
+	Vector m_Normal;
 
 public:
 

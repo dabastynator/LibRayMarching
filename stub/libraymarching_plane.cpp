@@ -10,6 +10,7 @@ Abstract: This is a stub class definition of CLibRayMarchingPlane
 
 #include "libraymarching_plane.hpp"
 #include "libraymarching_interfaceexception.hpp"
+#include "libraymarching_utils.hpp"
 
 // Include custom headers here.
 
@@ -22,21 +23,21 @@ using namespace LibRayMarching::Impl;
 
 sLibRayMarchingVector CLibRayMarchingPlane::GetOrigin ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return VectorToLibVec(m_Origin);
 }
 
 void CLibRayMarchingPlane::SetOrigin (const sLibRayMarchingVector Origin)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_Origin = LibVecToVector(Origin);
 }
 
 sLibRayMarchingVector CLibRayMarchingPlane::GetNormal ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return VectorToLibVec(m_Normal);
 }
 
 void CLibRayMarchingPlane::SetNormal (const sLibRayMarchingVector Normal)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_Normal = LibVecToVector(Normal);
 }
 

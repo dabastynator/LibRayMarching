@@ -13,6 +13,8 @@ Abstract: This is the class declaration of CLibRayMarchingRayMarching
 #define __LIBRAYMARCHING_LIBRAYMARCHINGRAYMARCHING
 
 #include "libraymarching_interfaces.hpp"
+#include "libraymarching_primitive.hpp"
+#include <vector>
 
 
 // Include custom headers here.
@@ -39,6 +41,10 @@ protected:
 	* Put protected members here.
 	*/
 
+	std::vector<CLibRayMarchingPrimitive*> m_Primitives;
+
+	LibRayMarchingProgressCallback m_ProgressCallback;
+
 public:
 
 	/**
@@ -52,9 +58,9 @@ public:
 
 	LibRayMarching_uint32 GetLightCount ();
 
-	ILibRayMarchingLight * GetLight (const LibRayMarching_uint32 nIndex);
+	void GetLight (const LibRayMarching_uint32 nIndex, sLibRayMarchingVector & sPosition, sLibRayMarchingVector & sColor);
 
-	void AddLight (ILibRayMarchingLight* pLight);
+	void AddLight (const sLibRayMarchingVector Position, const sLibRayMarchingVector Color);
 
 	void DeleteLight (const LibRayMarching_uint32 nIndex);
 

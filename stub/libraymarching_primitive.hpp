@@ -13,7 +13,8 @@ Abstract: This is the class declaration of CLibRayMarchingPrimitive
 #define __LIBRAYMARCHING_LIBRAYMARCHINGPRIMITIVE
 
 #include "libraymarching_interfaces.hpp"
-
+#include "vector.h"
+#include "matrix.h"
 
 // Include custom headers here.
 
@@ -39,6 +40,10 @@ protected:
 	* Put protected members here.
 	*/
 
+	Matrix m_ModelToWorld;
+
+	sLibRayMarchingMaterial m_Material;
+
 public:
 
 	/**
@@ -58,7 +63,9 @@ public:
 
 	void Scale (const sLibRayMarchingVector Scale);
 
-	void AssignMaterial (ILibRayMarchingMaterial* pMaterial);
+	void SetMaterial (const sLibRayMarchingMaterial Material);
+
+	double DistanceTo(Vector vPoint);
 
 };
 

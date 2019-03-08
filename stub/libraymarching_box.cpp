@@ -10,6 +10,7 @@ Abstract: This is a stub class definition of CLibRayMarchingBox
 
 #include "libraymarching_box.hpp"
 #include "libraymarching_interfaceexception.hpp"
+#include "libraymarching_utils.hpp"
 
 // Include custom headers here.
 
@@ -22,11 +23,11 @@ using namespace LibRayMarching::Impl;
 
 sLibRayMarchingVector CLibRayMarchingBox::GetDimensions ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return VectorToLibVec(m_Dimension);
 }
 
 void CLibRayMarchingBox::SetDimensions (const sLibRayMarchingVector Dimensions)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	m_Dimension = LibVecToVector(Dimensions);
 }
 
