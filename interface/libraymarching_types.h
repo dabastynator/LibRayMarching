@@ -84,13 +84,11 @@ typedef void * LibRayMarchingHandle;
 **************************************************************************************************************************/
 
 typedef LibRayMarchingHandle LibRayMarching_BaseClass;
-typedef LibRayMarchingHandle LibRayMarching_Material;
 typedef LibRayMarchingHandle LibRayMarching_Primitive;
 typedef LibRayMarchingHandle LibRayMarching_Sphere;
 typedef LibRayMarchingHandle LibRayMarching_Capsule;
 typedef LibRayMarchingHandle LibRayMarching_Plane;
 typedef LibRayMarchingHandle LibRayMarching_Box;
-typedef LibRayMarchingHandle LibRayMarching_Light;
 typedef LibRayMarchingHandle LibRayMarching_PrimitiveGroup;
 typedef LibRayMarchingHandle LibRayMarching_RayMarching;
 
@@ -105,6 +103,17 @@ typedef struct {
     LibRayMarching_double m_y;
     LibRayMarching_double m_z;
 } sLibRayMarchingVector;
+
+typedef struct {
+    LibRayMarching_double m_Red;
+    LibRayMarching_double m_Green;
+    LibRayMarching_double m_Blue;
+    LibRayMarching_double m_Ambient;
+    LibRayMarching_double m_Diffuse;
+    LibRayMarching_double m_Specular;
+    LibRayMarching_double m_SpecularAlpha;
+    LibRayMarching_double m_Reflection;
+} sLibRayMarchingMaterial;
 
 #pragma pack ()
 

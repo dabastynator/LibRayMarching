@@ -33,56 +33,22 @@
 		<member name="y" type="double" />
 		<member name="z" type="double" />
 	</struct>
+
+	<struct name="Material">
+		<member name="Red" type="double" />
+		<member name="Green" type="double" />
+		<member name="Blue" type="double" />
+		<member name="Ambient" type="double" />
+		<member name="Diffuse" type="double" />
+		<member name="Specular" type="double" />
+		<member name="SpecularAlpha" type="double" />
+		<member name="Reflection" type="double" />
+	</struct>
 	
 	<functiontype name="ProgressCallback" description="Callback to report calculation progress and query whether it should be aborted">
 		<param name="ProgressPercentage" type="single" pass="in" description="How far has the calculation progressed?"/>
 		<param name="ShouldAbort" type="bool" pass="out" description="Should the calculation be aborted?"/>
 	</functiontype>
-
-	<!-- Material for renderable primitives -->
-	<class name="Material">
-		<method name="GetColor" description="Returns the current color">
-			<param name="Color" type="struct" class="Vector" pass="return" description="The current color of this Material" />
-		</method>
-		<method name="SetColor" description="Set the current color">
-			<param name="Color" type="struct" class="Vector" pass="in" description="The color of this Material" />
-		</method>
-
-		<method name="GetAmbient" description="Get the ambient factor">
-			<param name="Ambient" type="double" pass="return" description="The ambient factor of this Material" />
-		</method>
-		<method name="SetAmbient" description="Set the ambient factor">
-			<param name="Ambient" type="double" pass="in" description="The ambient factor of this Material" />
-		</method>
-
-		<method name="GetDiffuse" description="Get the diffuse factor">
-			<param name="Diffuse" type="double" pass="return" description="The diffuse factor of this Material" />
-		</method>
-		<method name="SetDiffuse" description="Set the diffuse factor">
-			<param name="Diffuse" type="double" pass="in" description="The diffuse factor of this Material" />
-		</method>
-
-		<method name="GetSpecular" description="Get the specular factor">
-			<param name="Specular" type="double" pass="return" description="The specular factor of this Material" />
-		</method>
-		<method name="SetSpecular" description="Set the specular factor">
-			<param name="Specular" type="double" pass="in" description="The specular factor of this Material" />
-		</method>
-
-		<method name="GetSpecularAlpha" description="Get the specular alpha factor">
-			<param name="SpecularAlpha" type="double" pass="return" description="The specular alpha factor of this Material" />
-		</method>
-		<method name="SetSpecularAlpha" description="Set the specular alpha factor">
-			<param name="SpecularAlpha" type="double" pass="in" description="The specular alpha factor of this Material" />
-		</method>
-
-		<method name="GetReflection" description="Get the reflection factor">
-			<param name="Reflection" type="double" pass="return" description="The reflection factor of this Material" />
-		</method>
-		<method name="SetReflection" description="Set the specular alpha factor">
-			<param name="Reflection" type="double" pass="in" description="The reflection factor of this Material" />
-		</method>
-	</class>
 
 	<!-- A primitive is a renderable -->
 	<class name="Primitive">
@@ -98,8 +64,8 @@
 		<method name="Scale" description="Scale the primitive matrix by given vector">
 			<param name="Scale" type="struct" class="Vector" pass="in" description="Scale vector for each component" />
 		</method>
-		<method name="AssignMaterial" description="Copies given material for this primitive">
-			<param name="Material" type="handle" class="Material" pass="in" description="Material for this primitive" />
+		<method name="SetMaterial" description="Set material for this primitive">
+			<param name="Material" type="struct" class="Material" pass="in" description="Material for this primitive" />
 		</method>
 	</class>
 	
@@ -161,24 +127,6 @@
 		</method>
 	</class>
 
-	<!-- Light -->
-	<class name="Light">
-		<method name="GetColor" description="Returns the current color of this light">
-			<param name="Color" type="struct" class="Vector" pass="return" description="The current color" />
-		</method>
-		<method name="SetColor" description="Set the current color of this light">
-			<param name="Color" type="struct" class="Vector" pass="in" description="The color" />
-		</method>
-
-		<method name="GetPosition" description="Returns the current color of this light">
-			<param name="Position" type="struct" class="Vector" pass="return" description="The current position" />
-		</method>
-		<method name="SetPosition" description="Set the current color this light">
-			<param name="Position" type="struct" class="Vector" pass="in" description="The position" />
-		</method>
-
-	</class>
-
 	<!-- PrimitiveGroup -->
 	<class name="PrimitiveGroup" parent="Primitive">
 		<method name="GetPrimitiveCount" description="Get number of primitives">
@@ -203,10 +151,12 @@
 		</method>
 		<method name="GetLight" description="Get light at given index">
 			<param name="Index" type="uint32" pass="in" description="Index" />
-			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
+			<param name="Position" type="struct" class="Vector" pass="out" description="Position of the light" />
+			<param name="Color" type="struct" class="Vector" pass="out" description="Color of the light" />
 		</method>
 		<method name="AddLight" description="Add new light">
-			<param name="Light" type="handle" class="Light" pass="in" description="Light" />
+			<param name="Position" type="struct" class="Vector" pass="in" description="Position of the light" />
+			<param name="Color" type="struct" class="Vector" pass="in" description="Color of the light" />
 		</method>
 		<method name="DeleteLight" description="Delete light at given index">
 			<param name="Index" type="uint32" pass="in" description="Index" />
@@ -266,12 +216,6 @@
 			<param name="Instance" type="handle" class="RayMarching" pass="return" description="New raymarching instance" />
 		</method>
 
-		<method name="CreateLight" description="Create new light">
-			<param name="Color" type="struct" class="Vector" pass="in" description="Color for the new light" />
-			<param name="Position" type="struct" class="Vector" pass="in" description="Position for the new light" />
-			<param name="Light" type="handle" class="Light" pass="return" description="Light at given index" />
-		</method>
-
 		<method name="CreateSphere" description="Create new sphere">
 			<param name="Radius" type="double" pass="in" description="Radius of the sphere" />
 			<param name="Sphere" type="handle" class="Sphere" pass="return" description="New sphere" />
@@ -294,9 +238,6 @@
 			<param name="Normal" type="struct" class="Vector" pass="in" description="Normal of the plane" />
 			<param name="Plane" type="handle" class="Plane" pass="return" description="New plane" />
 		</method>
-				
-		<method name="CreateMaterial" description="Create new material">
-			<param name="Material" type="handle" class="Material" pass="return" description="New Material" />
-		</method>
+
 	</global>
 </component>

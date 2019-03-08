@@ -31,118 +31,6 @@ Interface version: 0.9.0
 extern "C" {
 
 /*************************************************************************************************************************
- Class definition for Material
-**************************************************************************************************************************/
-
-/**
-* Returns the current color
-*
-* @param[in] pMaterial - Material instance.
-* @param[out] pColor - The current color of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getcolor(LibRayMarching_Material pMaterial, sLibRayMarchingVector * pColor);
-
-/**
-* Set the current color
-*
-* @param[in] pMaterial - Material instance.
-* @param[in] pColor - The color of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setcolor(LibRayMarching_Material pMaterial, const sLibRayMarchingVector * pColor);
-
-/**
-* Get the ambient factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[out] pAmbient - The ambient factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getambient(LibRayMarching_Material pMaterial, LibRayMarching_double * pAmbient);
-
-/**
-* Set the ambient factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[in] dAmbient - The ambient factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setambient(LibRayMarching_Material pMaterial, LibRayMarching_double dAmbient);
-
-/**
-* Get the diffuse factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[out] pDiffuse - The diffuse factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getdiffuse(LibRayMarching_Material pMaterial, LibRayMarching_double * pDiffuse);
-
-/**
-* Set the diffuse factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[in] dDiffuse - The diffuse factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setdiffuse(LibRayMarching_Material pMaterial, LibRayMarching_double dDiffuse);
-
-/**
-* Get the specular factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[out] pSpecular - The specular factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getspecular(LibRayMarching_Material pMaterial, LibRayMarching_double * pSpecular);
-
-/**
-* Set the specular factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[in] dSpecular - The specular factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setspecular(LibRayMarching_Material pMaterial, LibRayMarching_double dSpecular);
-
-/**
-* Get the specular alpha factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[out] pSpecularAlpha - The specular alpha factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getspecularalpha(LibRayMarching_Material pMaterial, LibRayMarching_double * pSpecularAlpha);
-
-/**
-* Set the specular alpha factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[in] dSpecularAlpha - The specular alpha factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setspecularalpha(LibRayMarching_Material pMaterial, LibRayMarching_double dSpecularAlpha);
-
-/**
-* Get the reflection factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[out] pReflection - The reflection factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_getreflection(LibRayMarching_Material pMaterial, LibRayMarching_double * pReflection);
-
-/**
-* Set the specular alpha factor
-*
-* @param[in] pMaterial - Material instance.
-* @param[in] dReflection - The reflection factor of this Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_material_setreflection(LibRayMarching_Material pMaterial, LibRayMarching_double dReflection);
-
-/*************************************************************************************************************************
  Class definition for Primitive
 **************************************************************************************************************************/
 
@@ -183,13 +71,13 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_rotate(Lib
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_scale(LibRayMarching_Primitive pPrimitive, const sLibRayMarchingVector * pScale);
 
 /**
-* Copies given material for this primitive
+* Set material for this primitive
 *
 * @param[in] pPrimitive - Primitive instance.
 * @param[in] pMaterial - Material for this primitive
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_assignmaterial(LibRayMarching_Primitive pPrimitive, LibRayMarching_Material pMaterial);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_setmaterial(LibRayMarching_Primitive pPrimitive, const sLibRayMarchingMaterial * pMaterial);
 
 /*************************************************************************************************************************
  Class definition for Sphere
@@ -334,46 +222,6 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_box_getdimensions(Li
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_box_setdimensions(LibRayMarching_Box pBox, const sLibRayMarchingVector * pDimensions);
 
 /*************************************************************************************************************************
- Class definition for Light
-**************************************************************************************************************************/
-
-/**
-* Returns the current color of this light
-*
-* @param[in] pLight - Light instance.
-* @param[out] pColor - The current color
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_light_getcolor(LibRayMarching_Light pLight, sLibRayMarchingVector * pColor);
-
-/**
-* Set the current color of this light
-*
-* @param[in] pLight - Light instance.
-* @param[in] pColor - The color
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_light_setcolor(LibRayMarching_Light pLight, const sLibRayMarchingVector * pColor);
-
-/**
-* Returns the current color of this light
-*
-* @param[in] pLight - Light instance.
-* @param[out] pPosition - The current position
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_light_getposition(LibRayMarching_Light pLight, sLibRayMarchingVector * pPosition);
-
-/**
-* Set the current color this light
-*
-* @param[in] pLight - Light instance.
-* @param[in] pPosition - The position
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_light_setposition(LibRayMarching_Light pLight, const sLibRayMarchingVector * pPosition);
-
-/*************************************************************************************************************************
  Class definition for PrimitiveGroup
 **************************************************************************************************************************/
 
@@ -432,19 +280,21 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getlight
 *
 * @param[in] pRayMarching - RayMarching instance.
 * @param[in] nIndex - Index
-* @param[out] pLight - Light at given index
+* @param[out] pPosition - Position of the light
+* @param[out] pColor - Color of the light
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getlight(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex, LibRayMarching_Light * pLight);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_getlight(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex, sLibRayMarchingVector * pPosition, sLibRayMarchingVector * pColor);
 
 /**
 * Add new light
 *
 * @param[in] pRayMarching - RayMarching instance.
-* @param[in] pLight - Light
+* @param[in] pPosition - Position of the light
+* @param[in] pColor - Color of the light
 * @return error code or 0 (success)
 */
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_addlight(LibRayMarching_RayMarching pRayMarching, LibRayMarching_Light pLight);
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_addlight(LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pPosition, const sLibRayMarchingVector * pColor);
 
 /**
 * Delete light at given index
@@ -573,16 +423,6 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_getlibraryversion(Li
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createraymarching(LibRayMarching_RayMarching * pInstance);
 
 /**
-* Create new light
-*
-* @param[in] pColor - Color for the new light
-* @param[in] pPosition - Position for the new light
-* @param[out] pLight - Light at given index
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createlight(const sLibRayMarchingVector * pColor, const sLibRayMarchingVector * pPosition, LibRayMarching_Light * pLight);
-
-/**
 * Create new sphere
 *
 * @param[in] dRadius - Radius of the sphere
@@ -620,14 +460,6 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createbox(const sLib
 * @return error code or 0 (success)
 */
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createplane(const sLibRayMarchingVector * pOrigin, const sLibRayMarchingVector * pNormal, LibRayMarching_Plane * pPlane);
-
-/**
-* Create new material
-*
-* @param[out] pMaterial - New Material
-* @return error code or 0 (success)
-*/
-LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_creatematerial(LibRayMarching_Material * pMaterial);
 
 }
 

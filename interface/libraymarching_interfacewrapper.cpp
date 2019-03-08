@@ -23,298 +23,6 @@ extern "C" {
 
 
 /*************************************************************************************************************************
- Class implementation for Material
-**************************************************************************************************************************/
-LibRayMarchingResult libraymarching_material_getcolor (LibRayMarching_Material pMaterial, sLibRayMarchingVector * pColor)
-{
-	try {
-		if (pColor == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pColor = pIMaterial->GetColor();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_setcolor (LibRayMarching_Material pMaterial, const sLibRayMarchingVector * pColor)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pIMaterial->SetColor(*pColor);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_getambient (LibRayMarching_Material pMaterial, LibRayMarching_double * pAmbient)
-{
-	try {
-		if (pAmbient == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pAmbient = pIMaterial->GetAmbient();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_setambient (LibRayMarching_Material pMaterial, LibRayMarching_double dAmbient)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pIMaterial->SetAmbient(dAmbient);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_getdiffuse (LibRayMarching_Material pMaterial, LibRayMarching_double * pDiffuse)
-{
-	try {
-		if (pDiffuse == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pDiffuse = pIMaterial->GetDiffuse();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_setdiffuse (LibRayMarching_Material pMaterial, LibRayMarching_double dDiffuse)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pIMaterial->SetDiffuse(dDiffuse);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_getspecular (LibRayMarching_Material pMaterial, LibRayMarching_double * pSpecular)
-{
-	try {
-		if (pSpecular == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pSpecular = pIMaterial->GetSpecular();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_setspecular (LibRayMarching_Material pMaterial, LibRayMarching_double dSpecular)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pIMaterial->SetSpecular(dSpecular);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_getspecularalpha (LibRayMarching_Material pMaterial, LibRayMarching_double * pSpecularAlpha)
-{
-	try {
-		if (pSpecularAlpha == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pSpecularAlpha = pIMaterial->GetSpecularAlpha();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_setspecularalpha (LibRayMarching_Material pMaterial, LibRayMarching_double dSpecularAlpha)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pIMaterial->SetSpecularAlpha(dSpecularAlpha);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_getreflection (LibRayMarching_Material pMaterial, LibRayMarching_double * pReflection)
-{
-	try {
-		if (pReflection == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pReflection = pIMaterial->GetReflection();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_material_setreflection (LibRayMarching_Material pMaterial, LibRayMarching_double dReflection)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClass);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pIMaterial->SetReflection(dReflection);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-
-/*************************************************************************************************************************
  Class implementation for Primitive
 **************************************************************************************************************************/
 LibRayMarchingResult libraymarching_primitive_identityposition (LibRayMarching_Primitive pPrimitive)
@@ -409,7 +117,7 @@ LibRayMarchingResult libraymarching_primitive_scale (LibRayMarching_Primitive pP
 	}
 }
 
-LibRayMarchingResult libraymarching_primitive_assignmaterial (LibRayMarching_Primitive pPrimitive, LibRayMarching_Material pMaterial)
+LibRayMarchingResult libraymarching_primitive_setmaterial (LibRayMarching_Primitive pPrimitive, const sLibRayMarchingMaterial * pMaterial)
 {
 	try {
 
@@ -418,13 +126,8 @@ LibRayMarchingResult libraymarching_primitive_assignmaterial (LibRayMarching_Pri
 		if (!pIPrimitive)
 			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
 
-		ILibRayMarchingBaseClass* pIBaseClassMaterial = (ILibRayMarchingBaseClass *)pMaterial;
-		ILibRayMarchingMaterial* pIMaterial = dynamic_cast<ILibRayMarchingMaterial*>(pIBaseClassMaterial);
-		if (!pIMaterial)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDCAST);
 
-
-		pIPrimitive->AssignMaterial(pIMaterial);
+		pIPrimitive->SetMaterial(*pMaterial);
 
 
 		return LIBRAYMARCHING_SUCCESS;
@@ -791,106 +494,6 @@ LibRayMarchingResult libraymarching_box_setdimensions (LibRayMarching_Box pBox, 
 
 
 /*************************************************************************************************************************
- Class implementation for Light
-**************************************************************************************************************************/
-LibRayMarchingResult libraymarching_light_getcolor (LibRayMarching_Light pLight, sLibRayMarchingVector * pColor)
-{
-	try {
-		if (pColor == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pLight;
-		ILibRayMarchingLight* pILight = dynamic_cast<ILibRayMarchingLight*>(pIBaseClass);
-		if (!pILight)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pColor = pILight->GetColor();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_light_setcolor (LibRayMarching_Light pLight, const sLibRayMarchingVector * pColor)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pLight;
-		ILibRayMarchingLight* pILight = dynamic_cast<ILibRayMarchingLight*>(pIBaseClass);
-		if (!pILight)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pILight->SetColor(*pColor);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_light_getposition (LibRayMarching_Light pLight, sLibRayMarchingVector * pPosition)
-{
-	try {
-		if (pPosition == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pLight;
-		ILibRayMarchingLight* pILight = dynamic_cast<ILibRayMarchingLight*>(pIBaseClass);
-		if (!pILight)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		*pPosition = pILight->GetPosition();
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_light_setposition (LibRayMarching_Light pLight, const sLibRayMarchingVector * pPosition)
-{
-	try {
-
-		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pLight;
-		ILibRayMarchingLight* pILight = dynamic_cast<ILibRayMarchingLight*>(pIBaseClass);
-		if (!pILight)
-			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
-
-
-		pILight->SetPosition(*pPosition);
-
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-
-/*************************************************************************************************************************
  Class implementation for PrimitiveGroup
 **************************************************************************************************************************/
 LibRayMarchingResult libraymarching_primitivegroup_getprimitivecount (LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 * pCount)
@@ -1025,10 +628,12 @@ LibRayMarchingResult libraymarching_raymarching_getlightcount (LibRayMarching_Ra
 	}
 }
 
-LibRayMarchingResult libraymarching_raymarching_getlight (LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex, LibRayMarching_Light * pLight)
+LibRayMarchingResult libraymarching_raymarching_getlight (LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nIndex, sLibRayMarchingVector * pPosition, sLibRayMarchingVector * pColor)
 {
 	try {
-		if (pLight == nullptr)
+		if (!pPosition)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+		if (!pColor)
 			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
 
 		ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pRayMarching;
@@ -1036,11 +641,13 @@ LibRayMarchingResult libraymarching_raymarching_getlight (LibRayMarching_RayMarc
 		if (!pIRayMarching)
 			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
 
-		ILibRayMarchingBaseClass* pBaseLight(nullptr);
+		sLibRayMarchingVector Position;
+		sLibRayMarchingVector Color;
 
-		pBaseLight = pIRayMarching->GetLight(nIndex);
+		pIRayMarching->GetLight(nIndex, Position, Color);
 
-		*pLight = (ILibRayMarchingBaseClass*)(pBaseLight);
+		*pPosition = Position;
+		*pColor = Color;
 
 		return LIBRAYMARCHING_SUCCESS;
 	}
@@ -1052,7 +659,7 @@ LibRayMarchingResult libraymarching_raymarching_getlight (LibRayMarching_RayMarc
 	}
 }
 
-LibRayMarchingResult libraymarching_raymarching_addlight (LibRayMarching_RayMarching pRayMarching, LibRayMarching_Light pLight)
+LibRayMarchingResult libraymarching_raymarching_addlight (LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pPosition, const sLibRayMarchingVector * pColor)
 {
 	try {
 
@@ -1061,13 +668,8 @@ LibRayMarchingResult libraymarching_raymarching_addlight (LibRayMarching_RayMarc
 		if (!pIRayMarching)
 			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
 
-		ILibRayMarchingBaseClass* pIBaseClassLight = (ILibRayMarchingBaseClass *)pLight;
-		ILibRayMarchingLight* pILight = dynamic_cast<ILibRayMarchingLight*>(pIBaseClassLight);
-		if (!pILight)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDCAST);
 
-
-		pIRayMarching->AddLight(pILight);
+		pIRayMarching->AddLight(*pPosition, *pColor);
 
 
 		return LIBRAYMARCHING_SUCCESS;
@@ -1402,28 +1004,6 @@ LibRayMarchingResult libraymarching_createraymarching (LibRayMarching_RayMarchin
 	}
 }
 
-LibRayMarchingResult libraymarching_createlight (const sLibRayMarchingVector * pColor, const sLibRayMarchingVector * pPosition, LibRayMarching_Light * pLight)
-{
-	try {
-		if (pLight == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pBaseLight(nullptr);
-
-		pBaseLight = CLibRayMarchingWrapper::CreateLight(*pColor, *pPosition);
-
-		*pLight = (ILibRayMarchingBaseClass*)(pBaseLight);
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
 LibRayMarchingResult libraymarching_createsphere (LibRayMarching_double dRadius, LibRayMarching_Sphere * pSphere)
 {
 	try {
@@ -1501,28 +1081,6 @@ LibRayMarchingResult libraymarching_createplane (const sLibRayMarchingVector * p
 		pBasePlane = CLibRayMarchingWrapper::CreatePlane(*pOrigin, *pNormal);
 
 		*pPlane = (ILibRayMarchingBaseClass*)(pBasePlane);
-
-		return LIBRAYMARCHING_SUCCESS;
-	}
-	catch (ELibRayMarchingInterfaceException & E) {
-		return E.getErrorCode();
-	}
-	catch (...) {
-		return LIBRAYMARCHING_ERROR_GENERICEXCEPTION;
-	}
-}
-
-LibRayMarchingResult libraymarching_creatematerial (LibRayMarching_Material * pMaterial)
-{
-	try {
-		if (pMaterial == nullptr)
-			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
-
-		ILibRayMarchingBaseClass* pBaseMaterial(nullptr);
-
-		pBaseMaterial = CLibRayMarchingWrapper::CreateMaterial();
-
-		*pMaterial = (ILibRayMarchingBaseClass*)(pBaseMaterial);
 
 		return LIBRAYMARCHING_SUCCESS;
 	}

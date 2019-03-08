@@ -28,13 +28,11 @@ namespace Impl {
 /**
  Forward declarations of class interfaces
 */
-class ILibRayMarchingMaterial;
 class ILibRayMarchingPrimitive;
 class ILibRayMarchingSphere;
 class ILibRayMarchingCapsule;
 class ILibRayMarchingPlane;
 class ILibRayMarchingBox;
-class ILibRayMarchingLight;
 class ILibRayMarchingPrimitiveGroup;
 class ILibRayMarchingRayMarching;
 
@@ -46,87 +44,6 @@ class ILibRayMarchingRayMarching;
 class ILibRayMarchingBaseClass {
 public:
 	virtual ~ILibRayMarchingBaseClass () {}
-};
-
-
-/*************************************************************************************************************************
- Class interface for LibRayMarchingMaterial 
-**************************************************************************************************************************/
-
-class ILibRayMarchingMaterial : public virtual ILibRayMarchingBaseClass {
-public:
-	/**
-	* IMaterial::GetColor - Returns the current color
-	* @return The current color of this Material
-	*/
-	virtual sLibRayMarchingVector GetColor () = 0;
-
-	/**
-	* IMaterial::SetColor - Set the current color
-	* @param[in] Color - The color of this Material
-	*/
-	virtual void SetColor (const sLibRayMarchingVector Color) = 0;
-
-	/**
-	* IMaterial::GetAmbient - Get the ambient factor
-	* @return The ambient factor of this Material
-	*/
-	virtual LibRayMarching_double GetAmbient () = 0;
-
-	/**
-	* IMaterial::SetAmbient - Set the ambient factor
-	* @param[in] dAmbient - The ambient factor of this Material
-	*/
-	virtual void SetAmbient (const LibRayMarching_double dAmbient) = 0;
-
-	/**
-	* IMaterial::GetDiffuse - Get the diffuse factor
-	* @return The diffuse factor of this Material
-	*/
-	virtual LibRayMarching_double GetDiffuse () = 0;
-
-	/**
-	* IMaterial::SetDiffuse - Set the diffuse factor
-	* @param[in] dDiffuse - The diffuse factor of this Material
-	*/
-	virtual void SetDiffuse (const LibRayMarching_double dDiffuse) = 0;
-
-	/**
-	* IMaterial::GetSpecular - Get the specular factor
-	* @return The specular factor of this Material
-	*/
-	virtual LibRayMarching_double GetSpecular () = 0;
-
-	/**
-	* IMaterial::SetSpecular - Set the specular factor
-	* @param[in] dSpecular - The specular factor of this Material
-	*/
-	virtual void SetSpecular (const LibRayMarching_double dSpecular) = 0;
-
-	/**
-	* IMaterial::GetSpecularAlpha - Get the specular alpha factor
-	* @return The specular alpha factor of this Material
-	*/
-	virtual LibRayMarching_double GetSpecularAlpha () = 0;
-
-	/**
-	* IMaterial::SetSpecularAlpha - Set the specular alpha factor
-	* @param[in] dSpecularAlpha - The specular alpha factor of this Material
-	*/
-	virtual void SetSpecularAlpha (const LibRayMarching_double dSpecularAlpha) = 0;
-
-	/**
-	* IMaterial::GetReflection - Get the reflection factor
-	* @return The reflection factor of this Material
-	*/
-	virtual LibRayMarching_double GetReflection () = 0;
-
-	/**
-	* IMaterial::SetReflection - Set the specular alpha factor
-	* @param[in] dReflection - The reflection factor of this Material
-	*/
-	virtual void SetReflection (const LibRayMarching_double dReflection) = 0;
-
 };
 
 
@@ -161,10 +78,10 @@ public:
 	virtual void Scale (const sLibRayMarchingVector Scale) = 0;
 
 	/**
-	* IPrimitive::AssignMaterial - Copies given material for this primitive
-	* @param[in] pMaterial - Material for this primitive
+	* IPrimitive::SetMaterial - Set material for this primitive
+	* @param[in] Material - Material for this primitive
 	*/
-	virtual void AssignMaterial (ILibRayMarchingMaterial* pMaterial) = 0;
+	virtual void SetMaterial (const sLibRayMarchingMaterial Material) = 0;
 
 };
 
@@ -290,39 +207,6 @@ public:
 
 
 /*************************************************************************************************************************
- Class interface for LibRayMarchingLight 
-**************************************************************************************************************************/
-
-class ILibRayMarchingLight : public virtual ILibRayMarchingBaseClass {
-public:
-	/**
-	* ILight::GetColor - Returns the current color of this light
-	* @return The current color
-	*/
-	virtual sLibRayMarchingVector GetColor () = 0;
-
-	/**
-	* ILight::SetColor - Set the current color of this light
-	* @param[in] Color - The color
-	*/
-	virtual void SetColor (const sLibRayMarchingVector Color) = 0;
-
-	/**
-	* ILight::GetPosition - Returns the current color of this light
-	* @return The current position
-	*/
-	virtual sLibRayMarchingVector GetPosition () = 0;
-
-	/**
-	* ILight::SetPosition - Set the current color this light
-	* @param[in] Position - The position
-	*/
-	virtual void SetPosition (const sLibRayMarchingVector Position) = 0;
-
-};
-
-
-/*************************************************************************************************************************
  Class interface for LibRayMarchingPrimitiveGroup 
 **************************************************************************************************************************/
 
@@ -371,15 +255,17 @@ public:
 	/**
 	* IRayMarching::GetLight - Get light at given index
 	* @param[in] nIndex - Index
-	* @return Light at given index
+	* @param[out] sPosition - Position of the light
+	* @param[out] sColor - Color of the light
 	*/
-	virtual ILibRayMarchingLight * GetLight (const LibRayMarching_uint32 nIndex) = 0;
+	virtual void GetLight (const LibRayMarching_uint32 nIndex, sLibRayMarchingVector & sPosition, sLibRayMarchingVector & sColor) = 0;
 
 	/**
 	* IRayMarching::AddLight - Add new light
-	* @param[in] pLight - Light
+	* @param[in] Position - Position of the light
+	* @param[in] Color - Color of the light
 	*/
-	virtual void AddLight (ILibRayMarchingLight* pLight) = 0;
+	virtual void AddLight (const sLibRayMarchingVector Position, const sLibRayMarchingVector Color) = 0;
 
 	/**
 	* IRayMarching::DeleteLight - Delete light at given index
@@ -476,14 +362,6 @@ public:
 	static ILibRayMarchingRayMarching * CreateRayMarching ();
 
 	/**
-	* Ilibraymarching::CreateLight - Create new light
-	* @param[in] Color - Color for the new light
-	* @param[in] Position - Position for the new light
-	* @return Light at given index
-	*/
-	static ILibRayMarchingLight * CreateLight (const sLibRayMarchingVector Color, const sLibRayMarchingVector Position);
-
-	/**
 	* Ilibraymarching::CreateSphere - Create new sphere
 	* @param[in] dRadius - Radius of the sphere
 	* @return New sphere
@@ -513,12 +391,6 @@ public:
 	* @return New plane
 	*/
 	static ILibRayMarchingPlane * CreatePlane (const sLibRayMarchingVector Origin, const sLibRayMarchingVector Normal);
-
-	/**
-	* Ilibraymarching::CreateMaterial - Create new material
-	* @return New Material
-	*/
-	static ILibRayMarchingMaterial * CreateMaterial ();
 
 };
 
