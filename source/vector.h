@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace LibRayMarching
 {
 	template <typename T>
@@ -38,5 +40,11 @@ namespace LibRayMarching
 		Vector cross(const Vector& vec) const;
 		double min() const;
 		double max() const;
+		void normalize();
+		Vector normalized() const;		
 	};
+
+	const Vector VectorNull(0, 0, 0);
+
+	std::ostream& operator<< (std::ostream& stream, const Vector& vector);
 }

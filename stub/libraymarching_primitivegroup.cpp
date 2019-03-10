@@ -40,3 +40,7 @@ void CLibRayMarchingPrimitiveGroup::RemovePrimitive (const LibRayMarching_uint32
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
 
+double CLibRayMarchingPrimitiveGroup::DistanceTo(Vector vPoint)
+{
+	return 0;
+}

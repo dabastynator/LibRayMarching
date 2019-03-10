@@ -136,3 +136,31 @@ double Vector::max() const
 {
 	return std::max(std::max(x, y), z);
 }
+
+void Vector::normalize()
+{
+	double l = length();
+	if (l != 0)
+	{
+		x /= l;
+		y /= l;
+		z /= l;
+	}
+}
+
+Vector Vector::normalized() const
+{
+	double l = length();
+	if (l != 0)
+	{
+		return Vector(x/l, y/l, z/l);
+	} else
+	{
+		return Vector(*this);
+	}
+}
+
+std::ostream& LibRayMarching::operator<<(std::ostream& stream, const Vector& vector)
+{
+	return stream << "(x=" << vector.x << ", y=" << vector.y << ", z=" << vector.z << ")";
+}

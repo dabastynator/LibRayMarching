@@ -24,6 +24,12 @@ Interface version: 0.9.0
 
 using namespace LibRayMarching::Impl;
 
+bool CLibRayMarchingWrapper::GetLastError (ILibRayMarchingBaseClass* pInstance, std::string & sErrorMessage)
+{
+	pInstance->GetLastErrorMessage(sErrorMessage);
+}
+
+
 void CLibRayMarchingWrapper::ReleaseInstance (ILibRayMarchingBaseClass* pInstance)
 {
 	delete pInstance;
@@ -43,7 +49,7 @@ ILibRayMarchingRayMarching * CLibRayMarchingWrapper::CreateRayMarching ()
 
 ILibRayMarchingSphere * CLibRayMarchingWrapper::CreateSphere (const LibRayMarching_double dRadius)
 {
-	return new CLibRayMarchingSphere();
+	return new CLibRayMarchingSphere(dRadius);
 }
 
 ILibRayMarchingCapsule * CLibRayMarchingWrapper::CreateCapsule (const LibRayMarching_double dRadius, const sLibRayMarchingVector Point1, const sLibRayMarchingVector Point2)

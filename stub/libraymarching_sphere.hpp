@@ -45,6 +45,8 @@ protected:
 
 	double m_Radius;
 
+	Vector m_Center;
+
 public:
 
 	/**
@@ -56,9 +58,15 @@ public:
 	* Public member functions to implement.
 	*/
 
+	CLibRayMarchingSphere(double radius): m_Radius(radius) {};
+
 	LibRayMarching_double GetRadius ();
 
 	void SetRadius (const LibRayMarching_double dRadius);
+
+	void Initialize();
+
+	double DistanceTo(Vector vPoint) const;
 
 };
 

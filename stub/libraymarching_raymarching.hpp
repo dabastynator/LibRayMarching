@@ -14,8 +14,12 @@ Abstract: This is the class declaration of CLibRayMarchingRayMarching
 
 #include "libraymarching_interfaces.hpp"
 #include "libraymarching_primitive.hpp"
-#include <vector>
+#include "libraymarching_baseclass.hpp"
 
+#include <vector>
+#include <memory>
+#include "camera.h"
+#include "shader.h"
 
 // Include custom headers here.
 
@@ -28,7 +32,7 @@ namespace Impl {
  Class declaration of CLibRayMarchingRayMarching 
 **************************************************************************************************************************/
 
-class CLibRayMarchingRayMarching : public virtual ILibRayMarchingRayMarching {
+class CLibRayMarchingRayMarching : public virtual ILibRayMarchingRayMarching, public virtual CLibRayMarchingBaseClass{
 private:
 
 	/**
@@ -41,9 +45,11 @@ protected:
 	* Put protected members here.
 	*/
 
-	std::vector<CLibRayMarchingPrimitive*> m_Primitives;
+	Shader m_Shader;
 
 	LibRayMarchingProgressCallback m_ProgressCallback;
+
+	unsigned int *m_ColorBuffer;
 
 public:
 
@@ -55,6 +61,10 @@ public:
 	/**
 	* Public member functions to implement.
 	*/
+
+	CLibRayMarchingRayMarching();
+
+	~CLibRayMarchingRayMarching();
 
 	LibRayMarching_uint32 GetLightCount ();
 
@@ -77,6 +87,9 @@ public:
 	void SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV);
 
 	void RenderScene ();
+
+	
+	void GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching_uint64 * pColorBufferBuffer);
 
 	LibRayMarching_uint32 RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY);
 

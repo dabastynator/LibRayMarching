@@ -13,7 +13,11 @@ Abstract: This is the class declaration of CLibRayMarchingPrimitive
 #define __LIBRAYMARCHING_LIBRAYMARCHINGPRIMITIVE
 
 #include "libraymarching_interfaces.hpp"
+#include "libraymarching_baseclass.hpp"
+#include "libraymarching_utils.hpp"
+
 #include "vector.h"
+#include "types.h"
 #include "matrix.h"
 
 // Include custom headers here.
@@ -27,7 +31,7 @@ namespace Impl {
  Class declaration of CLibRayMarchingPrimitive 
 **************************************************************************************************************************/
 
-class CLibRayMarchingPrimitive : public virtual ILibRayMarchingPrimitive {
+class CLibRayMarchingPrimitive : public virtual ILibRayMarchingPrimitive, public virtual CLibRayMarchingBaseClass {
 private:
 
 	/**
@@ -42,7 +46,7 @@ protected:
 
 	Matrix m_ModelToWorld;
 
-	sLibRayMarchingMaterial m_Material;
+	Material m_Material;
 
 public:
 
@@ -53,7 +57,7 @@ public:
 
 	/**
 	* Public member functions to implement.
-	*/
+	*/	
 
 	void IdentityPosition ();
 
@@ -65,7 +69,11 @@ public:
 
 	void SetMaterial (const sLibRayMarchingMaterial Material);
 
-	double DistanceTo(Vector vPoint);
+	Material* GetMaterial() { return &m_Material; };
+
+	virtual double DistanceTo(Vector vPoint) const = 0;
+
+	virtual void Initialize() {};
 
 };
 

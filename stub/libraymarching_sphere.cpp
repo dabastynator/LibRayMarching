@@ -30,3 +30,13 @@ void CLibRayMarchingSphere::SetRadius (const LibRayMarching_double dRadius)
 	m_Radius = dRadius;
 }
 
+void CLibRayMarchingSphere::Initialize()
+{
+	m_Center = m_ModelToWorld * VectorNull;
+}
+
+double CLibRayMarchingSphere::DistanceTo(Vector vPoint) const
+{
+	Vector p = m_Center - vPoint;
+	return p.length() - m_Radius;
+}

@@ -69,6 +69,8 @@ public:
 
 	void SetPoint2 (const sLibRayMarchingVector Point2);
 
+	double DistanceTo(Vector vPoint) const;
+
 };
 
 } // namespace Impl

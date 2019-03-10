@@ -56,13 +56,11 @@ public:
 	* Public member functions to implement.
 	*/
 
-	sLibRayMarchingVector GetOrigin ();
-
-	void SetOrigin (const sLibRayMarchingVector Origin);
-
 	sLibRayMarchingVector GetNormal ();
 
 	void SetNormal (const sLibRayMarchingVector Normal);
+
+	double DistanceTo(Vector vPoint) const;
 
 };
 

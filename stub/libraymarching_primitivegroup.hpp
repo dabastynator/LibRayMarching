@@ -62,6 +62,7 @@ public:
 
 	void RemovePrimitive (const LibRayMarching_uint32 nIndex);
 
+	double DistanceTo(Vector vPoint);
 };
 
 } // namespace Impl

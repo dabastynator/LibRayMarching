@@ -31,3 +31,8 @@ void CLibRayMarchingBox::SetDimensions (const sLibRayMarchingVector Dimensions)
 	m_Dimension = LibVecToVector(Dimensions);
 }
 
+double CLibRayMarchingBox::DistanceTo(Vector vPoint) const
+{
+	Vector p = m_ModelToWorld * vPoint;
+	return 0;
+}

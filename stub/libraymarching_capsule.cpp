@@ -51,3 +51,8 @@ void CLibRayMarchingCapsule::SetPoint2 (const sLibRayMarchingVector Point2)
 	m_Point1 = LibVecToVector(Point2);
 }
 
+double CLibRayMarchingCapsule::DistanceTo(Vector vPoint) const
+{
+	Vector p = m_ModelToWorld * vPoint;
+	return 0;
+}

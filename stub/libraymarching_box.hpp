@@ -60,6 +60,8 @@ public:
 
 	void SetDimensions (const sLibRayMarchingVector Dimensions);
 
+	double DistanceTo(Vector vPoint) const;
+
 };
 
 } // namespace Impl

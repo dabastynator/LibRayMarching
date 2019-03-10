@@ -42,5 +42,5 @@ void CLibRayMarchingPrimitive::Scale (const sLibRayMarchingVector Scale)
 
 void CLibRayMarchingPrimitive::SetMaterial (const sLibRayMarchingMaterial Material)
 {
-	m_Material = Material;
+	m_Material = LibMaterialToMaterial(Material);
 }
