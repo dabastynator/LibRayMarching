@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "shader.h"
 #include "libraymarching_primitive.hpp"
 
@@ -16,12 +17,50 @@ Vector Shader::CalculateColor(const Vector& position, const Vector& ray, int bou
 {
 	MarcheResult result;
 	Trace(position, ray, result);
-	return Vector(result.distance, result.distance, result.distance) * 0.2;
+	if (result.material != NULL)
+	{
+		Vector colAmbient = result.material->color * result.material->ambient;
+		Vector colDiffuse(0, 0, 0);
+		Vector colSpecular(0, 0, 0);
+		Vector reflectedRay = ray - result.normal * 2 * result.normal.dot(ray);
+		for (int i = 0; i < m_Lights.size(); i++)
+		{
+			Light light = m_Lights[i];
+			Vector toLight = (light.position - result.position).normalized();
+			double toLightDot = toLight.dot(result.normal);
+			if (toLightDot > 0)
+			{
+				colDiffuse += result.material->color * (toLightDot * result.material->diffuse);
+
+				double specFactor = result.material->specular * std::pow(reflectedRay.dot(toLight), result.material->specular_alpha);
+				if (specFactor > 0)
+					colSpecular += light.color * specFactor;
+			}
+		}
+		return colAmbient + colDiffuse + colSpecular;
+	} else
+	{
+		return m_Lightning.background;
+	}
 }
 
 double Shader::Trace(const Vector& position, const Vector& ray, MarcheResult& result)
 {
-	return RayMarche(position, ray, result);
+	// Calculate distance and hit object
+	double distance = RayMarche(position, ray, result);
+
+	// Calculate normal at hit position
+	if (result.material != NULL)
+	{
+		MarcheResult d;
+		Vector dX(m_Epsilon, 0, 0), dY(0, m_Epsilon, 0), dZ(0, 0, m_Epsilon);
+		Vector p = result.position;
+		result.normal.x = GetDistance(p + dX, d) - GetDistance(p - dX, d);
+		result.normal.y = GetDistance(p + dY, d) - GetDistance(p - dY, d);
+		result.normal.z = GetDistance(p + dZ, d) - GetDistance(p - dZ, d);
+		result.normal.normalize();
+	}
+	return distance;
 }
 
 double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult& result)
@@ -38,7 +77,7 @@ double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult
 		distance += d;
 		result.position = position + ray * distance;		
 		if (distance > m_MaxDistance) {
-			result.hit = NULL;
+			result.material = NULL;
 			result.distance = distance;
 			return distance;
 		}
@@ -47,6 +86,7 @@ double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult
 			return distance;
 		}
 	}
+	return distance;
 }
 
 double Shader::GetDistance(const Vector& position, MarcheResult& result)
@@ -59,7 +99,7 @@ double Shader::GetDistance(const Vector& position, MarcheResult& result)
 		if (distance < minDist)
 		{
 			minDist = distance;
-			result.hit = primitive->GetMaterial();
+			result.material = primitive->GetMaterial();
 		}
 	}
 	return minDist;

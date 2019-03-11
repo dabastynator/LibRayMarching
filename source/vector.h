@@ -45,6 +45,9 @@ namespace LibRayMarching
 	};
 
 	const Vector VectorNull(0, 0, 0);
+	const Vector VectorX(1, 0, 0);
+	const Vector VectorY(0, 1, 0);
+	const Vector VectorZ(1, 0, 1);
 
 	std::ostream& operator<< (std::ostream& stream, const Vector& vector);
 }

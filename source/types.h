@@ -31,7 +31,7 @@ namespace LibRayMarching
 
 	struct MarcheResult
 	{
-		Material* hit;
+		Material* material;
 		Vector position;
 		Vector normal;
 		double distance;
