@@ -20,49 +20,70 @@ import math
 from LibRayMarching import *
 from PIL import Image
 
+class RayMarching:
+
+	def __init__(self, width, height):
+		self.Wrapper = LibRayMarchingWrapper("../build/libraymarching");
+		major, minor, micro = self.Wrapper.GetLibraryVersion();
+		print("LibRayMarching version: {:d}.{:d}.{:d}".format(major, minor, micro));
+
+		self.Scene = self.Wrapper.CreateRayMarching();
+		print("Set size")
+		self.Scene.SetScreenSize(width, height);
+		self.Width = width;
+		self.Height = height;
+
+		print("Set viewport")
+		self.Scene.SetViewport(
+			LibRayMarchingVector(x = 0, y = 0, z = 1),
+			LibRayMarchingVector(x = 0, y = 1, z = 0),
+			LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
+
+	def BuildScene(self):
+		print ("Create light")
+		self.Scene.AddLight(LibRayMarchingVector(0, 5, 10), LibRayMarchingVector(1, 1, 1));
+		print ("Create sphere")
+		self.Sphere = self.Wrapper.CreateSphere(1);
+		print ("Set material")
+		self.Sphere.SetMaterial(LibRayMarchingMaterial(
+			Red = 0.6, 
+			Ambient = 0.3,
+			Diffuse = 1,
+			Specular = 1,
+			SpecularAlpha = 15));
+		print ("Move sphere")
+		self.Sphere.Translate(LibRayMarchingVector(x = 0, y = 5, z = 1));
+		print ("Add sphere")
+		self.Scene.AddPrimitive(self.Sphere);
+
+	def RenderPixel(self):
+		print ("Render scene")
+		self.Scene.RenderPixel(150, 17);
+
+
+	def Render(self):
+		print ("Render scene")
+		self.Scene.RenderScene();
+
+		print ("Get buffer")
+		color_buffer = self.Scene.GetColorBuffer();
+		print ("Buffer length " + str(len(color_buffer)))
+
+		img = Image.new('RGB', (self.Width, self.Height))
+		pixels = img.load()
+		for i in range(img.size[0]):    # for every col:
+			for j in range(img.size[1]):    # For every row
+				color = color_buffer[i + j * img.size[0]];
+				# print color;    		
+				pixels[i,j] = ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF) # set the colour accordingly
+		#img.save('ray_marching.png')
+		img.show()
+
 def main():
-	wrapper = LibRayMarchingWrapper("../build/libraymarching");
+	RM = RayMarching(300, 200);
+	RM.BuildScene();
+	RM.Render();
 	
-	major, minor, micro = wrapper.GetLibraryVersion();
-	print("LibRayMarching version: {:d}.{:d}.{:d}".format(major, minor, micro));
-	ray_marching = wrapper.CreateRayMarching();
-	print("Set size")
-	color = ray_marching.SetScreenSize(150, 100);
-	print("Set viewport")
-	color = ray_marching.SetViewport(
-		LibRayMarchingVector(x = 0, y = 0, z = 1),
-		LibRayMarchingVector(x = 0, y = 1, z = 0),
-		LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
-
-	print ("Create sphere")
-	sphere = wrapper.CreateSphere(1);
-	print ("Move sphere")
-	sphere.Translate(LibRayMarchingVector(x = 0, y = 5, z = 1));
-	print ("Add sphere")
-	ray_marching.AddPrimitive(sphere);
-
-	print("Render pixel")
-	color = ray_marching.RenderPixel(75, 50);
-	print("Color is " +  hex(color));
-	color = ray_marching.RenderPixel(0, 0);
-	print("Color is " +  hex(color));
-
-	print ("Render scene")
-	ray_marching.RenderScene();
-
-	print ("Get buffer")
-	color_buffer = ray_marching.GetColorBuffer();
-	print ("Buffer length " + str(len(color_buffer)))
-
-	img = Image.new('RGB', (150, 100))
-	pixels = img.load()
-	for i in range(img.size[0]):    # for every col:
-		for j in range(img.size[1]):    # For every row
-			color = color_buffer[i + j * img.size[0]];
-			# print color;    		
-			pixels[i,j] = ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF) # set the colour accordingly
-	#img.save('ray_marching.png')
-	img.show()
 
 if __name__ == "__main__":
 	try:
