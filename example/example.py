@@ -35,30 +35,68 @@ class RayMarching:
 
 		print("Set viewport")
 		self.Scene.SetViewport(
-			LibRayMarchingVector(x = 0, y = 0, z = 1),
-			LibRayMarchingVector(x = 0, y = 1, z = 0),
+			LibRayMarchingVector(x = 0, y = -10, z = 3),
+			LibRayMarchingVector(x = 0, y = 1, z = -0.2),
 			LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
 
 	def BuildScene(self):
 		print ("Create light")
-		self.Scene.AddLight(LibRayMarchingVector(0, 5, 10), LibRayMarchingVector(1, 1, 1));
+		self.Scene.AddLight(LibRayMarchingVector(0, -2, 15), LibRayMarchingVector(1, 1, 1));
 		print ("Create sphere")
-		self.Sphere = self.Wrapper.CreateSphere(1);
+		Sphere = self.Wrapper.CreateSphere(1);
 		print ("Set material")
-		self.Sphere.SetMaterial(LibRayMarchingMaterial(
+		Sphere.SetMaterial(LibRayMarchingMaterial(
 			Red = 0.6, 
 			Ambient = 0.3,
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
 		print ("Move sphere")
-		self.Sphere.Translate(LibRayMarchingVector(x = 0, y = 5, z = 1));
+		Sphere.Translate(LibRayMarchingVector(x = 1.5, y = 0, z = 1));
 		print ("Add sphere")
-		self.Scene.AddPrimitive(self.Sphere);
+		self.Scene.AddPrimitive(Sphere);
+
+		Box = self.Wrapper.CreateBox(
+			LibRayMarchingVector(x = 1, y = 1, z = 1)
+		);
+		Box.SetMaterial(LibRayMarchingMaterial(
+			Blue = 0.6,
+			Ambient = 0.3,
+			Diffuse = 1,
+			Specular = 1,
+			SpecularAlpha = 15));
+		Box.Translate(LibRayMarchingVector(x = -1.5, y = 0, z = 1));
+		self.Scene.AddPrimitive(Box);
+
+		Capsule = self.Wrapper.CreateCapsule(
+			0.5,
+			LibRayMarchingVector(x = 0, y = -1.5, z = 0.5),
+			LibRayMarchingVector(x = 0.7, y = -1.5, z = 1)
+		);
+		Capsule.SetMaterial(LibRayMarchingMaterial(
+			Green = 0.6,
+			Ambient = 0.3,
+			Diffuse = 1,
+			Specular = 1,
+			SpecularAlpha = 15));
+		self.Scene.AddPrimitive(Capsule);
+
+		Plane = self.Wrapper.CreatePlane(
+			LibRayMarchingVector(x = 0, y = 0, z = 0),
+			LibRayMarchingVector(x = 0, y = 0, z = 1)
+		);
+		Plane.SetMaterial(LibRayMarchingMaterial(
+			Red = 0.2, Green = 0.2, Blue = 0.2,
+			Ambient = 0.3,
+			Diffuse = 1,
+			Specular = 1,
+			SpecularAlpha = 15));
+		self.Scene.AddPrimitive(Plane);
 
 	def RenderPixel(self):
 		print ("Render scene")
-		self.Scene.RenderPixel(150, 17);
+		Pixel = self.Scene.RenderPixel(150, 90);
+		print ("Pixelcolor is " + str(Pixel))
 
 
 	def Render(self):
