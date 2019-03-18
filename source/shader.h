@@ -1,10 +1,7 @@
 #pragma once
 
-#include <vector>
-#include "libraymarching_primitive.hpp"
-#include "vector.h"
+#include "primitives.h"
 #include "camera.h"
-#include "types.h"
 
 namespace LibRayMarching
 {
@@ -19,7 +16,7 @@ namespace LibRayMarching
 
 			Camera m_Camera;
 			std::vector<Light> m_Lights;
-			std::vector<Impl::CLibRayMarchingPrimitive*> m_Primitives;
+			std::vector<PrimitivePtr> m_Primitives;
 
 			int m_MaxIteration = 300;
 			double m_MaxDistance = 100;
@@ -48,8 +45,8 @@ namespace LibRayMarching
 			Camera* GetCamera() { return &m_Camera; };
 			Lightning* GetLightning() { return &m_Lightning; };
 
-			void AddPrimitive(Impl::CLibRayMarchingPrimitive* p) { m_Primitives.push_back(p); };
-			Impl::CLibRayMarchingPrimitive* GetPrimitive(int index) { return m_Primitives.at(index); };
+			void AddPrimitive(PrimitivePtr p) { m_Primitives.push_back(p); };
+			PrimitivePtr GetPrimitive(int index) { return m_Primitives.at(index); };
 			int GetPrimitiveCount() { return m_Primitives.size(); };
 			void DeletePrimitive(int index){ m_Primitives.erase(m_Primitives.begin() + index); };
 			

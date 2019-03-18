@@ -26,6 +26,8 @@ namespace LibRayMarching
 		Vector operator-(const double& val) const;
 		Vector operator*(const Vector& vec) const;
 		Vector operator*(const double& val) const;
+		Vector operator/(const Vector& vec) const;
+		Vector operator/(const double& val) const;
 
 		Vector operator+=(const Vector& vec);
 		Vector operator+=(const double& val);
@@ -33,6 +35,8 @@ namespace LibRayMarching
 		Vector operator-=(const double& val);
 		Vector operator*=(const Vector& vec);
 		Vector operator*=(const double& val);
+		Vector operator/=(const Vector& vec);
+		Vector operator/=(const double& val);
 
 		double length() const;
 		double lengthSquare() const;

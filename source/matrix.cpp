@@ -155,3 +155,10 @@ Matrix LibRayMarching::MatrixScale(const double& scale)
 	result.field[10] = scale;
 	return result;
 }
+
+Matrix LibRayMarching::MatrixInverse(const Matrix& matrix)
+{
+	Matrix result;
+	// TODO
+	return result;
+}

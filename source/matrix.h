@@ -26,4 +26,5 @@ namespace LibRayMarching
 	Matrix MatrixTranslate(const Vector& translation);
 	Matrix MatrixScale(const Vector& scale);
 	Matrix MatrixScale(const double& scale);
+	Matrix MatrixInverse(const Matrix& matrix);
 }

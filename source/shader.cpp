@@ -1,13 +1,13 @@
 #include <iostream>
 #include <cmath>
 #include "shader.h"
-#include "libraymarching_primitive.hpp"
+#include "primitives.h"
 
 using namespace LibRayMarching;
 
 Shader::Shader()
 {
-	m_Lightning.background = Vector(0.2, 0.2, 0.2);
+	m_Lightning.background = Vector(0, 0, 0);
 	m_Lightning.soft_shadow = 50;
 	m_Lightning.minimal_shadow = 0.5;
 	m_Lightning.oversampling = 1;
@@ -92,10 +92,12 @@ double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult
 double Shader::GetDistance(const Vector& position, MarcheResult& result)
 {
 	double minDist = m_MaxDistance;
+	//std::cout << "get distance " << std::endl;
 	for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 	{		
-		Impl::CLibRayMarchingPrimitive* primitive = *p;
-		double distance = primitive->DistanceTo(position);
+		PrimitivePtr primitive = *p;
+		double distance = primitive->SignedDistance(position);
+		//std::cout << " dist is " << distance << std::endl;
 		if (distance < minDist)
 		{
 			minDist = distance;

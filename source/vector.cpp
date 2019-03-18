@@ -55,6 +55,16 @@ Vector Vector::operator*(const double& val) const
 	return Vector(x*val, y*val, z*val);
 }
 
+Vector Vector::operator/(const Vector& vec) const
+{
+	return Vector(x/vec.x, y/vec.y, z/vec.z);
+}
+
+Vector Vector::operator/(const double& val) const
+{
+	return Vector(x/val, y/val, z/val);
+}
+
 Vector Vector::operator+=(const Vector& vec)
 {
 	x += vec.x;
@@ -100,6 +110,22 @@ Vector Vector::operator*=(const double& val)
 	x *= val;
 	y *= val;
 	z *= val;
+	return *this;
+}
+
+Vector Vector::operator/=(const Vector& vec)
+{
+	x /= vec.x;
+	y /= vec.y;
+	z /= vec.z;
+	return *this;
+}
+
+Vector Vector::operator/=(const double& val)
+{
+	x /= val;
+	y /= val;
+	z /= val;
 	return *this;
 }
 
