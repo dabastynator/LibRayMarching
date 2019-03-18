@@ -49,20 +49,29 @@ ILibRayMarchingRayMarching * CLibRayMarchingWrapper::CreateRayMarching ()
 
 ILibRayMarchingSphere * CLibRayMarchingWrapper::CreateSphere (const LibRayMarching_double dRadius)
 {
-	return new CLibRayMarchingSphere(dRadius);
+	SpherePtr sphere (new Sphere(dRadius));
+	return new CLibRayMarchingSphere(sphere);
 }
 
 ILibRayMarchingCapsule * CLibRayMarchingWrapper::CreateCapsule (const LibRayMarching_double dRadius, const sLibRayMarchingVector Point1, const sLibRayMarchingVector Point2)
 {
-	return new CLibRayMarchingCapsule();
+	CapsulePtr capsule (new Capsule(dRadius));
+	capsule->SetPoint1(LibVecToVector(Point1));
+	capsule->SetPoint2(LibVecToVector(Point2));
+	return new CLibRayMarchingCapsule(capsule);
 }
 
 ILibRayMarchingBox * CLibRayMarchingWrapper::CreateBox (const sLibRayMarchingVector Dimensions)
 {
-	return new CLibRayMarchingBox();
+	BoxPtr box (new Box());
+	box->SetDimensions(LibVecToVector(Dimensions));
+	return new CLibRayMarchingBox(box);
 }
 
 ILibRayMarchingPlane * CLibRayMarchingWrapper::CreatePlane (const sLibRayMarchingVector Origin, const sLibRayMarchingVector Normal)
 {
-	return new CLibRayMarchingPlane();
+	PlanePtr plane (new Plane());
+	plane->SetNormal(LibVecToVector(Normal));
+	plane->Translate(LibVecToVector(Origin));
+	return new CLibRayMarchingPlane(plane);
 }

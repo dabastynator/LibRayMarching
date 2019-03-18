@@ -11,6 +11,10 @@ Abstract: This is a stub class definition of CLibRayMarchingRayMarching
 #include "libraymarching_raymarching.hpp"
 #include "libraymarching_interfaceexception.hpp"
 #include "libraymarching_utils.hpp"
+#include "libraymarching_box.hpp"
+#include "libraymarching_plane.hpp"
+#include "libraymarching_sphere.hpp"
+#include "libraymarching_capsule.hpp"
 #include "vector.h"
 
 // Include custom headers here.
@@ -67,13 +71,36 @@ LibRayMarching_uint32 CLibRayMarchingRayMarching::GetPrimitiveCount ()
 
 ILibRayMarchingPrimitive * CLibRayMarchingRayMarching::GetPrimitive (const LibRayMarching_uint32 nIndex)
 {
-	return m_Shader.GetPrimitive(nIndex);
+	PrimitivePtr primitive = m_Shader.GetPrimitive(nIndex);
+	switch(primitive->GetType()){
+		case Primitive::Type::ptBox:
+		{
+			BoxPtr box( std::dynamic_pointer_cast<Box> (primitive) );
+			return new CLibRayMarchingBox(box);
+		}
+		case Primitive::Type::ptSphere:
+		{
+			SpherePtr sphere( std::dynamic_pointer_cast<Sphere> (primitive) );
+			return new CLibRayMarchingSphere(sphere);
+		}
+		case Primitive::Type::ptPlane:
+		{
+			PlanePtr plane( std::dynamic_pointer_cast<Plane> (primitive) );
+			return new CLibRayMarchingPlane(plane);
+		}
+		case Primitive::Type::ptCapsule:
+		{
+			CapsulePtr capsule( std::dynamic_pointer_cast<Capsule> (primitive) );
+			return new CLibRayMarchingCapsule(capsule);
+		}
+	}
+	throw new ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDPARAM);
 }
 
 void CLibRayMarchingRayMarching::AddPrimitive (ILibRayMarchingPrimitive* pPrimitive)
 {
 	CLibRayMarchingPrimitive* pPrimitiveImpl = dynamic_cast < CLibRayMarchingPrimitive* >(pPrimitive);
-	m_Shader.AddPrimitive(pPrimitiveImpl);
+	m_Shader.AddPrimitive(pPrimitiveImpl->GetPrimitive());
 }
 
 void CLibRayMarchingRayMarching::RemovePrimitive (const LibRayMarching_uint32 nIndex)

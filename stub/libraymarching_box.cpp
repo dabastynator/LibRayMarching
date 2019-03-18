@@ -21,18 +21,18 @@ using namespace LibRayMarching::Impl;
  Class definition of CLibRayMarchingBox 
 **************************************************************************************************************************/
 
+CLibRayMarchingBox::CLibRayMarchingBox(BoxPtr box):
+	CLibRayMarchingPrimitive(box), m_Box(box)
+{
+
+}
+
 sLibRayMarchingVector CLibRayMarchingBox::GetDimensions ()
 {
-	return VectorToLibVec(m_Dimension);
+	return VectorToLibVec(m_Box->GetDimensions());
 }
 
 void CLibRayMarchingBox::SetDimensions (const sLibRayMarchingVector Dimensions)
 {
-	m_Dimension = LibVecToVector(Dimensions);
-}
-
-double CLibRayMarchingBox::DistanceTo(Vector vPoint) const
-{
-	Vector p = m_ModelToWorld * vPoint;
-	return 0;
+	m_Box->SetDimensions(LibVecToVector(Dimensions));
 }

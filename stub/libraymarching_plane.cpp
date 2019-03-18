@@ -21,18 +21,18 @@ using namespace LibRayMarching::Impl;
  Class definition of CLibRayMarchingPlane 
 **************************************************************************************************************************/
 
+CLibRayMarchingPlane::CLibRayMarchingPlane(PlanePtr plane):
+	CLibRayMarchingPrimitive(plane), m_Plane(plane)
+{
+
+}
+
 sLibRayMarchingVector CLibRayMarchingPlane::GetNormal ()
 {
-	return VectorToLibVec(m_Normal);
+	return VectorToLibVec(m_Plane->GetNormal());
 }
 
 void CLibRayMarchingPlane::SetNormal (const sLibRayMarchingVector Normal)
 {
-	m_Normal = LibVecToVector(Normal);
-}
-
-double CLibRayMarchingPlane::DistanceTo(Vector vPoint) const
-{
-	Vector p = m_ModelToWorld * vPoint;
-	return std::abs(p.dot(m_Normal));
+	m_Plane->SetNormal(LibVecToVector(Normal));
 }

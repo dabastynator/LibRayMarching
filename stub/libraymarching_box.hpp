@@ -16,11 +16,11 @@ Abstract: This is the class declaration of CLibRayMarchingBox
 
 // Parent classes
 #include "libraymarching_primitive.hpp"
-#include "vector.h"
 #pragma warning( push)
 #pragma warning( disable : 4250)
 
 // Include custom headers here.
+#include "primitives.h"
 
 
 namespace LibRayMarching {
@@ -43,7 +43,7 @@ protected:
 	/**
 	* Put protected members here.
 	*/
-	Vector m_Dimension;
+	BoxPtr m_Box;
 
 public:
 
@@ -56,11 +56,11 @@ public:
 	* Public member functions to implement.
 	*/
 
+	CLibRayMarchingBox(BoxPtr box);
+
 	sLibRayMarchingVector GetDimensions ();
 
 	void SetDimensions (const sLibRayMarchingVector Dimensions);
-
-	double DistanceTo(Vector vPoint) const;
 
 };
 

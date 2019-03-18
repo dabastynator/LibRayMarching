@@ -12,6 +12,8 @@ Abstract: This is the class declaration of CLibRayMarchingPrimitive
 #ifndef __LIBRAYMARCHING_LIBRAYMARCHINGPRIMITIVE
 #define __LIBRAYMARCHING_LIBRAYMARCHINGPRIMITIVE
 
+#include <memory>
+
 #include "libraymarching_interfaces.hpp"
 #include "libraymarching_baseclass.hpp"
 #include "libraymarching_utils.hpp"
@@ -19,6 +21,7 @@ Abstract: This is the class declaration of CLibRayMarchingPrimitive
 #include "vector.h"
 #include "types.h"
 #include "matrix.h"
+#include "primitives.h"
 
 // Include custom headers here.
 
@@ -44,9 +47,7 @@ protected:
 	* Put protected members here.
 	*/
 
-	Matrix m_ModelToWorld;
-
-	Material m_Material;
+	PrimitivePtr m_Primitive;
 
 public:
 
@@ -57,7 +58,9 @@ public:
 
 	/**
 	* Public member functions to implement.
-	*/	
+	*/
+
+	CLibRayMarchingPrimitive(PrimitivePtr sPrimitive);
 
 	void IdentityPosition ();
 
@@ -69,11 +72,9 @@ public:
 
 	void SetMaterial (const sLibRayMarchingMaterial Material);
 
-	Material* GetMaterial() { return &m_Material; };
+	Material* GetMaterial() { return m_Primitive->GetMaterial(); };
 
-	virtual double DistanceTo(Vector vPoint) const = 0;
-
-	virtual void Initialize() {};
+	PrimitivePtr GetPrimitive() { return m_Primitive; };
 
 };
 

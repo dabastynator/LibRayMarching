@@ -20,27 +20,33 @@ using namespace LibRayMarching::Impl;
  Class definition of CLibRayMarchingPrimitive 
 **************************************************************************************************************************/
 
+CLibRayMarchingPrimitive::CLibRayMarchingPrimitive(PrimitivePtr sPrimitive):
+	m_Primitive(sPrimitive)
+{
+
+}
+
 void CLibRayMarchingPrimitive::IdentityPosition ()
 {
-	m_ModelToWorld = Matrix();
+	m_Primitive->IdentityPosition();
 }
 
 void CLibRayMarchingPrimitive::Translate (const sLibRayMarchingVector Translation)
 {
-	m_ModelToWorld *= MatrixTranslate(LibVecToVector(Translation));
+	m_Primitive->Translate(LibVecToVector(Translation));
 }
 
 void CLibRayMarchingPrimitive::Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian)
 {
-	m_ModelToWorld *= MatrixRotate(LibVecToVector(Axis), dRadian);
+	m_Primitive->Rotate(LibVecToVector(Axis), dRadian);
 }
 
 void CLibRayMarchingPrimitive::Scale (const sLibRayMarchingVector Scale)
 {
-	m_ModelToWorld *= MatrixScale(LibVecToVector(Scale));
+	m_Primitive->Scale(LibVecToVector(Scale));
 }
 
 void CLibRayMarchingPrimitive::SetMaterial (const sLibRayMarchingMaterial Material)
 {
-	m_Material = LibMaterialToMaterial(Material);
+	m_Primitive->SetMaterial(LibMaterialToMaterial(Material));
 }

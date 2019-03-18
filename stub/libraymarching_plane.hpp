@@ -19,6 +19,7 @@ Abstract: This is the class declaration of CLibRayMarchingPlane
 #pragma warning( disable : 4250)
 
 // Include custom headers here.
+#include "primitives.h"
 
 
 namespace LibRayMarching {
@@ -42,8 +43,7 @@ protected:
 	* Put protected members here.
 	*/
 
-	Vector m_Origin;
-	Vector m_Normal;
+	std::shared_ptr<Plane> m_Plane;
 
 public:
 
@@ -56,12 +56,11 @@ public:
 	* Public member functions to implement.
 	*/
 
+	CLibRayMarchingPlane(PlanePtr plane);
+
 	sLibRayMarchingVector GetNormal ();
 
 	void SetNormal (const sLibRayMarchingVector Normal);
-
-	double DistanceTo(Vector vPoint) const;
-
 };
 
 } // namespace Impl

@@ -19,7 +19,7 @@ Abstract: This is the class declaration of CLibRayMarchingCapsule
 #pragma warning( disable : 4250)
 
 // Include custom headers here.
-
+#include "primitives.h"
 
 namespace LibRayMarching {
 namespace Impl {
@@ -41,10 +41,7 @@ protected:
 	/**
 	* Put protected members here.
 	*/
-
-	Vector m_Point1;
-	Vector m_Point2;
-	double m_Radius;
+	std::shared_ptr<Capsule> m_Capsule;
 
 public:
 
@@ -56,6 +53,7 @@ public:
 	/**
 	* Public member functions to implement.
 	*/
+	CLibRayMarchingCapsule(CapsulePtr capsule);
 
 	LibRayMarching_double GetRadius ();
 
@@ -68,9 +66,6 @@ public:
 	sLibRayMarchingVector GetPoint2 ();
 
 	void SetPoint2 (const sLibRayMarchingVector Point2);
-
-	double DistanceTo(Vector vPoint) const;
-
 };
 
 } // namespace Impl

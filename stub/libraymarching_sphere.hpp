@@ -20,7 +20,8 @@ Abstract: This is the class declaration of CLibRayMarchingSphere
 #pragma warning( disable : 4250)
 
 // Include custom headers here.
-
+#include <memory>
+#include "primitives.h"
 
 namespace LibRayMarching {
 namespace Impl {
@@ -42,10 +43,7 @@ protected:
 	/**
 	* Put protected members here.
 	*/
-
-	double m_Radius;
-
-	Vector m_Center;
+	std::shared_ptr<Sphere> m_Sphere;
 
 public:
 
@@ -58,15 +56,13 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingSphere(double radius): m_Radius(radius) {};
+	CLibRayMarchingSphere(SpherePtr sphere);
 
 	LibRayMarching_double GetRadius ();
 
 	void SetRadius (const LibRayMarching_double dRadius);
 
 	void Initialize();
-
-	double DistanceTo(Vector vPoint) const;
 
 };
 
