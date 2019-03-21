@@ -126,6 +126,11 @@ Matrix LibRayMarching::MatrixRotate(const Vector& axis, const double& angle_radi
 	mx.field[8]  = axis.z * axis.x * (1 - c) - axis.y * s;
 	mx.field[9]  = axis.z * axis.y * (1 - c) + axis.x * s;
 	mx.field[10] = c + axis.z * axis.z * (1 - c);
+	mx.field[11]  = 0;
+	mx.field[12]  = 0;
+	mx.field[13]  = 0;
+	mx.field[14]  = 0;
+	mx.field[15]  = 1;
 	return mx;
 }
 
@@ -161,4 +166,14 @@ Matrix LibRayMarching::MatrixInverse(const Matrix& matrix)
 	Matrix result;
 	// TODO
 	return result;
+}
+
+std::ostream& LibRayMarching::operator<<(std::ostream& stream, const Matrix& matrix)
+{
+	for (int i=0; i < 4; i++)
+	{
+		stream << "(" << matrix.field[0 + 4*i] << ", " << matrix.field[1 + 4*i] << ", "
+			 << matrix.field[2 + 4*i] << ", " << matrix.field[3 + 4*i] << ")" << std::endl;
+	}
+	return stream;
 }

@@ -22,7 +22,7 @@ namespace LibRayMarching
 
 		public:
 
-			enum Type {ptSphere, ptBox, ptPlane, ptCapsule};
+			enum Type {ptSphere, ptBox, ptPlane, ptCapsule, ptCylinder, ptTorus};
 
 			void IdentityPosition ();
 
@@ -156,5 +156,64 @@ namespace LibRayMarching
 	};
 
 	typedef std::shared_ptr<Plane> PlanePtr;
+
+
+	class Cylinder: public virtual Primitive
+	{
+
+		private:
+
+			double m_Radius;
+
+			double m_Height;
+
+		public:
+
+			double GetRadius () { return m_Radius; };
+
+			void SetRadius(double radius) {m_Radius = radius; };
+
+			double GetHeight () { return m_Height; };
+
+			void SetHeight(double height) {m_Height = height; };
+
+			Type GetType () { return Type::ptCylinder; };
+
+			void Initialize();
+
+			double SignedDistance (const Vector& vPoint);
+
+	};
+
+	typedef std::shared_ptr<Cylinder> CylinderPtr;
+
+	class Torus: public virtual Primitive
+	{
+
+		private:
+
+			double m_RadiusBig;
+
+			double m_RadiusSmall;
+
+		public:
+
+			double GetRadiusBig () { return m_RadiusBig; };
+
+			void SetRadiusBig(double radiusBig) {m_RadiusBig = radiusBig; };
+
+			double GetRadiusSmall () { return m_RadiusSmall; };
+
+			void SetRadiusSmall(double radiusSmall) {m_RadiusSmall = radiusSmall; };
+			
+			Type GetType () { return Type::ptTorus; };
+
+			void Initialize();
+
+			double SignedDistance (const Vector& vPoint);
+
+	};
+
+	typedef std::shared_ptr<Torus> TorusPtr;
 
 }

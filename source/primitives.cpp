@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "primitives.h"
 
 using namespace LibRayMarching;
@@ -88,4 +90,38 @@ double Plane::SignedDistance (const Vector& vPoint)
 {
 	Vector p = vPoint - m_Origin;
 	return std::abs(p.dot(m_TransformedNormal));
+}
+
+void Cylinder::Initialize()
+{
+
+}
+
+double Cylinder::SignedDistance (const Vector& vPoint)
+{
+	Vector p = m_Inverse * vPoint;
+	double distCircle = sqrt(p.x * p.x + p.y * p.y) - m_Radius;
+	double distHeight = std::abs(p.z) - m_Height / 2;
+	if (distCircle < 0 && distHeight < 0)
+	{
+		return std::max(distCircle, distHeight);
+	} else 
+	{
+		distCircle = std::max(distCircle, 0.);
+		distHeight = std::max(distHeight, 0.);
+		return sqrt(distCircle * distCircle + distHeight * distHeight);
+	}
+}
+
+void Torus::Initialize()
+{
+
+}
+
+double Torus::SignedDistance (const Vector& vPoint)
+{
+	Vector p = m_Inverse * vPoint;
+	double distBig = sqrt(p.x * p.x + p.y * p.y) - m_RadiusBig;
+	double dist = sqrt(distBig * distBig  + p.z * p.z);
+	return dist - m_RadiusSmall;
 }

@@ -27,4 +27,6 @@ namespace LibRayMarching
 	Matrix MatrixScale(const Vector& scale);
 	Matrix MatrixScale(const double& scale);
 	Matrix MatrixInverse(const Matrix& matrix);
+
+	std::ostream& operator<< (std::ostream& stream, const Matrix& matrix);
 }
