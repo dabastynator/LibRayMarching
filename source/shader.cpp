@@ -9,11 +9,11 @@ Shader::Shader()
 {
 	m_Lightning.background = Vector(0, 0, 0);
 	m_Lightning.soft_shadow = 50;
-	m_Lightning.minimal_shadow = 0.5;
+	m_Lightning.minimal_shadow = 0.1;
 	m_Lightning.oversampling = 1;
 }
 
-Vector Shader::CalculateColor(const Vector& position, const Vector& ray, int bouncing)
+Vector Shader::PhongShading(const Vector& position, const Vector& ray)
 {
 	MarcheResult result;
 	Trace(position, ray, result);
@@ -23,6 +23,7 @@ Vector Shader::CalculateColor(const Vector& position, const Vector& ray, int bou
 		Vector colDiffuse(0, 0, 0);
 		Vector colSpecular(0, 0, 0);
 		Vector reflectedRay = ray - result.normal * 2 * result.normal.dot(ray);
+		Vector hitPosOffset = result.position + result.normal * m_Epsilon;
 		for (int i = 0; i < m_Lights.size(); i++)
 		{
 			Light light = m_Lights[i];
@@ -30,9 +31,15 @@ Vector Shader::CalculateColor(const Vector& position, const Vector& ray, int bou
 			double toLightDot = toLight.dot(result.normal);
 			if (toLightDot > 0)
 			{
-				colDiffuse += result.material->color * (toLightDot * result.material->diffuse);
+				MarcheResult resultLigth;
+				RayMarche(hitPosOffset, toLight, resultLigth);
 
-				double specFactor = result.material->specular * std::pow(reflectedRay.dot(toLight), result.material->specular_alpha);
+				double diffFactor = toLightDot * result.material->diffuse * resultLigth.shadow_factor;
+				colDiffuse += result.material->color * diffFactor;
+
+				double specFactor = result.material->specular * 
+					std::pow(reflectedRay.dot(toLight), result.material->specular_alpha) * 
+					resultLigth.shadow_factor;
 				if (specFactor > 0)
 					colSpecular += light.color * specFactor;
 			}
@@ -116,7 +123,7 @@ unsigned int Shader::RenderPixel(int x, int y)
 	for (int i = 0; i < oversampling; i++) {
 		double offset = i / (double) oversampling;
 		m_Camera.CalculateRay(x + offset, y + offset, pos, ray);		
-		color += CalculateColor(pos, ray, m_Bouncing);
+		color += PhongShading(pos, ray);
 	}
 	color *= 255. / oversampling;
 	int red = EnsureRange((int)color.x, 0, 255);

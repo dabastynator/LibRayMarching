@@ -29,8 +29,8 @@ namespace LibRayMarching
 			*  Calculation methods
 			*/
 
-			// Calculate color along ray, allow bouncing up to given limit
-			Vector CalculateColor(const Vector& position, const Vector& ray, int bouncing);
+			// Calculate color along ray by phong shading
+			Vector PhongShading(const Vector& position, const Vector& ray);
 			// Trace along given ray and calculate normal
 			double Trace(const Vector& position, const Vector& ray, MarcheResult& result);
 			// Ray marche along given ray and set result
