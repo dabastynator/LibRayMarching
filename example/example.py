@@ -19,6 +19,7 @@ import sys
 import math
 from LibRayMarching import *
 from PIL import Image
+import math
 
 class RayMarching:
 
@@ -35,27 +36,26 @@ class RayMarching:
 
 		print("Set viewport")
 		self.Scene.SetViewport(
-			LibRayMarchingVector(x = 0, y = -10, z = 3),
-			LibRayMarchingVector(x = 0, y = 1, z = -0.2),
+			LibRayMarchingVector(x = 4.5, y = -14, z = 4),
+			LibRayMarchingVector(x = -0.2, y = 1, z = -0.2),
 			LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
 
 	def BuildScene(self):
 		print ("Create light")
-		self.Scene.AddLight(LibRayMarchingVector(0, -2, 15), LibRayMarchingVector(1, 1, 1));
+		self.Scene.AddLight(LibRayMarchingVector(3, 3, 25), LibRayMarchingVector(1, 1, 1));
+
 		print ("Create sphere")
 		Sphere = self.Wrapper.CreateSphere(1);
-		print ("Set material")
 		Sphere.SetMaterial(LibRayMarchingMaterial(
 			Red = 0.6, 
 			Ambient = 0.3,
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
-		print ("Move sphere")
-		Sphere.Translate(LibRayMarchingVector(x = 1.5, y = 0, z = 1));
-		print ("Add sphere")
+		Sphere.Translate(LibRayMarchingVector(x = 0, y = 0, z = 2));
 		self.Scene.AddPrimitive(Sphere);
 
+		print ("Create box")
 		Box = self.Wrapper.CreateBox(
 			LibRayMarchingVector(x = 1, y = 1, z = 1)
 		);
@@ -65,13 +65,14 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
-		Box.Translate(LibRayMarchingVector(x = -1.5, y = 0, z = 1));
+		Box.Translate(LibRayMarchingVector(x = 3, y = 0, z = 2));
 		self.Scene.AddPrimitive(Box);
 
+		print ("Create capsule")
 		Capsule = self.Wrapper.CreateCapsule(
 			0.5,
-			LibRayMarchingVector(x = 0, y = -1.5, z = 0.5),
-			LibRayMarchingVector(x = 0.7, y = -1.5, z = 1)
+			LibRayMarchingVector(x = -0.5, y = -0.5, z = -0.5),
+			LibRayMarchingVector(x = 0.5, y = 0.5, z = 0.5)
 		);
 		Capsule.SetMaterial(LibRayMarchingMaterial(
 			Green = 0.6,
@@ -79,8 +80,33 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
+		Capsule.Translate(LibRayMarchingVector(x = 6, y = 0, z = 2));
 		self.Scene.AddPrimitive(Capsule);
 
+		print ("Create cylinder")
+		Cylinder = self.Wrapper.CreateCylinder(1, 2);
+		Cylinder.SetMaterial(LibRayMarchingMaterial(
+			Red = 0.6, Green = 0.6,
+			Ambient = 0.3,
+			Diffuse = 1,
+			Specular = 1,
+			SpecularAlpha = 15));
+		Cylinder.Translate(LibRayMarchingVector(x = 0, y = -3, z = 2));		
+		self.Scene.AddPrimitive(Cylinder);
+
+		print ("Create torus")
+		Torus = self.Wrapper.CreateTorus(0.7, 0.3);
+		Torus.SetMaterial(LibRayMarchingMaterial(
+			Blue = 0.6, Green = 0.6,
+			Ambient = 0.3,
+			Diffuse = 1,
+			Specular = 1,
+			SpecularAlpha = 15));
+		Torus.Rotate(LibRayMarchingVector(x = 1, y = 0, z = 0), math.pi/2);
+		Torus.Translate(LibRayMarchingVector(x = 3, y = -3, z = 2));		
+		self.Scene.AddPrimitive(Torus);
+
+		print ("Create pane")
 		Plane = self.Wrapper.CreatePlane(
 			LibRayMarchingVector(x = 0, y = 0, z = 0),
 			LibRayMarchingVector(x = 0, y = 0, z = 1)
