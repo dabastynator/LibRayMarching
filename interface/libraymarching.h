@@ -208,6 +208,86 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_box_getdimensions(Li
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_box_setdimensions(LibRayMarching_Box pBox, const sLibRayMarchingVector * pDimensions);
 
 /*************************************************************************************************************************
+ Class definition for Torus
+**************************************************************************************************************************/
+
+/**
+* Get the bigger outer radius
+*
+* @param[in] pTorus - Torus instance.
+* @param[out] pBigRadius - Bigger outer radius
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_torus_getbigradius(LibRayMarching_Torus pTorus, LibRayMarching_double * pBigRadius);
+
+/**
+* Set the bigger outer radius
+*
+* @param[in] pTorus - Torus instance.
+* @param[in] dBigRadius - Bigger outer radius
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_torus_setbigradius(LibRayMarching_Torus pTorus, LibRayMarching_double dBigRadius);
+
+/**
+* Get the smaller outer radius
+*
+* @param[in] pTorus - Torus instance.
+* @param[out] pSmallRadius - Smaller outer radius
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_torus_getsmallradius(LibRayMarching_Torus pTorus, LibRayMarching_double * pSmallRadius);
+
+/**
+* Set the smaller outer radius
+*
+* @param[in] pTorus - Torus instance.
+* @param[in] dSmallRadius - Smaller outer radius
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_torus_setsmallradius(LibRayMarching_Torus pTorus, LibRayMarching_double dSmallRadius);
+
+/*************************************************************************************************************************
+ Class definition for Cylinder
+**************************************************************************************************************************/
+
+/**
+* Get the radius
+*
+* @param[in] pCylinder - Cylinder instance.
+* @param[out] pRadius - radius
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_cylinder_getradius(LibRayMarching_Cylinder pCylinder, LibRayMarching_double * pRadius);
+
+/**
+* Set the radius
+*
+* @param[in] pCylinder - Cylinder instance.
+* @param[in] dRadius - radius
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_cylinder_setradius(LibRayMarching_Cylinder pCylinder, LibRayMarching_double dRadius);
+
+/**
+* Get the Height
+*
+* @param[in] pCylinder - Cylinder instance.
+* @param[out] pHeight - Height
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_cylinder_getheight(LibRayMarching_Cylinder pCylinder, LibRayMarching_double * pHeight);
+
+/**
+* Set the Height
+*
+* @param[in] pCylinder - Cylinder instance.
+* @param[in] dHeight - Height
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_cylinder_setheight(LibRayMarching_Cylinder pCylinder, LibRayMarching_double dHeight);
+
+/*************************************************************************************************************************
  Class definition for PrimitiveGroup
 **************************************************************************************************************************/
 
@@ -469,6 +549,26 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createbox(const sLib
 * @return error code or 0 (success)
 */
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createplane(const sLibRayMarchingVector * pOrigin, const sLibRayMarchingVector * pNormal, LibRayMarching_Plane * pPlane);
+
+/**
+* Create new cylinder
+*
+* @param[in] dRadius - Radius of the cylinder
+* @param[in] dHeight - Height of the cylinder
+* @param[out] pCylinder - New cylinder
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createcylinder(LibRayMarching_double dRadius, LibRayMarching_double dHeight, LibRayMarching_Cylinder * pCylinder);
+
+/**
+* Create new Torus
+*
+* @param[in] dBigRadius - Big Radius of the Torus
+* @param[in] dSmallRadius - Small Radius of the Torus
+* @param[out] pTorus - New Torus
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createtorus(LibRayMarching_double dBigRadius, LibRayMarching_double dSmallRadius, LibRayMarching_Torus * pTorus);
 
 }
 

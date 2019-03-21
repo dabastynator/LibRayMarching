@@ -34,6 +34,8 @@ class ILibRayMarchingSphere;
 class ILibRayMarchingCapsule;
 class ILibRayMarchingPlane;
 class ILibRayMarchingBox;
+class ILibRayMarchingTorus;
+class ILibRayMarchingCylinder;
 class ILibRayMarchingPrimitiveGroup;
 class ILibRayMarchingRayMarching;
 
@@ -212,6 +214,72 @@ public:
 	* @param[in] Dimensions - Size in x, y and z dimension
 	*/
 	virtual void SetDimensions (const sLibRayMarchingVector Dimensions) = 0;
+
+};
+
+
+/*************************************************************************************************************************
+ Class interface for LibRayMarchingTorus 
+**************************************************************************************************************************/
+
+class ILibRayMarchingTorus : public virtual ILibRayMarchingBaseClass, public virtual ILibRayMarchingPrimitive{
+public:
+	/**
+	* ITorus::GetBigRadius - Get the bigger outer radius
+	* @return Bigger outer radius
+	*/
+	virtual LibRayMarching_double GetBigRadius () = 0;
+
+	/**
+	* ITorus::SetBigRadius - Set the bigger outer radius
+	* @param[in] dBigRadius - Bigger outer radius
+	*/
+	virtual void SetBigRadius (const LibRayMarching_double dBigRadius) = 0;
+
+	/**
+	* ITorus::GetSmallRadius - Get the smaller outer radius
+	* @return Smaller outer radius
+	*/
+	virtual LibRayMarching_double GetSmallRadius () = 0;
+
+	/**
+	* ITorus::SetSmallRadius - Set the smaller outer radius
+	* @param[in] dSmallRadius - Smaller outer radius
+	*/
+	virtual void SetSmallRadius (const LibRayMarching_double dSmallRadius) = 0;
+
+};
+
+
+/*************************************************************************************************************************
+ Class interface for LibRayMarchingCylinder 
+**************************************************************************************************************************/
+
+class ILibRayMarchingCylinder : public virtual ILibRayMarchingBaseClass, public virtual ILibRayMarchingPrimitive{
+public:
+	/**
+	* ICylinder::GetRadius - Get the radius
+	* @return radius
+	*/
+	virtual LibRayMarching_double GetRadius () = 0;
+
+	/**
+	* ICylinder::SetRadius - Set the radius
+	* @param[in] dRadius - radius
+	*/
+	virtual void SetRadius (const LibRayMarching_double dRadius) = 0;
+
+	/**
+	* ICylinder::GetHeight - Get the Height
+	* @return Height
+	*/
+	virtual LibRayMarching_double GetHeight () = 0;
+
+	/**
+	* ICylinder::SetHeight - Set the Height
+	* @param[in] dHeight - Height
+	*/
+	virtual void SetHeight (const LibRayMarching_double dHeight) = 0;
 
 };
 
@@ -417,6 +485,22 @@ public:
 	* @return New plane
 	*/
 	static ILibRayMarchingPlane * CreatePlane (const sLibRayMarchingVector Origin, const sLibRayMarchingVector Normal);
+
+	/**
+	* Ilibraymarching::CreateCylinder - Create new cylinder
+	* @param[in] dRadius - Radius of the cylinder
+	* @param[in] dHeight - Height of the cylinder
+	* @return New cylinder
+	*/
+	static ILibRayMarchingCylinder * CreateCylinder (const LibRayMarching_double dRadius, const LibRayMarching_double dHeight);
+
+	/**
+	* Ilibraymarching::CreateTorus - Create new Torus
+	* @param[in] dBigRadius - Big Radius of the Torus
+	* @param[in] dSmallRadius - Small Radius of the Torus
+	* @return New Torus
+	*/
+	static ILibRayMarchingTorus * CreateTorus (const LibRayMarching_double dBigRadius, const LibRayMarching_double dSmallRadius);
 
 };
 

@@ -20,6 +20,8 @@ Interface version: 0.9.0
 #include "libraymarching_sphere.hpp"
 #include "libraymarching_capsule.hpp"
 #include "libraymarching_plane.hpp"
+#include "libraymarching_cylinder.hpp"
+#include "libraymarching_torus.hpp"
 #include "libraymarching_raymarching.hpp"
 
 using namespace LibRayMarching::Impl;
@@ -74,4 +76,20 @@ ILibRayMarchingPlane * CLibRayMarchingWrapper::CreatePlane (const sLibRayMarchin
 	plane->SetNormal(LibVecToVector(Normal));
 	plane->Translate(LibVecToVector(Origin));
 	return new CLibRayMarchingPlane(plane);
+}
+
+ILibRayMarchingCylinder * CLibRayMarchingWrapper::CreateCylinder (const LibRayMarching_double dRadius, const LibRayMarching_double dHeight)
+{
+	CylinderPtr cylinder (new Cylinder());
+	cylinder->SetRadius(dRadius);
+	cylinder->SetHeight(dHeight);
+	return new CLibRayMarchingCylinder(cylinder);
+}
+
+ILibRayMarchingTorus * CLibRayMarchingWrapper::CreateTorus (const LibRayMarching_double dBigRadius, const LibRayMarching_double dSmallRadius)
+{
+	TorusPtr torus (new Torus());
+	torus->SetRadiusBig(dBigRadius);
+	torus->SetRadiusSmall(dSmallRadius);
+	return new CLibRayMarchingTorus(torus);
 }

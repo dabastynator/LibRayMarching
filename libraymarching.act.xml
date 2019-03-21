@@ -124,6 +124,38 @@
 		</method>
 	</class>
 
+	<!-- Torus -->
+	<class name="Torus" parent="Primitive">
+		<method name="GetBigRadius" description="Get the bigger outer radius">
+			<param name="BigRadius" type="double" pass="return" description="Bigger outer radius" />
+		</method>
+		<method name="SetBigRadius" description="Set the bigger outer radius">
+			<param name="BigRadius" type="double" pass="in" description="Bigger outer radius" />
+		</method>
+		<method name="GetSmallRadius" description="Get the smaller outer radius">
+			<param name="SmallRadius" type="double" pass="return" description="Smaller outer radius" />
+		</method>
+		<method name="SetSmallRadius" description="Set the smaller outer radius">
+			<param name="SmallRadius" type="double" pass="in" description="Smaller outer radius" />
+		</method>
+	</class>
+
+	<!-- Cylinder -->
+	<class name="Cylinder" parent="Primitive">
+		<method name="GetRadius" description="Get the radius">
+			<param name="Radius" type="double" pass="return" description="radius" />
+		</method>
+		<method name="SetRadius" description="Set the radius">
+			<param name="Radius" type="double" pass="in" description="radius" />
+		</method>
+		<method name="GetHeight" description="Get the Height">
+			<param name="Height" type="double" pass="return" description="Height" />
+		</method>
+		<method name="SetHeight" description="Set the Height">
+			<param name="Height" type="double" pass="in" description="Height" />
+		</method>		
+	</class>
+
 	<!-- PrimitiveGroup -->
 	<class name="PrimitiveGroup" parent="Primitive">
 		<method name="GetPrimitiveCount" description="Get number of primitives">
@@ -245,6 +277,18 @@
 			<param name="Origin" type="struct" class="Vector" pass="in" description="Origin of the plane" />
 			<param name="Normal" type="struct" class="Vector" pass="in" description="Normal of the plane" />
 			<param name="Plane" type="handle" class="Plane" pass="return" description="New plane" />
+		</method>
+
+		<method name="CreateCylinder" description="Create new cylinder">
+			<param name="Radius" type="double" pass="in" description="Radius of the cylinder" />
+			<param name="Height" type="double" pass="in" description="Height of the cylinder" />
+			<param name="Cylinder" type="handle" class="Cylinder" pass="return" description="New cylinder" />
+		</method>
+
+		<method name="CreateTorus" description="Create new Torus">
+			<param name="BigRadius" type="double" pass="in" description="Big Radius of the Torus" />
+			<param name="SmallRadius" type="double" pass="in" description="Small Radius of the Torus" />
+			<param name="Torus" type="handle" class="Torus" pass="return" description="New Torus" />
 		</method>
 
 	</global>

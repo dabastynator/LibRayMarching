@@ -547,6 +547,238 @@ LibRayMarchingResult libraymarching_box_setdimensions (LibRayMarching_Box pBox, 
 
 
 /*************************************************************************************************************************
+ Class implementation for Torus
+**************************************************************************************************************************/
+LibRayMarchingResult libraymarching_torus_getbigradius (LibRayMarching_Torus pTorus, LibRayMarching_double * pBigRadius)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pTorus;
+
+	try {
+		if (pBigRadius == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingTorus* pITorus = dynamic_cast<ILibRayMarchingTorus*>(pIBaseClass);
+		if (!pITorus)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pBigRadius = pITorus->GetBigRadius();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_torus_setbigradius (LibRayMarching_Torus pTorus, LibRayMarching_double dBigRadius)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pTorus;
+
+	try {
+
+		ILibRayMarchingTorus* pITorus = dynamic_cast<ILibRayMarchingTorus*>(pIBaseClass);
+		if (!pITorus)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pITorus->SetBigRadius(dBigRadius);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_torus_getsmallradius (LibRayMarching_Torus pTorus, LibRayMarching_double * pSmallRadius)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pTorus;
+
+	try {
+		if (pSmallRadius == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingTorus* pITorus = dynamic_cast<ILibRayMarchingTorus*>(pIBaseClass);
+		if (!pITorus)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pSmallRadius = pITorus->GetSmallRadius();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_torus_setsmallradius (LibRayMarching_Torus pTorus, LibRayMarching_double dSmallRadius)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pTorus;
+
+	try {
+
+		ILibRayMarchingTorus* pITorus = dynamic_cast<ILibRayMarchingTorus*>(pIBaseClass);
+		if (!pITorus)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pITorus->SetSmallRadius(dSmallRadius);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+
+/*************************************************************************************************************************
+ Class implementation for Cylinder
+**************************************************************************************************************************/
+LibRayMarchingResult libraymarching_cylinder_getradius (LibRayMarching_Cylinder pCylinder, LibRayMarching_double * pRadius)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pCylinder;
+
+	try {
+		if (pRadius == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingCylinder* pICylinder = dynamic_cast<ILibRayMarchingCylinder*>(pIBaseClass);
+		if (!pICylinder)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pRadius = pICylinder->GetRadius();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_cylinder_setradius (LibRayMarching_Cylinder pCylinder, LibRayMarching_double dRadius)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pCylinder;
+
+	try {
+
+		ILibRayMarchingCylinder* pICylinder = dynamic_cast<ILibRayMarchingCylinder*>(pIBaseClass);
+		if (!pICylinder)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pICylinder->SetRadius(dRadius);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_cylinder_getheight (LibRayMarching_Cylinder pCylinder, LibRayMarching_double * pHeight)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pCylinder;
+
+	try {
+		if (pHeight == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingCylinder* pICylinder = dynamic_cast<ILibRayMarchingCylinder*>(pIBaseClass);
+		if (!pICylinder)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pHeight = pICylinder->GetHeight();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_cylinder_setheight (LibRayMarching_Cylinder pCylinder, LibRayMarching_double dHeight)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pCylinder;
+
+	try {
+
+		ILibRayMarchingCylinder* pICylinder = dynamic_cast<ILibRayMarchingCylinder*>(pIBaseClass);
+		if (!pICylinder)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pICylinder->SetHeight(dHeight);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+
+/*************************************************************************************************************************
  Class implementation for PrimitiveGroup
 **************************************************************************************************************************/
 LibRayMarchingResult libraymarching_primitivegroup_getprimitivecount (LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 * pCount)
@@ -1294,6 +1526,60 @@ LibRayMarchingResult libraymarching_createplane (const sLibRayMarchingVector * p
 		pBasePlane = CLibRayMarchingWrapper::CreatePlane(*pOrigin, *pNormal);
 
 		*pPlane = (ILibRayMarchingBaseClass*)(pBasePlane);
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_createcylinder (LibRayMarching_double dRadius, LibRayMarching_double dHeight, LibRayMarching_Cylinder * pCylinder)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = nullptr;
+
+	try {
+		if (pCylinder == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingBaseClass* pBaseCylinder(nullptr);
+
+		pBaseCylinder = CLibRayMarchingWrapper::CreateCylinder(dRadius, dHeight);
+
+		*pCylinder = (ILibRayMarchingBaseClass*)(pBaseCylinder);
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_createtorus (LibRayMarching_double dBigRadius, LibRayMarching_double dSmallRadius, LibRayMarching_Torus * pTorus)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = nullptr;
+
+	try {
+		if (pTorus == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingBaseClass* pBaseTorus(nullptr);
+
+		pBaseTorus = CLibRayMarchingWrapper::CreateTorus(dBigRadius, dSmallRadius);
+
+		*pTorus = (ILibRayMarchingBaseClass*)(pBaseTorus);
 
 		return LIBRAYMARCHING_SUCCESS;
 	}
