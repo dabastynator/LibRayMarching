@@ -27,6 +27,8 @@ Material LibRayMarching::LibMaterialToMaterial(const sLibRayMarchingMaterial& li
 	result.specular = libMaterial.m_Specular;
 	result.specular_alpha = libMaterial.m_SpecularAlpha;
 	result.reflection = libMaterial.m_Reflection;
+	result.transparency = libMaterial.m_Transparency;
+	result.refraction = libMaterial.m_Refraction;
 	return result;
 }
 
@@ -41,5 +43,7 @@ sLibRayMarchingMaterial LibRayMarching::MaterialToLibMaterial(const Material& Ma
 	result.m_Specular = Material.specular;
 	result.m_SpecularAlpha = Material.specular_alpha;
 	result.m_Reflection = Material.reflection;
+	result.m_Transparency = Material.transparency;
+	result.m_Refraction = Material.refraction;
 	return result;
 }

@@ -7,12 +7,12 @@
 namespace LibRayMarching
 {
 
-Vector LibVecToVector(const sLibRayMarchingVector& libVec);
+    Vector LibVecToVector(const sLibRayMarchingVector& libVec);
 
-sLibRayMarchingVector VectorToLibVec(const Vector& libVec);
+    sLibRayMarchingVector VectorToLibVec(const Vector& libVec);
 
-Material LibMaterialToMaterial(const sLibRayMarchingMaterial& libMaterial);
+    Material LibMaterialToMaterial(const sLibRayMarchingMaterial& libMaterial);
 
-sLibRayMarchingMaterial MaterialToLibMaterial(const Material& material);
+    sLibRayMarchingMaterial MaterialToLibMaterial(const Material& material);
 
 }

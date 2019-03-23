@@ -116,6 +116,8 @@ typedef struct {
     LibRayMarching_double m_Specular;
     LibRayMarching_double m_SpecularAlpha;
     LibRayMarching_double m_Reflection;
+    LibRayMarching_double m_Transparency;
+    LibRayMarching_double m_Refraction;
 } sLibRayMarchingMaterial;
 
 #pragma pack ()

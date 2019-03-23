@@ -43,6 +43,8 @@
 		<member name="Specular" type="double" />
 		<member name="SpecularAlpha" type="double" />
 		<member name="Reflection" type="double" />
+		<member name="Transparency" type="double" />
+		<member name="Refraction" type="double" />
 	</struct>
 	
 	<functiontype name="ProgressCallback" description="Callback to report calculation progress and query whether it should be aborted">
