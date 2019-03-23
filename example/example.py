@@ -36,8 +36,8 @@ class RayMarching:
 
 		print("Set viewport")
 		self.Scene.SetViewport(
-			LibRayMarchingVector(x = 4.5, y = -14, z = 4),
-			LibRayMarchingVector(x = -0.2, y = 1, z = -0.2),
+			LibRayMarchingVector(x = 6.5, y = -14, z = 4),
+			LibRayMarchingVector(x = -0.3, y = 1, z = -0.2),
 			LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
 
 	def BuildScene(self):
@@ -57,7 +57,7 @@ class RayMarching:
 
 		print ("Create box")
 		Box = self.Wrapper.CreateBox(
-			LibRayMarchingVector(x = 1, y = 1, z = 1)
+			LibRayMarchingVector(x = 0.5, y = 0.5, z = 0.5)
 		);
 		Box.SetMaterial(LibRayMarchingMaterial(
 			Blue = 0.6,
@@ -65,7 +65,7 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
-		Box.Translate(LibRayMarchingVector(x = 3, y = 0, z = 2));
+		Box.Translate(LibRayMarchingVector(x = 3, y = -3, z = 2));
 		self.Scene.AddPrimitive(Box);
 
 		print ("Create capsule")
@@ -98,13 +98,27 @@ class RayMarching:
 		Torus = self.Wrapper.CreateTorus(0.7, 0.3);
 		Torus.SetMaterial(LibRayMarchingMaterial(
 			Blue = 0.6, Green = 0.6,
-			Ambient = 0.3,
-			Diffuse = 1,
-			Specular = 1,
-			SpecularAlpha = 15));
+			Ambient = 0.1,
+			Diffuse = 0.3,
+			Specular = 0.3,
+			SpecularAlpha = 15,
+			Reflection = 0.6));
 		Torus.Rotate(LibRayMarchingVector(x = 1, y = 0, z = 0), math.pi/2);
-		Torus.Translate(LibRayMarchingVector(x = 3, y = -3, z = 2));		
+		Torus.Translate(LibRayMarchingVector(x = 3, y = 0, z = 2));		
 		self.Scene.AddPrimitive(Torus);
+
+		print ("Create transparent sphere")
+		Sphere = self.Wrapper.CreateSphere(1);
+		Sphere.SetMaterial(LibRayMarchingMaterial(
+			Red = 0.6, Green = 0.6,
+			Ambient = 0.1,
+			Diffuse = 0.2,
+			Specular = 0.4,
+			SpecularAlpha = 15,
+			Transparency = 0.5,
+			Refraction = 1.33));
+		Sphere.Translate(LibRayMarchingVector(x = 6, y = -3, z = 2));
+		self.Scene.AddPrimitive(Sphere);
 
 		print ("Create pane")
 		Plane = self.Wrapper.CreatePlane(
@@ -121,7 +135,7 @@ class RayMarching:
 
 	def RenderPixel(self):
 		print ("Render scene")
-		Pixel = self.Scene.RenderPixel(150, 90);
+		Pixel = self.Scene.RenderPixel(504, 199);
 		print ("Pixelcolor is " + str(Pixel))
 
 
@@ -140,12 +154,13 @@ class RayMarching:
 				color = color_buffer[i + j * img.size[0]];
 				# print color;    		
 				pixels[i,j] = ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF) # set the colour accordingly
-		#img.save('ray_marching.png')
+		img.save('ray_marching.png')
 		img.show()
 
 def main():
-	RM = RayMarching(300, 200);
+	RM = RayMarching(600, 400);
 	RM.BuildScene();
+	RM.RenderPixel();
 	RM.Render();
 	
 
