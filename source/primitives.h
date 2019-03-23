@@ -40,7 +40,7 @@ namespace LibRayMarching
 
 			virtual void Initialize() {};
 
-			virtual double SignedDistance (const Vector& vPoint) = 0;
+			virtual double SignedDistance (const Vector& vPoint) const = 0;
 			
 	};
 
@@ -65,7 +65,7 @@ namespace LibRayMarching
 
 			void Initialize();
 
-			double SignedDistance (const Vector& vPoint);
+			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -102,7 +102,7 @@ namespace LibRayMarching
 
 			void Initialize();
 
-			double SignedDistance (const Vector& vPoint);
+			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -125,7 +125,7 @@ namespace LibRayMarching
 
 			void Initialize();
 
-			double SignedDistance (const Vector& vPoint);
+			double SignedDistance (const Vector& vPoint) const;
 	};
 
 	typedef std::shared_ptr<Box> BoxPtr;
@@ -151,7 +151,7 @@ namespace LibRayMarching
 
 			void Initialize();
 
-			double SignedDistance (const Vector& vPoint);
+			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -181,7 +181,7 @@ namespace LibRayMarching
 
 			void Initialize();
 
-			double SignedDistance (const Vector& vPoint);
+			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -210,7 +210,7 @@ namespace LibRayMarching
 
 			void Initialize();
 
-			double SignedDistance (const Vector& vPoint);
+			double SignedDistance (const Vector& vPoint) const;
 
 	};
 

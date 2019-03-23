@@ -19,6 +19,8 @@ namespace LibRayMarching
 		double specular;
 		double specular_alpha;
 		double reflection;
+		double transparency;
+		double refraction;
 	};
 
 	struct Lightning
@@ -29,9 +31,11 @@ namespace LibRayMarching
 		double minimal_shadow;
 	};
 
+	class Primitive;
+
 	struct MarcheResult
 	{
-		Material* material;
+		Primitive* primitive;
 		Vector position;
 		Vector normal;
 		double distance;

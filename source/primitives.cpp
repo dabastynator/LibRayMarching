@@ -38,7 +38,7 @@ void Sphere::Initialize()
 	
 }
 
-double Sphere::SignedDistance (const Vector& vPoint)
+double Sphere::SignedDistance (const Vector& vPoint) const
 {
 	Vector p = m_Inverse * vPoint;
 	return p.length() - m_Radius;
@@ -50,7 +50,7 @@ void Capsule::Initialize()
 	m_Length = m_P1P2.length();
 }
 
-double Capsule::SignedDistance (const Vector& vPoint)
+double Capsule::SignedDistance (const Vector& vPoint) const
 {	
 	Vector p = m_Inverse * vPoint - m_Point1;
 	if (m_Length > 0)
@@ -67,7 +67,7 @@ void Box::Initialize()
 
 }
 
-double Box::SignedDistance (const Vector& vPoint)
+double Box::SignedDistance (const Vector& vPoint) const
 {
 	Vector d = m_Inverse * vPoint;
 	d.x = std::abs(d.x);
@@ -86,7 +86,7 @@ void Plane::Initialize()
 	m_TransformedNormal = m_ModelToWorld * m_Normal;
 }
 
-double Plane::SignedDistance (const Vector& vPoint)
+double Plane::SignedDistance (const Vector& vPoint) const
 {
 	Vector p = vPoint - m_Origin;
 	return std::abs(p.dot(m_TransformedNormal));
@@ -97,7 +97,7 @@ void Cylinder::Initialize()
 
 }
 
-double Cylinder::SignedDistance (const Vector& vPoint)
+double Cylinder::SignedDistance (const Vector& vPoint) const
 {
 	Vector p = m_Inverse * vPoint;
 	double distCircle = sqrt(p.x * p.x + p.y * p.y) - m_Radius;
@@ -118,7 +118,7 @@ void Torus::Initialize()
 
 }
 
-double Torus::SignedDistance (const Vector& vPoint)
+double Torus::SignedDistance (const Vector& vPoint) const
 {
 	Vector p = m_Inverse * vPoint;
 	double distBig = sqrt(p.x * p.x + p.y * p.y) - m_RadiusBig;

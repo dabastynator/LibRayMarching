@@ -29,10 +29,14 @@ namespace LibRayMarching
 			*  Calculation methods
 			*/
 
+			Vector RefractRay(const Vector& ray, const Vector& normal, double refraction);
+
+			void RayMarcheInside(const Primitive* primitive, const Vector& position, const Vector& ray, MarcheResult& result);			
+
 			// Calculate color along ray by phong shading
-			Vector PhongShading(const Vector& position, const Vector& ray);
-			// Trace along given ray and calculate normal
-			double Trace(const Vector& position, const Vector& ray, MarcheResult& result);
+			Vector PhongShading(const Vector& position, const Vector& ray, int bouncing);
+			// Calculate the normal for given marche result
+			double CalcNormal(MarcheResult& result);
 			// Ray marche along given ray and set result
 			double RayMarche(const Vector& position, const Vector& ray, MarcheResult& result);
 			// Find nearest primitive and set distance and material
