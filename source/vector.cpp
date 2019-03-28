@@ -18,6 +18,13 @@ Vector::Vector(const Vector& vector)
 	z = vector.z;
 }
 
+Vector::Vector(const double& val)
+{
+	x = val;
+	y = val;
+	z = val;
+}
+
 Vector::Vector(const double& x, const double& y, const double& z)
 {
 	this->x = x;
@@ -63,6 +70,16 @@ Vector Vector::operator/(const Vector& vec) const
 Vector Vector::operator/(const double& val) const
 {
 	return Vector(x/val, y/val, z/val);
+}
+
+Vector Vector::operator%(const Vector& vec) const
+{
+	return Vector(std::fmod(x, vec.x), std::fmod(y, vec.y), std::fmod(z, vec.z));
+}
+
+Vector Vector::operator%(const double& val) const
+{
+	return Vector(std::fmod(x, val), std::fmod(y, val), std::fmod(z, val));
 }
 
 Vector Vector::operator+=(const Vector& vec)
@@ -129,6 +146,22 @@ Vector Vector::operator/=(const double& val)
 	return *this;
 }
 
+Vector Vector::operator%=(const Vector& vec)
+{
+	x = std::fmod(x, vec.x);
+	y = std::fmod(y, vec.y);
+	z = std::fmod(z, vec.z);
+	return *this;
+}
+
+Vector Vector::operator%=(const double& val)
+{
+	x = std::fmod(x, val);
+	y = std::fmod(y, val);
+	z = std::fmod(z, val);
+	return *this;
+}
+
 double Vector::length() const
 {
 	return sqrt(x*x + y*y + z*z);
@@ -161,6 +194,11 @@ double Vector::min() const
 double Vector::max() const
 {
 	return std::max(std::max(x, y), z);
+}
+
+Vector Vector::abs() const
+{
+	return Vector(std::abs(x), std::abs(y), std::abs(z));
 }
 
 void Vector::normalize()

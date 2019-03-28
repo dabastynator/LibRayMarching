@@ -18,6 +18,7 @@ namespace LibRayMarching
 
 		Vector();
 		Vector(const Vector& vector);
+		Vector(const double& val);
 		Vector(const double& x, const double& y, const double& z);
 
 		Vector operator+(const Vector& vec) const;
@@ -28,6 +29,8 @@ namespace LibRayMarching
 		Vector operator*(const double& val) const;
 		Vector operator/(const Vector& vec) const;
 		Vector operator/(const double& val) const;
+		Vector operator%(const Vector& vec) const;
+		Vector operator%(const double& val) const;
 
 		Vector operator+=(const Vector& vec);
 		Vector operator+=(const double& val);
@@ -37,6 +40,8 @@ namespace LibRayMarching
 		Vector operator*=(const double& val);
 		Vector operator/=(const Vector& vec);
 		Vector operator/=(const double& val);
+		Vector operator%=(const Vector& vec);
+		Vector operator%=(const double& val);
 
 		double length() const;
 		double lengthSquare() const;
@@ -44,6 +49,7 @@ namespace LibRayMarching
 		Vector cross(const Vector& vec) const;
 		double min() const;
 		double max() const;
+		Vector abs() const;
 		void normalize();
 		Vector normalized() const;		
 	};
