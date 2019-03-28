@@ -36,31 +36,31 @@ class RayMarching:
 
 		print("Set viewport")
 		self.Scene.SetViewport(
-			LibRayMarchingVector(x = 6.5, y = -14, z = 4),
+			LibRayMarchingVector(x = 6.5, y = -16, z = 4),
 			LibRayMarchingVector(x = -0.3, y = 1, z = -0.2),
 			LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
 
 	def BuildScene(self):
 		print ("Create light")
-		self.Scene.AddLight(LibRayMarchingVector(3, 3, 25), LibRayMarchingVector(1, 1, 1));
+		self.Scene.AddLight(LibRayMarchingVector(9, -20, 25), LibRayMarchingVector(1, 1, 1));
 
 		print ("Create sphere")
 		Sphere = self.Wrapper.CreateSphere(1);
 		Sphere.SetMaterial(LibRayMarchingMaterial(
-			Red = 0.6, 
+			Red = 0.5, Green = 0.1, Blue = 0.3,
 			Ambient = 0.3,
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
 		Sphere.Translate(LibRayMarchingVector(x = 0, y = 0, z = 2));
 		self.Scene.AddPrimitive(Sphere);
-
+		
 		print ("Create box")
 		Box = self.Wrapper.CreateBox(
 			LibRayMarchingVector(x = 0.5, y = 0.5, z = 0.5)
 		);
 		Box.SetMaterial(LibRayMarchingMaterial(
-			Blue = 0.6,
+			Red = 0.5, Blue = 0.1, Green = 0.3,
 			Ambient = 0.3,
 			Diffuse = 1,
 			Specular = 1,
@@ -75,7 +75,7 @@ class RayMarching:
 			LibRayMarchingVector(x = 0.5, y = 0.5, z = 0.5)
 		);
 		Capsule.SetMaterial(LibRayMarchingMaterial(
-			Green = 0.6,
+			Blue = 0.5, Green = 0.1, Red = 0.3,
 			Ambient = 0.3,
 			Diffuse = 1,
 			Specular = 1,
@@ -86,7 +86,7 @@ class RayMarching:
 		print ("Create cylinder")
 		Cylinder = self.Wrapper.CreateCylinder(1, 2);
 		Cylinder.SetMaterial(LibRayMarchingMaterial(
-			Red = 0.6, Green = 0.6,
+			Green = 0.5, Red = 0.1, Blue = 0.3,
 			Ambient = 0.3,
 			Diffuse = 1,
 			Specular = 1,
@@ -97,9 +97,9 @@ class RayMarching:
 		print ("Create torus")
 		Torus = self.Wrapper.CreateTorus(0.7, 0.3);
 		Torus.SetMaterial(LibRayMarchingMaterial(
-			Blue = 0.6, Green = 0.6,
-			Ambient = 0.1,
-			Diffuse = 0.3,
+			Green = 1, Blue = 1, Red = 1,
+			Ambient = 0.05,
+			Diffuse = 0.1,
 			Specular = 0.3,
 			SpecularAlpha = 15,
 			Reflection = 0.6));
@@ -110,7 +110,7 @@ class RayMarching:
 		print ("Create transparent sphere")
 		Sphere = self.Wrapper.CreateSphere(1);
 		Sphere.SetMaterial(LibRayMarchingMaterial(
-			Red = 0.6, Green = 0.6,
+			Blue = 0.5, Red = 0.1, Green = 0.3,
 			Ambient = 0.1,
 			Diffuse = 0.2,
 			Specular = 0.4,
@@ -119,6 +119,30 @@ class RayMarching:
 			Refraction = 1.33));
 		Sphere.Translate(LibRayMarchingVector(x = 6, y = -3, z = 2));
 		self.Scene.AddPrimitive(Sphere);
+		
+		print ("Create menger sponge")
+		MengerSponge = self.Wrapper.CreateMengerSponge(3);
+		MengerSponge.SetMaterial(LibRayMarchingMaterial(
+			Green = 0.5, Blue = 0.1, Red = 0.3,
+			Ambient = 0.3,
+			Diffuse = 0.5,
+			Specular = 0.4,
+			SpecularAlpha = 15));
+		MengerSponge.Translate(LibRayMarchingVector(x = 0, y = -6, z = 2));
+		self.Scene.AddPrimitive(MengerSponge);
+
+		print ("Create julia quaternion fractal")
+		QuaternionFractal = self.Wrapper.CreateQuaternionFractal(10);
+		QuaternionFractal.SetQuaternion(0.2, -0.4, 0, -0.6);
+		QuaternionFractal.SetMaterial(LibRayMarchingMaterial(
+			Green = 0.5, Blue = 0.1, Red = 0.5,
+			Ambient = 0.3,
+			Diffuse = 0.5,
+			Specular = 0.4,
+			SpecularAlpha = 15));
+		QuaternionFractal.Translate(LibRayMarchingVector(x = 3, y = -6, z = 2));
+		self.Scene.AddPrimitive(QuaternionFractal);
+
 
 		print ("Create pane")
 		Plane = self.Wrapper.CreatePlane(
@@ -133,9 +157,9 @@ class RayMarching:
 			SpecularAlpha = 15));
 		self.Scene.AddPrimitive(Plane);
 
-	def RenderPixel(self):
+	def RenderPixel(self, x, y):
 		print ("Render scene")
-		Pixel = self.Scene.RenderPixel(504, 199);
+		Pixel = self.Scene.RenderPixel(x, y);
 		print ("Pixelcolor is " + str(Pixel))
 
 
@@ -160,7 +184,7 @@ class RayMarching:
 def main():
 	RM = RayMarching(600, 400);
 	RM.BuildScene();
-	RM.RenderPixel();
+	RM.RenderPixel(70, 300);
 	RM.Render();
 	
 
