@@ -24,7 +24,7 @@ namespace LibRayMarching
 		public:
 
 			enum Type {ptSphere, ptBox, ptPlane, ptCapsule, ptCylinder, ptTorus,
-				ptMengerSonge, ptQuaternion};
+				ptMengerSonge, ptQuaternion, ptGroup};
 
 			void IdentityPosition ();
 
@@ -269,5 +269,36 @@ namespace LibRayMarching
 	};
 
 	typedef std::shared_ptr<QuaternionFractal> QuaternionFractalPtr;
+
+	class PrimitiveGroup: public virtual Primitive
+	{
+
+		private:
+
+			std::vector<PrimitivePtr> m_Primitives;
+
+			CombineAction m_CombineAction;
+
+		public:
+
+			Type GetType () { return Type::ptGroup; };
+
+			int GetCount() { return m_Primitives.size(); };
+
+			void AddPrimitive(PrimitivePtr p) { m_Primitives.push_back(p); };
+
+			PrimitivePtr GetPrimitive(int index) { return m_Primitives.at(index); };
+
+			void SetCombineAction(CombineAction action) { m_CombineAction = action; };
+
+			CombineAction GetCombineAction() { return m_CombineAction; };
+
+			void Initialize();
+
+			double SignedDistance (const Vector& vPoint) const;
+
+	};
+
+	typedef std::shared_ptr<PrimitiveGroup> PrimitiveGroupPtr;	
 
 }

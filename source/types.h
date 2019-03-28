@@ -31,6 +31,13 @@ namespace LibRayMarching
 		double minimal_shadow;
 	};
 
+	enum CombineAction
+	{
+		caUnify, 
+		caIntersect, 
+		caSubtract
+	};
+
 	class Primitive;
 
 	struct MarcheResult

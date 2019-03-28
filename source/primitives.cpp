@@ -176,3 +176,49 @@ double QuaternionFractal::SignedDistance (const Vector& vPoint) const
 	}
 	return 0.25 * sqrt(mz2 / md2) * log(mz2);
 }
+
+void PrimitiveGroup::Initialize()
+{
+	
+}
+
+double PrimitiveGroup::SignedDistance (const Vector& vPoint) const
+{
+	Vector point = m_Inverse * vPoint;
+	double sd;
+	switch(m_CombineAction){
+		case caUnify:
+			sd = 10e10;
+			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
+			{		
+				PrimitivePtr primitive = *p;
+				double distance = primitive->SignedDistance(point);
+				sd = std::min(sd, distance);
+			}
+			return sd;
+		case caIntersect:
+			sd = -10e10;
+			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
+			{		
+				PrimitivePtr primitive = *p;
+				double distance = primitive->SignedDistance(point);
+				sd = std::max(sd, distance);
+			}
+			return sd;
+		case caSubtract:
+			sd = 0;
+			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
+			{		
+				PrimitivePtr primitive = *p;
+				double distance = primitive->SignedDistance(point);
+				if (p == m_Primitives.begin())
+				{
+					sd = distance;
+				} else
+				{
+					sd = std::max(sd, -distance);
+				}				
+			}
+			return sd;
+	}
+}
