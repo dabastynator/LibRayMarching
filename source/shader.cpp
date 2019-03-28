@@ -144,12 +144,10 @@ void Shader::RayMarcheInside(const Primitive* primitive, const Vector& position,
 double Shader::GetDistance(const Vector& position, MarcheResult& result)
 {
 	double minDist = m_MaxDistance;
-	//std::cout << "get distance " << std::endl;
 	for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 	{		
 		PrimitivePtr primitive = *p;
 		double distance = primitive->SignedDistance(position);
-		//std::cout << " dist is " << distance << std::endl;
 		if (distance < minDist)
 		{
 			minDist = distance;
