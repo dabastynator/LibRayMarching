@@ -4,6 +4,7 @@
 #include <memory>
 #include "vector.h"
 #include "matrix.h"
+#include "quaternion.h"
 #include "types.h"
 
 namespace LibRayMarching
@@ -22,7 +23,8 @@ namespace LibRayMarching
 
 		public:
 
-			enum Type {ptSphere, ptBox, ptPlane, ptCapsule, ptCylinder, ptTorus};
+			enum Type {ptSphere, ptBox, ptPlane, ptCapsule, ptCylinder, ptTorus,
+				ptMengerSonge, ptQuaternion};
 
 			void IdentityPosition ();
 
@@ -215,5 +217,57 @@ namespace LibRayMarching
 	};
 
 	typedef std::shared_ptr<Torus> TorusPtr;
+
+	class MengerSponge: public virtual Primitive
+	{
+
+		private:
+
+			int m_SetpCount;
+
+		public:
+
+			double GetSetpCount () { return m_SetpCount; };
+
+			void SetSetpCount(double setpcount) {m_SetpCount = setpcount; };
+
+			Type GetType () { return Type::ptMengerSonge; };
+
+			void Initialize();
+
+			double SignedDistance (const Vector& vPoint) const;
+
+	};
+
+	typedef std::shared_ptr<MengerSponge> MengerSpongePtr;
+
+	class QuaternionFractal: public virtual Primitive
+	{
+
+		private:
+
+			int m_Iterations;
+
+			Quaternion m_Quaternion;
+
+		public:
+
+			double GetIterations () { return m_Iterations; };
+
+			void SetIterations(double iterations) {m_Iterations = iterations; };
+
+			Quaternion GetQuaternion () { return m_Quaternion; };
+
+			void SetQuaternion(Quaternion quaternion) {m_Quaternion = quaternion; };
+
+			Type GetType () { return Type::ptQuaternion; };
+
+			void Initialize();
+
+			double SignedDistance (const Vector& vPoint) const;
+
+	};
+
+	typedef std::shared_ptr<QuaternionFractal> QuaternionFractalPtr;
 
 }

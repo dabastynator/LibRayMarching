@@ -125,3 +125,54 @@ double Torus::SignedDistance (const Vector& vPoint) const
 	double dist = sqrt(distBig * distBig  + p.z * p.z);
 	return dist - m_RadiusSmall;
 }
+
+void MengerSponge::Initialize()
+{
+
+}
+
+double MengerSponge::SignedDistance (const Vector& vPoint) const
+{
+	Vector p = m_Inverse * vPoint;
+
+	// SDF box
+	Vector box(
+		std::max(0., std::abs(p.x) - 1),
+		std::max(0., std::abs(p.y) - 1),
+		std::max(0., std::abs(p.z) - 1));
+	float sdBox = box.length();
+
+	// SDF inside crosses
+	float sdMS = sdBox;
+	float size = 1;
+	for (int i=0; i < m_SetpCount; i++)
+	{
+		Vector a = ((p.abs() * size + size) % 2 - 1).abs();
+		Vector d(std::max(a.x, a.y), std::max(a.y, a.z), std::max(a.z, a.x));
+		size *= 3;
+		float sdCross = (d.min() - 1./3.) / size;
+		sdMS = std::max(sdMS, -sdCross);		
+	}
+	return sdMS;
+}
+
+void QuaternionFractal::Initialize()
+{
+
+}
+
+double QuaternionFractal::SignedDistance (const Vector& vPoint) const
+{
+	Vector p = m_Inverse * vPoint;
+	Quaternion z(p.x, p.y, p.z, 0);
+	double md2 = 1.0;
+	double mz2 = z.dot(z);
+	for (int i = 0; i < m_Iterations; i++) {
+		md2 *= 4.0 * mz2;
+		z = z.squared() + m_Quaternion;
+		mz2 = z.dot(z);
+		if (mz2 > 10.0)
+			break;
+	}
+	return 0.25 * sqrt(mz2 / md2) * log(mz2);
+}
