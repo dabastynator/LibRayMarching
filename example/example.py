@@ -43,7 +43,7 @@ class RayMarching:
 	def BuildScene(self):
 		print ("Create light")
 		self.Scene.AddLight(LibRayMarchingVector(9, -20, 25), LibRayMarchingVector(1, 1, 1));
-
+		
 		print ("Create sphere")
 		Sphere = self.Wrapper.CreateSphere(1);
 		Sphere.SetMaterial(LibRayMarchingMaterial(
@@ -142,7 +142,28 @@ class RayMarching:
 			SpecularAlpha = 15));
 		QuaternionFractal.Translate(LibRayMarchingVector(x = 3, y = -6, z = 2));
 		self.Scene.AddPrimitive(QuaternionFractal);
+		
+		GSphere = self.Wrapper.CreateSphere(1.25);
+		GBox = self.Wrapper.CreateBox(
+			LibRayMarchingVector(x = 1, y = 1, z = 1)
+		);
+		GCylinder = self.Wrapper.CreateCylinder(0.4, 100);
+		GCylinder.Rotate(LibRayMarchingVector(x = 1, y = 0, z = 0), math.pi/2);
+		GroupRCube = self.Wrapper.CreatePrimitiveGroup(LibRayMarchingGroupAction.Intersect);
+		GroupRCube.AddPrimitive(GSphere);
+		GroupRCube.AddPrimitive(GBox);
 
+		GroupM = self.Wrapper.CreatePrimitiveGroup(LibRayMarchingGroupAction.Subtract);
+		GroupM.AddPrimitive(GroupRCube);
+		GroupM.AddPrimitive(GCylinder);
+		GroupM.Translate(LibRayMarchingVector(x = 6, y = -6, z = 2));
+		GroupM.SetMaterial(LibRayMarchingMaterial(
+			Green = 0.5, Blue = 0.5, Red = 0.1,
+			Ambient = 0.3,
+			Diffuse = 0.5,
+			Specular = 0.4,
+			SpecularAlpha = 15));			
+		self.Scene.AddPrimitive(GroupM);
 
 		print ("Create pane")
 		Plane = self.Wrapper.CreatePlane(
