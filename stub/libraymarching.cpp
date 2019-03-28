@@ -22,7 +22,10 @@ Interface version: 0.9.0
 #include "libraymarching_plane.hpp"
 #include "libraymarching_cylinder.hpp"
 #include "libraymarching_torus.hpp"
+#include "libraymarching_mengersponge.hpp"
+#include "libraymarching_quaternionfractal.hpp"
 #include "libraymarching_raymarching.hpp"
+#include "primitives.h"
 
 using namespace LibRayMarching::Impl;
 
@@ -92,4 +95,19 @@ ILibRayMarchingTorus * CLibRayMarchingWrapper::CreateTorus (const LibRayMarching
 	torus->SetRadiusBig(dBigRadius);
 	torus->SetRadiusSmall(dSmallRadius);
 	return new CLibRayMarchingTorus(torus);
+}
+
+
+ILibRayMarchingMengerSponge * CLibRayMarchingWrapper::CreateMengerSponge (const LibRayMarching_uint32 nStepCount)
+{
+	MengerSpongePtr ms(new MengerSponge());
+	ms->SetSetpCount(nStepCount);
+	return new CLibRayMarchingMengerSponge(ms);
+}
+
+ILibRayMarchingQuaternionFractal * CLibRayMarchingWrapper::CreateQuaternionFractal (const LibRayMarching_uint32 nIterations)
+{
+	QuaternionFractalPtr ms(new QuaternionFractal());
+	ms->SetIterations(nIterations);
+	return new CLibRayMarchingQuaternionFractal(ms);
 }

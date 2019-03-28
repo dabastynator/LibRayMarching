@@ -36,6 +36,8 @@ class ILibRayMarchingPlane;
 class ILibRayMarchingBox;
 class ILibRayMarchingTorus;
 class ILibRayMarchingCylinder;
+class ILibRayMarchingQuaternionFractal;
+class ILibRayMarchingMengerSponge;
 class ILibRayMarchingPrimitiveGroup;
 class ILibRayMarchingRayMarching;
 
@@ -285,6 +287,66 @@ public:
 
 
 /*************************************************************************************************************************
+ Class interface for LibRayMarchingQuaternionFractal 
+**************************************************************************************************************************/
+
+class ILibRayMarchingQuaternionFractal : public virtual ILibRayMarchingBaseClass, public virtual ILibRayMarchingPrimitive{
+public:
+	/**
+	* IQuaternionFractal::GetQuaternion - Get the current quaternion parameter
+	* @param[out] dR - quaternion r part
+	* @param[out] dI - quaternion i part
+	* @param[out] dJ - quaternion j part
+	* @param[out] dK - quaternion k part
+	*/
+	virtual void GetQuaternion (LibRayMarching_double & dR, LibRayMarching_double & dI, LibRayMarching_double & dJ, LibRayMarching_double & dK) = 0;
+
+	/**
+	* IQuaternionFractal::SetQuaternion - Set the current quaternion parameter
+	* @param[in] dR - quaternion r part
+	* @param[in] dI - quaternion i part
+	* @param[in] dJ - quaternion j part
+	* @param[in] dK - quaternion k part
+	*/
+	virtual void SetQuaternion (const LibRayMarching_double dR, const LibRayMarching_double dI, const LibRayMarching_double dJ, const LibRayMarching_double dK) = 0;
+
+	/**
+	* IQuaternionFractal::GetIterations - Get the number of maximal iterations
+	* @return iterations
+	*/
+	virtual LibRayMarching_uint32 GetIterations () = 0;
+
+	/**
+	* IQuaternionFractal::SetIterations - Set the number of maximal iterations
+	* @param[in] nIterations - iterations
+	*/
+	virtual void SetIterations (const LibRayMarching_uint32 nIterations) = 0;
+
+};
+
+
+/*************************************************************************************************************************
+ Class interface for LibRayMarchingMengerSponge 
+**************************************************************************************************************************/
+
+class ILibRayMarchingMengerSponge : public virtual ILibRayMarchingBaseClass, public virtual ILibRayMarchingPrimitive{
+public:
+	/**
+	* IMengerSponge::GetStepCount - Get the number of step count
+	* @return StepCount
+	*/
+	virtual LibRayMarching_uint32 GetStepCount () = 0;
+
+	/**
+	* IMengerSponge::SetStepCount - Set the number of step count
+	* @param[in] nStepCount - StepCount
+	*/
+	virtual void SetStepCount (const LibRayMarching_uint32 nStepCount) = 0;
+
+};
+
+
+/*************************************************************************************************************************
  Class interface for LibRayMarchingPrimitiveGroup 
 **************************************************************************************************************************/
 
@@ -501,6 +563,20 @@ public:
 	* @return New Torus
 	*/
 	static ILibRayMarchingTorus * CreateTorus (const LibRayMarching_double dBigRadius, const LibRayMarching_double dSmallRadius);
+
+	/**
+	* Ilibraymarching::CreateMengerSponge - Create new MengerSponge
+	* @param[in] nStepCount - StepCount
+	* @return New MengerSponge
+	*/
+	static ILibRayMarchingMengerSponge * CreateMengerSponge (const LibRayMarching_uint32 nStepCount);
+
+	/**
+	* Ilibraymarching::CreateQuaternionFractal - Create new QuaternionFractal
+	* @param[in] nIterations - Iterations
+	* @return New QuaternionFractal
+	*/
+	static ILibRayMarchingQuaternionFractal * CreateQuaternionFractal (const LibRayMarching_uint32 nIterations);
 
 };
 

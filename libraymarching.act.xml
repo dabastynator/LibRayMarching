@@ -158,6 +158,38 @@
 		</method>		
 	</class>
 
+	<!-- QuaternionFractal -->
+	<class name="QuaternionFractal" parent="Primitive">
+		<method name="GetQuaternion" description="Get the current quaternion parameter">
+			<param name="R" type="double" pass="out" description="quaternion r part" />
+			<param name="I" type="double" pass="out" description="quaternion i part" />
+			<param name="J" type="double" pass="out" description="quaternion j part" />
+			<param name="K" type="double" pass="out" description="quaternion k part" />
+		</method>
+		<method name="SetQuaternion" description="Set the current quaternion parameter">
+			<param name="R" type="double" pass="in" description="quaternion r part" />
+			<param name="I" type="double" pass="in" description="quaternion i part" />
+			<param name="J" type="double" pass="in" description="quaternion j part" />
+			<param name="K" type="double" pass="in" description="quaternion k part" />
+		</method>
+		<method name="GetIterations" description="Get the number of maximal iterations">
+			<param name="Iterations" type="uint32" pass="return" description="iterations" />
+		</method>
+		<method name="SetIterations" description="Set the number of maximal iterations">
+			<param name="Iterations" type="uint32" pass="in" description="iterations" />
+		</method>
+	</class>
+
+	<!-- MengerSponge -->
+	<class name="MengerSponge" parent="Primitive">
+		<method name="GetStepCount" description="Get the number of step count">
+			<param name="StepCount" type="uint32" pass="return" description="StepCount" />
+		</method>
+		<method name="SetStepCount" description="Set the number of step count">
+			<param name="StepCount" type="uint32" pass="in" description="StepCount" />
+		</method>
+	</class>
+
 	<!-- PrimitiveGroup -->
 	<class name="PrimitiveGroup" parent="Primitive">
 		<method name="GetPrimitiveCount" description="Get number of primitives">
@@ -291,6 +323,16 @@
 			<param name="BigRadius" type="double" pass="in" description="Big Radius of the Torus" />
 			<param name="SmallRadius" type="double" pass="in" description="Small Radius of the Torus" />
 			<param name="Torus" type="handle" class="Torus" pass="return" description="New Torus" />
+		</method>
+
+		<method name="CreateMengerSponge" description="Create new MengerSponge">
+			<param name="StepCount" type="uint32" pass="in" description="StepCount" />
+			<param name="MengerSponge" type="handle" class="MengerSponge" pass="return" description="New MengerSponge" />
+		</method>
+
+		<method name="CreateQuaternionFractal" description="Create new QuaternionFractal">
+			<param name="Iterations" type="uint32" pass="in" description="Iterations" />
+			<param name="QuaternionFractal" type="handle" class="QuaternionFractal" pass="return" description="New QuaternionFractal" />
 		</method>
 
 	</global>

@@ -92,6 +92,8 @@ typedef LibRayMarchingHandle LibRayMarching_Plane;
 typedef LibRayMarchingHandle LibRayMarching_Box;
 typedef LibRayMarchingHandle LibRayMarching_Torus;
 typedef LibRayMarchingHandle LibRayMarching_Cylinder;
+typedef LibRayMarchingHandle LibRayMarching_QuaternionFractal;
+typedef LibRayMarchingHandle LibRayMarching_MengerSponge;
 typedef LibRayMarchingHandle LibRayMarching_PrimitiveGroup;
 typedef LibRayMarchingHandle LibRayMarching_RayMarching;
 

@@ -779,6 +779,188 @@ LibRayMarchingResult libraymarching_cylinder_setheight (LibRayMarching_Cylinder 
 
 
 /*************************************************************************************************************************
+ Class implementation for QuaternionFractal
+**************************************************************************************************************************/
+LibRayMarchingResult libraymarching_quaternionfractal_getquaternion (LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_double * pR, LibRayMarching_double * pI, LibRayMarching_double * pJ, LibRayMarching_double * pK)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pQuaternionFractal;
+
+	try {
+		if (!pR)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+		if (!pI)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+		if (!pJ)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+		if (!pK)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingQuaternionFractal* pIQuaternionFractal = dynamic_cast<ILibRayMarchingQuaternionFractal*>(pIBaseClass);
+		if (!pIQuaternionFractal)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIQuaternionFractal->GetQuaternion(*pR, *pI, *pJ, *pK);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_quaternionfractal_setquaternion (LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_double dR, LibRayMarching_double dI, LibRayMarching_double dJ, LibRayMarching_double dK)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pQuaternionFractal;
+
+	try {
+
+		ILibRayMarchingQuaternionFractal* pIQuaternionFractal = dynamic_cast<ILibRayMarchingQuaternionFractal*>(pIBaseClass);
+		if (!pIQuaternionFractal)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIQuaternionFractal->SetQuaternion(dR, dI, dJ, dK);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_quaternionfractal_getiterations (LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_uint32 * pIterations)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pQuaternionFractal;
+
+	try {
+		if (pIterations == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingQuaternionFractal* pIQuaternionFractal = dynamic_cast<ILibRayMarchingQuaternionFractal*>(pIBaseClass);
+		if (!pIQuaternionFractal)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pIterations = pIQuaternionFractal->GetIterations();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_quaternionfractal_setiterations (LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_uint32 nIterations)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pQuaternionFractal;
+
+	try {
+
+		ILibRayMarchingQuaternionFractal* pIQuaternionFractal = dynamic_cast<ILibRayMarchingQuaternionFractal*>(pIBaseClass);
+		if (!pIQuaternionFractal)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIQuaternionFractal->SetIterations(nIterations);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+
+/*************************************************************************************************************************
+ Class implementation for MengerSponge
+**************************************************************************************************************************/
+LibRayMarchingResult libraymarching_mengersponge_getstepcount (LibRayMarching_MengerSponge pMengerSponge, LibRayMarching_uint32 * pStepCount)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMengerSponge;
+
+	try {
+		if (pStepCount == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingMengerSponge* pIMengerSponge = dynamic_cast<ILibRayMarchingMengerSponge*>(pIBaseClass);
+		if (!pIMengerSponge)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pStepCount = pIMengerSponge->GetStepCount();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_mengersponge_setstepcount (LibRayMarching_MengerSponge pMengerSponge, LibRayMarching_uint32 nStepCount)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pMengerSponge;
+
+	try {
+
+		ILibRayMarchingMengerSponge* pIMengerSponge = dynamic_cast<ILibRayMarchingMengerSponge*>(pIBaseClass);
+		if (!pIMengerSponge)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIMengerSponge->SetStepCount(nStepCount);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+
+/*************************************************************************************************************************
  Class implementation for PrimitiveGroup
 **************************************************************************************************************************/
 LibRayMarchingResult libraymarching_primitivegroup_getprimitivecount (LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 * pCount)
@@ -1580,6 +1762,60 @@ LibRayMarchingResult libraymarching_createtorus (LibRayMarching_double dBigRadiu
 		pBaseTorus = CLibRayMarchingWrapper::CreateTorus(dBigRadius, dSmallRadius);
 
 		*pTorus = (ILibRayMarchingBaseClass*)(pBaseTorus);
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_createmengersponge (LibRayMarching_uint32 nStepCount, LibRayMarching_MengerSponge * pMengerSponge)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = nullptr;
+
+	try {
+		if (pMengerSponge == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingBaseClass* pBaseMengerSponge(nullptr);
+
+		pBaseMengerSponge = CLibRayMarchingWrapper::CreateMengerSponge(nStepCount);
+
+		*pMengerSponge = (ILibRayMarchingBaseClass*)(pBaseMengerSponge);
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_createquaternionfractal (LibRayMarching_uint32 nIterations, LibRayMarching_QuaternionFractal * pQuaternionFractal)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = nullptr;
+
+	try {
+		if (pQuaternionFractal == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingBaseClass* pBaseQuaternionFractal(nullptr);
+
+		pBaseQuaternionFractal = CLibRayMarchingWrapper::CreateQuaternionFractal(nIterations);
+
+		*pQuaternionFractal = (ILibRayMarchingBaseClass*)(pBaseQuaternionFractal);
 
 		return LIBRAYMARCHING_SUCCESS;
 	}

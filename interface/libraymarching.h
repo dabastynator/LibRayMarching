@@ -288,6 +288,74 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_cylinder_getheight(L
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_cylinder_setheight(LibRayMarching_Cylinder pCylinder, LibRayMarching_double dHeight);
 
 /*************************************************************************************************************************
+ Class definition for QuaternionFractal
+**************************************************************************************************************************/
+
+/**
+* Get the current quaternion parameter
+*
+* @param[in] pQuaternionFractal - QuaternionFractal instance.
+* @param[out] pR - quaternion r part
+* @param[out] pI - quaternion i part
+* @param[out] pJ - quaternion j part
+* @param[out] pK - quaternion k part
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_quaternionfractal_getquaternion(LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_double * pR, LibRayMarching_double * pI, LibRayMarching_double * pJ, LibRayMarching_double * pK);
+
+/**
+* Set the current quaternion parameter
+*
+* @param[in] pQuaternionFractal - QuaternionFractal instance.
+* @param[in] dR - quaternion r part
+* @param[in] dI - quaternion i part
+* @param[in] dJ - quaternion j part
+* @param[in] dK - quaternion k part
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_quaternionfractal_setquaternion(LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_double dR, LibRayMarching_double dI, LibRayMarching_double dJ, LibRayMarching_double dK);
+
+/**
+* Get the number of maximal iterations
+*
+* @param[in] pQuaternionFractal - QuaternionFractal instance.
+* @param[out] pIterations - iterations
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_quaternionfractal_getiterations(LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_uint32 * pIterations);
+
+/**
+* Set the number of maximal iterations
+*
+* @param[in] pQuaternionFractal - QuaternionFractal instance.
+* @param[in] nIterations - iterations
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_quaternionfractal_setiterations(LibRayMarching_QuaternionFractal pQuaternionFractal, LibRayMarching_uint32 nIterations);
+
+/*************************************************************************************************************************
+ Class definition for MengerSponge
+**************************************************************************************************************************/
+
+/**
+* Get the number of step count
+*
+* @param[in] pMengerSponge - MengerSponge instance.
+* @param[out] pStepCount - StepCount
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_mengersponge_getstepcount(LibRayMarching_MengerSponge pMengerSponge, LibRayMarching_uint32 * pStepCount);
+
+/**
+* Set the number of step count
+*
+* @param[in] pMengerSponge - MengerSponge instance.
+* @param[in] nStepCount - StepCount
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_mengersponge_setstepcount(LibRayMarching_MengerSponge pMengerSponge, LibRayMarching_uint32 nStepCount);
+
+/*************************************************************************************************************************
  Class definition for PrimitiveGroup
 **************************************************************************************************************************/
 
@@ -569,6 +637,24 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createcylinder(LibRa
 * @return error code or 0 (success)
 */
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createtorus(LibRayMarching_double dBigRadius, LibRayMarching_double dSmallRadius, LibRayMarching_Torus * pTorus);
+
+/**
+* Create new MengerSponge
+*
+* @param[in] nStepCount - StepCount
+* @param[out] pMengerSponge - New MengerSponge
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createmengersponge(LibRayMarching_uint32 nStepCount, LibRayMarching_MengerSponge * pMengerSponge);
+
+/**
+* Create new QuaternionFractal
+*
+* @param[in] nIterations - Iterations
+* @param[out] pQuaternionFractal - New QuaternionFractal
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createquaternionfractal(LibRayMarching_uint32 nIterations, LibRayMarching_QuaternionFractal * pQuaternionFractal);
 
 }
 
