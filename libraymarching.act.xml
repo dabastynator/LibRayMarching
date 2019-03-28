@@ -27,6 +27,12 @@
 		<error name="INCOMPATIBLEBINARYVERSION" code="8" description="the version of the binary interface does not match the bindings interface" />
 		<error name="INDEXOUTOFBOUNDS" code="9" description="a given index is out of bounds" />
 	</errors>
+
+	<enum name="GroupAction">
+		<option name="Unify" value="0" />
+		<option name="Intersect" value="1" />
+		<option name="Subtract" value="2" />
+	</enum>
 	
 	<struct name="Vector">
 		<member name="x" type="double" />
@@ -205,6 +211,12 @@
 		<method name="RemovePrimitive" description="Remove primitive at given index">
 			<param name="Index" type="uint32" pass="in" description="Index" />
 		</method>
+		<method name="SetGroupAction" description="Set method to combine primitives">
+			<param name="GroupAction" type="enum" class="GroupAction" pass="in" description="Method to combine primitives" />
+		</method>
+		<method name="GetGroupAction" description="Get method to combine primitives">
+			<param name="GroupAction" type="enum" class="GroupAction" pass="return" description="Method to combine primitives" />
+		</method>
 	</class>
 
 	<!-- The ray marching holds a scene and renders it to a pixel buffer array -->
@@ -333,6 +345,11 @@
 		<method name="CreateQuaternionFractal" description="Create new QuaternionFractal">
 			<param name="Iterations" type="uint32" pass="in" description="Iterations" />
 			<param name="QuaternionFractal" type="handle" class="QuaternionFractal" pass="return" description="New QuaternionFractal" />
+		</method>
+
+		<method name="CreatePrimitiveGroup" description="Create new PrimitiveGroup">
+			<param name="GroupAction" type="enum" class="GroupAction" pass="in" description="Method to combine primitives" />
+			<param name="PrimitiveGroup" type="handle" class="PrimitiveGroup" pass="return" description="New PrimitiveGroup" />
 		</method>
 
 	</global>

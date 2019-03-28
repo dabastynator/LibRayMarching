@@ -377,6 +377,18 @@ public:
 	*/
 	virtual void RemovePrimitive (const LibRayMarching_uint32 nIndex) = 0;
 
+	/**
+	* IPrimitiveGroup::SetGroupAction - Set method to combine primitives
+	* @param[in] eGroupAction - Method to combine primitives
+	*/
+	virtual void SetGroupAction (const eLibRayMarchingGroupAction eGroupAction) = 0;
+
+	/**
+	* IPrimitiveGroup::GetGroupAction - Get method to combine primitives
+	* @return Method to combine primitives
+	*/
+	virtual eLibRayMarchingGroupAction GetGroupAction () = 0;
+
 };
 
 
@@ -577,6 +589,13 @@ public:
 	* @return New QuaternionFractal
 	*/
 	static ILibRayMarchingQuaternionFractal * CreateQuaternionFractal (const LibRayMarching_uint32 nIterations);
+
+	/**
+	* Ilibraymarching::CreatePrimitiveGroup - Create new PrimitiveGroup
+	* @param[in] eGroupAction - Method to combine primitives
+	* @return New PrimitiveGroup
+	*/
+	static ILibRayMarchingPrimitiveGroup * CreatePrimitiveGroup (const eLibRayMarchingGroupAction eGroupAction);
 
 };
 

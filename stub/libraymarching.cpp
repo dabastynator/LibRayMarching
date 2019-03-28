@@ -24,6 +24,7 @@ Interface version: 0.9.0
 #include "libraymarching_torus.hpp"
 #include "libraymarching_mengersponge.hpp"
 #include "libraymarching_quaternionfractal.hpp"
+#include "libraymarching_primitivegroup.hpp"
 #include "libraymarching_raymarching.hpp"
 #include "primitives.h"
 
@@ -110,4 +111,11 @@ ILibRayMarchingQuaternionFractal * CLibRayMarchingWrapper::CreateQuaternionFract
 	QuaternionFractalPtr ms(new QuaternionFractal());
 	ms->SetIterations(nIterations);
 	return new CLibRayMarchingQuaternionFractal(ms);
+}
+
+ILibRayMarchingPrimitiveGroup * CLibRayMarchingWrapper::CreatePrimitiveGroup (const eLibRayMarchingGroupAction eGroupAction)
+{
+	PrimitiveGroupPtr group(new PrimitiveGroup());
+	group->SetCombineAction(LibCAToCA(eGroupAction));
+	return new CLibRayMarchingPrimitiveGroup(group);
 }

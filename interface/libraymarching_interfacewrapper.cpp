@@ -1082,6 +1082,62 @@ LibRayMarchingResult libraymarching_primitivegroup_removeprimitive (LibRayMarchi
 	}
 }
 
+LibRayMarchingResult libraymarching_primitivegroup_setgroupaction (LibRayMarching_PrimitiveGroup pPrimitiveGroup, eLibRayMarchingGroupAction eGroupAction)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pPrimitiveGroup;
+
+	try {
+
+		ILibRayMarchingPrimitiveGroup* pIPrimitiveGroup = dynamic_cast<ILibRayMarchingPrimitiveGroup*>(pIBaseClass);
+		if (!pIPrimitiveGroup)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIPrimitiveGroup->SetGroupAction(eGroupAction);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_primitivegroup_getgroupaction (LibRayMarching_PrimitiveGroup pPrimitiveGroup, eLibRayMarchingGroupAction * pGroupAction)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pPrimitiveGroup;
+
+	try {
+		if (pGroupAction == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingPrimitiveGroup* pIPrimitiveGroup = dynamic_cast<ILibRayMarchingPrimitiveGroup*>(pIBaseClass);
+		if (!pIPrimitiveGroup)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		*pGroupAction = pIPrimitiveGroup->GetGroupAction();
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
 
 /*************************************************************************************************************************
  Class implementation for RayMarching
@@ -1816,6 +1872,33 @@ LibRayMarchingResult libraymarching_createquaternionfractal (LibRayMarching_uint
 		pBaseQuaternionFractal = CLibRayMarchingWrapper::CreateQuaternionFractal(nIterations);
 
 		*pQuaternionFractal = (ILibRayMarchingBaseClass*)(pBaseQuaternionFractal);
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_createprimitivegroup (eLibRayMarchingGroupAction eGroupAction, LibRayMarching_PrimitiveGroup * pPrimitiveGroup)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = nullptr;
+
+	try {
+		if (pPrimitiveGroup == nullptr)
+			throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_INVALIDPARAM);
+
+		ILibRayMarchingBaseClass* pBasePrimitiveGroup(nullptr);
+
+		pBasePrimitiveGroup = CLibRayMarchingWrapper::CreatePrimitiveGroup(eGroupAction);
+
+		*pPrimitiveGroup = (ILibRayMarchingBaseClass*)(pBasePrimitiveGroup);
 
 		return LIBRAYMARCHING_SUCCESS;
 	}

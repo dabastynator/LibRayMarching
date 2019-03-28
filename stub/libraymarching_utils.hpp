@@ -1,5 +1,6 @@
 #pragma once
 
+#include "primitives.h"
 #include "vector.h"
 #include "types.h"
 #include "libraymarching_types.h"
@@ -15,4 +16,7 @@ namespace LibRayMarching
 
     sLibRayMarchingMaterial MaterialToLibMaterial(const Material& material);
 
+    CombineAction LibCAToCA (const eLibRayMarchingGroupAction& action);
+
+    eLibRayMarchingGroupAction CAToLibCA (const CombineAction& action);
 }

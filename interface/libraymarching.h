@@ -396,6 +396,24 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_addpr
 */
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_removeprimitive(LibRayMarching_PrimitiveGroup pPrimitiveGroup, LibRayMarching_uint32 nIndex);
 
+/**
+* Set method to combine primitives
+*
+* @param[in] pPrimitiveGroup - PrimitiveGroup instance.
+* @param[in] eGroupAction - Method to combine primitives
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_setgroupaction(LibRayMarching_PrimitiveGroup pPrimitiveGroup, eLibRayMarchingGroupAction eGroupAction);
+
+/**
+* Get method to combine primitives
+*
+* @param[in] pPrimitiveGroup - PrimitiveGroup instance.
+* @param[out] pGroupAction - Method to combine primitives
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitivegroup_getgroupaction(LibRayMarching_PrimitiveGroup pPrimitiveGroup, eLibRayMarchingGroupAction * pGroupAction);
+
 /*************************************************************************************************************************
  Class definition for RayMarching
 **************************************************************************************************************************/
@@ -655,6 +673,15 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createmengersponge(L
 * @return error code or 0 (success)
 */
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createquaternionfractal(LibRayMarching_uint32 nIterations, LibRayMarching_QuaternionFractal * pQuaternionFractal);
+
+/**
+* Create new PrimitiveGroup
+*
+* @param[in] eGroupAction - Method to combine primitives
+* @param[out] pPrimitiveGroup - New PrimitiveGroup
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_createprimitivegroup(eLibRayMarchingGroupAction eGroupAction, LibRayMarching_PrimitiveGroup * pPrimitiveGroup);
 
 }
 

@@ -98,6 +98,25 @@ typedef LibRayMarchingHandle LibRayMarching_PrimitiveGroup;
 typedef LibRayMarchingHandle LibRayMarching_RayMarching;
 
 /*************************************************************************************************************************
+ Declaration of enums
+**************************************************************************************************************************/
+
+enum eLibRayMarchingGroupAction {
+  eGroupActionUnify = 0,
+  eGroupActionIntersect = 1,
+  eGroupActionSubtract = 2
+};
+
+/*************************************************************************************************************************
+ Declaration of enum members for 4 byte struct alignment
+**************************************************************************************************************************/
+
+typedef union {
+  eLibRayMarchingGroupAction m_enum;
+  int m_code;
+} structEnumLibRayMarchingGroupAction;
+
+/*************************************************************************************************************************
  Declaration of structs
 **************************************************************************************************************************/
 

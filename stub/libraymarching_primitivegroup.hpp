@@ -20,6 +20,7 @@ Abstract: This is the class declaration of CLibRayMarchingPrimitiveGroup
 #pragma warning( disable : 4250)
 
 // Include custom headers here.
+#include "primitives.h"
 
 
 namespace LibRayMarching {
@@ -42,6 +43,7 @@ protected:
 	/**
 	* Put protected members here.
 	*/
+	PrimitiveGroupPtr m_Group;
 
 public:
 
@@ -53,6 +55,7 @@ public:
 	/**
 	* Public member functions to implement.
 	*/
+	CLibRayMarchingPrimitiveGroup(PrimitiveGroupPtr group);
 
 	LibRayMarching_uint32 GetPrimitiveCount ();
 
@@ -62,7 +65,10 @@ public:
 
 	void RemovePrimitive (const LibRayMarching_uint32 nIndex);
 
-	double DistanceTo(Vector vPoint);
+	void SetGroupAction (const eLibRayMarchingGroupAction eGroupAction);
+
+	eLibRayMarchingGroupAction GetGroupAction ();
+
 };
 
 } // namespace Impl

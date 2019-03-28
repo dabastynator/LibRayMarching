@@ -20,9 +20,15 @@ using namespace LibRayMarching::Impl;
  Class definition of CLibRayMarchingPrimitiveGroup 
 **************************************************************************************************************************/
 
+CLibRayMarchingPrimitiveGroup::CLibRayMarchingPrimitiveGroup(PrimitiveGroupPtr group):
+	CLibRayMarchingPrimitive(group), m_Group(group)
+{
+
+}
+
 LibRayMarching_uint32 CLibRayMarchingPrimitiveGroup::GetPrimitiveCount ()
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	return m_Group->GetCount();
 }
 
 ILibRayMarchingPrimitive * CLibRayMarchingPrimitiveGroup::GetPrimitive (const LibRayMarching_uint32 nIndex)
@@ -32,7 +38,8 @@ ILibRayMarchingPrimitive * CLibRayMarchingPrimitiveGroup::GetPrimitive (const Li
 
 void CLibRayMarchingPrimitiveGroup::AddPrimitive (ILibRayMarchingPrimitive* pPrimitive)
 {
-	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
+	CLibRayMarchingPrimitive* pPrimitiveImpl = dynamic_cast < CLibRayMarchingPrimitive* >(pPrimitive);
+	m_Group->AddPrimitive(pPrimitiveImpl->GetPrimitive());
 }
 
 void CLibRayMarchingPrimitiveGroup::RemovePrimitive (const LibRayMarching_uint32 nIndex)
@@ -40,7 +47,13 @@ void CLibRayMarchingPrimitiveGroup::RemovePrimitive (const LibRayMarching_uint32
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
 
-double CLibRayMarchingPrimitiveGroup::DistanceTo(Vector vPoint)
+void CLibRayMarchingPrimitiveGroup::SetGroupAction (const eLibRayMarchingGroupAction eGroupAction)
 {
-	return 0;
+	m_Group->SetCombineAction(LibCAToCA(eGroupAction));
 }
+
+eLibRayMarchingGroupAction CLibRayMarchingPrimitiveGroup::GetGroupAction ()
+{
+	return CAToLibCA(m_Group->GetCombineAction());
+}
+

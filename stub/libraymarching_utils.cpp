@@ -47,3 +47,23 @@ sLibRayMarchingMaterial LibRayMarching::MaterialToLibMaterial(const Material& Ma
 	result.m_Refraction = Material.refraction;
 	return result;
 }
+
+CombineAction LibRayMarching::LibCAToCA (const eLibRayMarchingGroupAction& action)
+{
+	switch(action)
+	{
+		case eGroupActionIntersect: return caIntersect;
+		case eGroupActionUnify: return caUnify;
+		case eGroupActionSubtract: return caSubtract;
+	}
+}
+
+eLibRayMarchingGroupAction LibRayMarching::CAToLibCA (const CombineAction& action)
+{
+	switch(action)
+	{
+		case caIntersect: return eGroupActionIntersect;
+		case caUnify: return eGroupActionUnify;
+		case caSubtract: return eGroupActionSubtract;
+	}
+}
