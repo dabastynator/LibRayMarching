@@ -38,6 +38,18 @@ namespace LibRayMarching
 		caSubtract
 	};
 
+	enum PrimitiveType
+	{
+		ptSphere, ptBox, ptPlane, ptCapsule, ptCylinder, ptTorus,
+		ptMengerSponge, ptQuaternion, ptGroup
+	};
+
+	enum Distortion
+	{
+		pdNone,
+		pdSinus
+	};
+
 	class Primitive;
 
 	struct MarcheResult

@@ -21,10 +21,17 @@ namespace LibRayMarching
 
 			Material m_Material;
 
+			Distortion m_Distortion;
+
+			double m_DistSinFactor;
+
+			double m_DistSinSize;
+
+			virtual double InternSignedDistance (const Vector& vPoint) const = 0;
+
 		public:
 
-			enum Type {ptSphere, ptBox, ptPlane, ptCapsule, ptCylinder, ptTorus,
-				ptMengerSonge, ptQuaternion, ptGroup};
+			Primitive();
 
 			void IdentityPosition ();
 
@@ -38,11 +45,13 @@ namespace LibRayMarching
 
 			Material* GetMaterial() { return &m_Material; };
 
-			virtual Type GetType () = 0;
+			void SetDistortionSinus(double factor, double size);
+
+			virtual PrimitiveType GetType () = 0;
 
 			virtual void Initialize() {};
 
-			virtual double SignedDistance (const Vector& vPoint) const = 0;
+			double SignedDistance (const Vector& vPoint) const;
 			
 	};
 
@@ -55,6 +64,10 @@ namespace LibRayMarching
 
 			double m_Radius;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			Sphere(double radius): m_Radius(radius) {};
@@ -63,11 +76,9 @@ namespace LibRayMarching
 
 			void SetRadius (const double dRadius) { m_Radius = dRadius; };
 
-			Type GetType () { return Type::ptSphere; };
+			PrimitiveType GetType () { return ptSphere; };
 
-			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
+			void Initialize();			
 
 	};
 
@@ -83,6 +94,10 @@ namespace LibRayMarching
 			Vector m_Point1, m_Point2, m_P1P2;
 
 			double m_Length;
+
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;			
 
 		public:
 
@@ -100,11 +115,9 @@ namespace LibRayMarching
 
 			Vector GetPoint2 () { return m_Point2; };
 
-			Type GetType () { return Type::ptCapsule; };
+			PrimitiveType GetType () { return ptCapsule; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -117,17 +130,19 @@ namespace LibRayMarching
 
 			Vector m_Dimensions;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			Vector GetDimensions () { return m_Dimensions; };
 
 			void SetDimensions (const Vector& vDimensions) { m_Dimensions = vDimensions; };
 
-			Type GetType () { return Type::ptBox; };
+			PrimitiveType GetType () { return ptBox; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
 	};
 
 	typedef std::shared_ptr<Box> BoxPtr;
@@ -143,18 +158,19 @@ namespace LibRayMarching
 			
 			Vector m_Normal;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			Vector GetNormal () { return m_Normal; };
 
 			void SetNormal (const Vector& vNormal) { m_Normal = vNormal; };
 
-			Type GetType () { return Type::ptPlane; };
+			PrimitiveType GetType () { return ptPlane; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
-
 	};
 
 	typedef std::shared_ptr<Plane> PlanePtr;
@@ -169,6 +185,10 @@ namespace LibRayMarching
 
 			double m_Height;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			double GetRadius () { return m_Radius; };
@@ -179,11 +199,9 @@ namespace LibRayMarching
 
 			void SetHeight(double height) {m_Height = height; };
 
-			Type GetType () { return Type::ptCylinder; };
+			PrimitiveType GetType () { return ptCylinder; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -198,6 +216,10 @@ namespace LibRayMarching
 
 			double m_RadiusSmall;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			double GetRadiusBig () { return m_RadiusBig; };
@@ -208,12 +230,9 @@ namespace LibRayMarching
 
 			void SetRadiusSmall(double radiusSmall) {m_RadiusSmall = radiusSmall; };
 			
-			Type GetType () { return Type::ptTorus; };
+			PrimitiveType GetType () { return ptTorus; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
-
 	};
 
 	typedef std::shared_ptr<Torus> TorusPtr;
@@ -225,17 +244,19 @@ namespace LibRayMarching
 
 			int m_SetpCount;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			double GetSetpCount () { return m_SetpCount; };
 
 			void SetSetpCount(double setpcount) {m_SetpCount = setpcount; };
 
-			Type GetType () { return Type::ptMengerSonge; };
+			PrimitiveType GetType () { return ptMengerSponge; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
 
 	};
 
@@ -250,6 +271,10 @@ namespace LibRayMarching
 
 			Quaternion m_Quaternion;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
 			double GetIterations () { return m_Iterations; };
@@ -260,12 +285,9 @@ namespace LibRayMarching
 
 			void SetQuaternion(Quaternion quaternion) {m_Quaternion = quaternion; };
 
-			Type GetType () { return Type::ptQuaternion; };
+			PrimitiveType GetType () { return ptQuaternion; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
-
 	};
 
 	typedef std::shared_ptr<QuaternionFractal> QuaternionFractalPtr;
@@ -279,9 +301,13 @@ namespace LibRayMarching
 
 			CombineAction m_CombineAction;
 
+		protected:
+
+			double InternSignedDistance (const Vector& vPoint) const;
+
 		public:
 
-			Type GetType () { return Type::ptGroup; };
+			PrimitiveType GetType () { return ptGroup; };
 
 			int GetCount() { return m_Primitives.size(); };
 
@@ -294,9 +320,6 @@ namespace LibRayMarching
 			CombineAction GetCombineAction() { return m_CombineAction; };
 
 			void Initialize();
-
-			double SignedDistance (const Vector& vPoint) const;
-
 	};
 
 	typedef std::shared_ptr<PrimitiveGroup> PrimitiveGroupPtr;	

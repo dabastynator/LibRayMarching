@@ -4,6 +4,13 @@
 
 using namespace LibRayMarching;
 
+Primitive::Primitive()
+{
+	m_Distortion = pdNone;
+	m_DistSinSize = 0;
+	m_DistSinFactor = 0;
+}
+
 void Primitive::IdentityPosition ()
 {
 	m_ModelToWorld = Matrix();
@@ -33,15 +40,36 @@ void Primitive::SetMaterial (const Material& Material)
 	m_Material = Material;
 }
 
+void Primitive::SetDistortionSinus(double factor, double size)
+{
+	m_Distortion = pdSinus;
+	m_DistSinSize = size;
+	m_DistSinFactor = factor;
+}
+
+double Primitive::SignedDistance (const Vector& vPoint) const
+{
+	Vector p = m_Inverse * vPoint;
+	double sd = InternSignedDistance(p);
+	switch(m_Distortion){
+		case pdSinus:
+			//std::cout << " has sin distortion " << sd << std::endl;
+			Vector d = p * (2 * M_PI / m_DistSinSize);
+			sd += (sin(d.x) + sin(d.y) + sin(d.z)) * m_DistSinFactor;
+			//std::cout << " result " << sd << std::endl;
+			break;
+	}
+	return sd;
+}
+
 void Sphere::Initialize()
 {
 	
 }
 
-double Sphere::SignedDistance (const Vector& vPoint) const
+double Sphere::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector p = m_Inverse * vPoint;
-	return p.length() - m_Radius;
+	return vPoint.length() - m_Radius;
 }
 
 void Capsule::Initialize()
@@ -50,9 +78,9 @@ void Capsule::Initialize()
 	m_Length = m_P1P2.length();
 }
 
-double Capsule::SignedDistance (const Vector& vPoint) const
+double Capsule::InternSignedDistance (const Vector& vPoint) const
 {	
-	Vector p = m_Inverse * vPoint - m_Point1;
+	Vector p = vPoint - m_Point1;
 	if (m_Length > 0)
 	{
 		double dot = EnsureRange(p.dot(m_P1P2) / (m_Length * m_Length), 0., 1.);
@@ -67,9 +95,9 @@ void Box::Initialize()
 
 }
 
-double Box::SignedDistance (const Vector& vPoint) const
+double Box::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector d = m_Inverse * vPoint;
+	Vector d = vPoint;
 	d.x = std::abs(d.x);
 	d.y = std::abs(d.y);
 	d.z = std::abs(d.z);
@@ -86,7 +114,7 @@ void Plane::Initialize()
 	m_TransformedNormal = m_ModelToWorld * m_Normal;
 }
 
-double Plane::SignedDistance (const Vector& vPoint) const
+double Plane::InternSignedDistance (const Vector& vPoint) const
 {
 	Vector p = vPoint - m_Origin;
 	return std::abs(p.dot(m_TransformedNormal));
@@ -97,11 +125,10 @@ void Cylinder::Initialize()
 
 }
 
-double Cylinder::SignedDistance (const Vector& vPoint) const
+double Cylinder::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector p = m_Inverse * vPoint;
-	double distCircle = sqrt(p.x * p.x + p.y * p.y) - m_Radius;
-	double distHeight = std::abs(p.z) - m_Height / 2;
+	double distCircle = sqrt(vPoint.x * vPoint.x + vPoint.y * vPoint.y) - m_Radius;
+	double distHeight = std::abs(vPoint.z) - m_Height / 2;
 	if (distCircle < 0 && distHeight < 0)
 	{
 		return std::max(distCircle, distHeight);
@@ -118,11 +145,10 @@ void Torus::Initialize()
 
 }
 
-double Torus::SignedDistance (const Vector& vPoint) const
+double Torus::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector p = m_Inverse * vPoint;
-	double distBig = sqrt(p.x * p.x + p.y * p.y) - m_RadiusBig;
-	double dist = sqrt(distBig * distBig  + p.z * p.z);
+	double distBig = sqrt(vPoint.x * vPoint.x + vPoint.y * vPoint.y) - m_RadiusBig;
+	double dist = sqrt(distBig * distBig  + vPoint.z * vPoint.z);
 	return dist - m_RadiusSmall;
 }
 
@@ -131,15 +157,13 @@ void MengerSponge::Initialize()
 
 }
 
-double MengerSponge::SignedDistance (const Vector& vPoint) const
+double MengerSponge::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector p = m_Inverse * vPoint;
-
 	// SDF box
 	Vector box(
-		std::max(0., std::abs(p.x) - 1),
-		std::max(0., std::abs(p.y) - 1),
-		std::max(0., std::abs(p.z) - 1));
+		std::max(0., std::abs(vPoint.x) - 1),
+		std::max(0., std::abs(vPoint.y) - 1),
+		std::max(0., std::abs(vPoint.z) - 1));
 	float sdBox = box.length();
 
 	// SDF inside crosses
@@ -147,7 +171,7 @@ double MengerSponge::SignedDistance (const Vector& vPoint) const
 	float size = 1;
 	for (int i=0; i < m_SetpCount; i++)
 	{
-		Vector a = ((p.abs() * size + size) % 2 - 1).abs();
+		Vector a = ((vPoint.abs() * size + size) % 2 - 1).abs();
 		Vector d(std::max(a.x, a.y), std::max(a.y, a.z), std::max(a.z, a.x));
 		size *= 3;
 		float sdCross = (d.min() - 1./3.) / size;
@@ -161,10 +185,9 @@ void QuaternionFractal::Initialize()
 
 }
 
-double QuaternionFractal::SignedDistance (const Vector& vPoint) const
+double QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector p = m_Inverse * vPoint;
-	Quaternion z(p.x, p.y, p.z, 0);
+	Quaternion z(vPoint.x, vPoint.y, vPoint.z, 0);
 	double md2 = 1.0;
 	double mz2 = z.dot(z);
 	for (int i = 0; i < m_Iterations; i++) {
@@ -182,9 +205,8 @@ void PrimitiveGroup::Initialize()
 	
 }
 
-double PrimitiveGroup::SignedDistance (const Vector& vPoint) const
+double PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector point = m_Inverse * vPoint;
 	double sd;
 	switch(m_CombineAction){
 		case caUnify:
@@ -192,7 +214,7 @@ double PrimitiveGroup::SignedDistance (const Vector& vPoint) const
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
-				double distance = primitive->SignedDistance(point);
+				double distance = primitive->SignedDistance(vPoint);
 				sd = std::min(sd, distance);
 			}
 			return sd;
@@ -201,7 +223,7 @@ double PrimitiveGroup::SignedDistance (const Vector& vPoint) const
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
-				double distance = primitive->SignedDistance(point);
+				double distance = primitive->SignedDistance(vPoint);
 				sd = std::max(sd, distance);
 			}
 			return sd;
@@ -210,7 +232,7 @@ double PrimitiveGroup::SignedDistance (const Vector& vPoint) const
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
-				double distance = primitive->SignedDistance(point);
+				double distance = primitive->SignedDistance(vPoint);
 				if (p == m_Primitives.begin())
 				{
 					sd = distance;
