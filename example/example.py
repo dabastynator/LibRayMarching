@@ -52,6 +52,7 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
+		Sphere.SetSinusDistortion(0.06, 0.6);
 		Sphere.Translate(LibRayMarchingVector(x = 0, y = 0, z = 2));
 		self.Scene.AddPrimitive(Sphere);
 		
@@ -164,7 +165,7 @@ class RayMarching:
 			Specular = 0.4,
 			SpecularAlpha = 15));			
 		self.Scene.AddPrimitive(GroupM);
-
+		
 		print ("Create pane")
 		Plane = self.Wrapper.CreatePlane(
 			LibRayMarchingVector(x = 0, y = 0, z = 0),
