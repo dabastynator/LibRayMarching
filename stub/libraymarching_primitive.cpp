@@ -50,3 +50,8 @@ void CLibRayMarchingPrimitive::SetMaterial (const sLibRayMarchingMaterial Materi
 {
 	m_Primitive->SetMaterial(LibMaterialToMaterial(Material));
 }
+
+void CLibRayMarchingPrimitive::SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval)
+{
+	m_Primitive->SetDistortionSinus(dDistortionFactor, dInterval);
+}

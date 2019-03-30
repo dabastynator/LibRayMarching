@@ -78,6 +78,10 @@
 		<method name="SetMaterial" description="Set material for this primitive">
 			<param name="Material" type="struct" class="Material" pass="in" description="Material for this primitive" />
 		</method>
+		<method name="SetSinusDistortion" description="Set distortion by sinus addition of signed distance">
+			<param name="DistortionFactor" type="double" pass="in" description="Maximal distortion value" />
+			<param name="Interval" type="double" pass="in" description="Size of distortion repeating interval" />
+		</method>
 	</class>
 	
 	<!-- Sphere -->

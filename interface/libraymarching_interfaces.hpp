@@ -109,6 +109,13 @@ public:
 	*/
 	virtual void SetMaterial (const sLibRayMarchingMaterial Material) = 0;
 
+	/**
+	* IPrimitive::SetSinusDistortion - Set distortion by sinus addition of signed distance
+	* @param[in] dDistortionFactor - Maximal distortion value
+	* @param[in] dInterval - Size of distortion repeating interval
+	*/
+	virtual void SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval) = 0;
+
 };
 
 

@@ -83,6 +83,16 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_scale(LibR
 */
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_setmaterial(LibRayMarching_Primitive pPrimitive, const sLibRayMarchingMaterial * pMaterial);
 
+/**
+* Set distortion by sinus addition of signed distance
+*
+* @param[in] pPrimitive - Primitive instance.
+* @param[in] dDistortionFactor - Maximal distortion value
+* @param[in] dInterval - Size of distortion repeating interval
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_primitive_setsinusdistortion(LibRayMarching_Primitive pPrimitive, LibRayMarching_double dDistortionFactor, LibRayMarching_double dInterval);
+
 /*************************************************************************************************************************
  Class definition for Sphere
 **************************************************************************************************************************/

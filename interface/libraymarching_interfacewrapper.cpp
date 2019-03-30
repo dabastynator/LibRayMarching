@@ -193,6 +193,33 @@ LibRayMarchingResult libraymarching_primitive_setmaterial (LibRayMarching_Primit
 	}
 }
 
+LibRayMarchingResult libraymarching_primitive_setsinusdistortion (LibRayMarching_Primitive pPrimitive, LibRayMarching_double dDistortionFactor, LibRayMarching_double dInterval)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pPrimitive;
+
+	try {
+
+		ILibRayMarchingPrimitive* pIPrimitive = dynamic_cast<ILibRayMarchingPrimitive*>(pIBaseClass);
+		if (!pIPrimitive)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIPrimitive->SetSinusDistortion(dDistortionFactor, dInterval);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
 
 /*************************************************************************************************************************
  Class implementation for Sphere

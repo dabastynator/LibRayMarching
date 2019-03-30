@@ -15,6 +15,10 @@ Abstract: This is a stub class definition of CLibRayMarchingRayMarching
 #include "libraymarching_plane.hpp"
 #include "libraymarching_sphere.hpp"
 #include "libraymarching_capsule.hpp"
+#include "libraymarching_torus.hpp"
+#include "libraymarching_mengersponge.hpp"
+#include "libraymarching_quaternionfractal.hpp"
+#include "libraymarching_primitivegroup.hpp"
 #include "vector.h"
 
 // Include custom headers here.
@@ -73,25 +77,45 @@ ILibRayMarchingPrimitive * CLibRayMarchingRayMarching::GetPrimitive (const LibRa
 {
 	PrimitivePtr primitive = m_Shader.GetPrimitive(nIndex);
 	switch(primitive->GetType()){
-		case Primitive::Type::ptBox:
+		case ptBox:
 		{
 			BoxPtr box( std::dynamic_pointer_cast<Box> (primitive) );
 			return new CLibRayMarchingBox(box);
 		}
-		case Primitive::Type::ptSphere:
+		case ptSphere:
 		{
 			SpherePtr sphere( std::dynamic_pointer_cast<Sphere> (primitive) );
 			return new CLibRayMarchingSphere(sphere);
 		}
-		case Primitive::Type::ptPlane:
+		case ptPlane:
 		{
 			PlanePtr plane( std::dynamic_pointer_cast<Plane> (primitive) );
 			return new CLibRayMarchingPlane(plane);
 		}
-		case Primitive::Type::ptCapsule:
+		case ptCapsule:
 		{
 			CapsulePtr capsule( std::dynamic_pointer_cast<Capsule> (primitive) );
 			return new CLibRayMarchingCapsule(capsule);
+		}
+		case ptTorus:
+		{
+			TorusPtr torus( std::dynamic_pointer_cast<Torus> (primitive) );
+			return new CLibRayMarchingTorus(torus);
+		}
+		case ptMengerSponge:
+		{
+			MengerSpongePtr ms( std::dynamic_pointer_cast<MengerSponge> (primitive) );
+			return new CLibRayMarchingMengerSponge(ms);
+		}
+		case ptQuaternion:
+		{
+			QuaternionFractalPtr ms( std::dynamic_pointer_cast<QuaternionFractal> (primitive) );
+			return new CLibRayMarchingQuaternionFractal(ms);
+		}
+		case ptGroup:
+		{
+			PrimitiveGroupPtr ms( std::dynamic_pointer_cast<PrimitiveGroup> (primitive) );
+			return new CLibRayMarchingPrimitiveGroup(ms);
 		}
 	}
 	throw new ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDPARAM);
