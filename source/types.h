@@ -29,6 +29,8 @@ namespace LibRayMarching
 		int oversampling;
 		double soft_shadow;
 		double minimal_shadow;
+		double max_dist_background;
+		double min_dist_background;
 	};
 
 	enum CombineAction

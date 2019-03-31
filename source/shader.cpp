@@ -7,11 +7,18 @@ using namespace LibRayMarching;
 
 Shader::Shader()
 {
+	m_MaxIteration = 100;
+	m_MaxDistance = 100;
+	m_MinDistance = 0.001;
+	m_Epsilon = 0.008;
+	m_Bouncing = 10;
 	m_Lightning.background = Vector(0, 0, 0);
+	m_Lightning.min_dist_background = m_MaxDistance;
+	m_Lightning.max_dist_background = m_MaxDistance;
 	m_Lightning.soft_shadow = 50;
 	m_Lightning.minimal_shadow = 0.1;
 	m_Lightning.oversampling = 1;
-	m_Bouncing = 10;
+	m_Bouncing = 8;
 }
 
 Vector Shader::RefractRay(const Vector& ray, const Vector& normal, double refraction)
@@ -31,6 +38,10 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 	CalcNormal(result);
 	if (result.primitive != NULL)
 	{
+		if (result.distance > m_Lightning.max_dist_background)
+		{
+			return m_Lightning.background;
+		}
 		Material* material = result.primitive->GetMaterial();
 		Vector colAmbient = material->color * material->ambient;
 		Vector colDiffuse(0, 0, 0);
@@ -74,7 +85,14 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 			Vector hitPosOut = resultInside.position + resultInside.normal * m_Epsilon;
 			colReflected = PhongShading(hitPosOut, refractedOut, bouncing - 1) * material->transparency;
 		}
-		return colAmbient + colDiffuse + colSpecular + colReflected + colTransparent;
+		Vector colFinal = colAmbient + colDiffuse + colSpecular + colReflected + colTransparent;
+		if (result.distance > m_Lightning.min_dist_background)
+		{
+			double ratio = (result.distance - m_Lightning.max_dist_background) / 
+				(m_Lightning.min_dist_background - m_Lightning.max_dist_background);
+			colFinal = colFinal * ratio + m_Lightning.background * (1 - ratio);
+		}
+		return colFinal;
 	} else
 	{
 		return m_Lightning.background;
@@ -118,6 +136,7 @@ double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult
 			return distance;
 		}
 	}
+	result.distance = distance;
 	return distance;
 }
 
