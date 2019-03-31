@@ -1456,6 +1456,60 @@ LibRayMarchingResult libraymarching_raymarching_setviewport (LibRayMarching_RayM
 	}
 }
 
+LibRayMarchingResult libraymarching_raymarching_setbackground (LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pBackground, LibRayMarching_double dDistanceStart, LibRayMarching_double dDistanceEnd)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pRayMarching;
+
+	try {
+
+		ILibRayMarchingRayMarching* pIRayMarching = dynamic_cast<ILibRayMarchingRayMarching*>(pIBaseClass);
+		if (!pIRayMarching)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIRayMarching->SetBackground(*pBackground, dDistanceStart, dDistanceEnd);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
+LibRayMarchingResult libraymarching_raymarching_setrenderproperties (LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nOversampling, LibRayMarching_uint32 nMaxBouncing)
+{
+	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pRayMarching;
+
+	try {
+
+		ILibRayMarchingRayMarching* pIRayMarching = dynamic_cast<ILibRayMarchingRayMarching*>(pIBaseClass);
+		if (!pIRayMarching)
+			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
+
+
+		pIRayMarching->SetRenderProperties(nOversampling, nMaxBouncing);
+
+
+		return LIBRAYMARCHING_SUCCESS;
+	}
+	catch (ELibRayMarchingInterfaceException & Exception) {
+		return handleLibRayMarchingException(pIBaseClass, Exception);
+	}
+	catch (std::exception & StdException) {
+		return handleStdException(pIBaseClass, StdException);
+	}
+	catch (...) {
+		return handleUnhandledException(pIBaseClass);
+	}
+}
+
 LibRayMarchingResult libraymarching_raymarching_renderscene (LibRayMarching_RayMarching pRayMarching)
 {
 	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pRayMarching;

@@ -527,6 +527,27 @@ LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_setscree
 LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_setviewport(LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pEye, const sLibRayMarchingVector * pDir, const sLibRayMarchingVector * pUp, LibRayMarching_double dFOV);
 
 /**
+* Set special properties
+*
+* @param[in] pRayMarching - RayMarching instance.
+* @param[in] pBackground - Background color
+* @param[in] dDistanceStart - Distance where the background shading starts
+* @param[in] dDistanceEnd - Distance where the background shading ends
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_setbackground(LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingVector * pBackground, LibRayMarching_double dDistanceStart, LibRayMarching_double dDistanceEnd);
+
+/**
+* Set special properties
+*
+* @param[in] pRayMarching - RayMarching instance.
+* @param[in] nOversampling - Oversampling of one pixel
+* @param[in] nMaxBouncing - Maximal tray bouncing for transparent and reflecting surfaces
+* @return error code or 0 (success)
+*/
+LIBRAYMARCHING_DECLSPEC LibRayMarchingResult libraymarching_raymarching_setrenderproperties(LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nOversampling, LibRayMarching_uint32 nMaxBouncing);
+
+/**
 * Renders the current scene
 *
 * @param[in] pRayMarching - RayMarching instance.

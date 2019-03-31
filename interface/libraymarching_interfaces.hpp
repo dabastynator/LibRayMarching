@@ -474,6 +474,21 @@ public:
 	virtual void SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV) = 0;
 
 	/**
+	* IRayMarching::SetBackground - Set special properties
+	* @param[in] Background - Background color
+	* @param[in] dDistanceStart - Distance where the background shading starts
+	* @param[in] dDistanceEnd - Distance where the background shading ends
+	*/
+	virtual void SetBackground (const sLibRayMarchingVector Background, const LibRayMarching_double dDistanceStart, const LibRayMarching_double dDistanceEnd) = 0;
+
+	/**
+	* IRayMarching::SetRenderProperties - Set special properties
+	* @param[in] nOversampling - Oversampling of one pixel
+	* @param[in] nMaxBouncing - Maximal tray bouncing for transparent and reflecting surfaces
+	*/
+	virtual void SetRenderProperties (const LibRayMarching_uint32 nOversampling, const LibRayMarching_uint32 nMaxBouncing) = 0;
+
+	/**
 	* IRayMarching::RenderScene - Renders the current scene
 	*/
 	virtual void RenderScene () = 0;

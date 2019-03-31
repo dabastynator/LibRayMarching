@@ -158,11 +158,16 @@ void CLibRayMarchingRayMarching::RenderScene ()
 	}
 	int width = m_Shader.GetCamera()->GetWidth();
 	int height = m_Shader.GetCamera()->GetHeight();
-	for (int x = 0; x < width; x++)
+	bool running = true;
+	for (int x = 0; x < width && running; x++)
 	{
 		for (int y = 0; y < height; y++)
 		{
 			m_ColorBuffer[x + y * width] = m_Shader.RenderPixel(x, y);
+		}
+		if (m_ProgressCallback != NULL)
+		{
+			m_ProgressCallback(100 * x / width, &running);
 		}
 	}
 }
@@ -195,5 +200,20 @@ LibRayMarching_uint32 CLibRayMarchingRayMarching::RenderPixel (const LibRayMarch
 void CLibRayMarchingRayMarching::SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback)
 {
 	m_ProgressCallback = pProgressCallback;
+}
+
+void CLibRayMarchingRayMarching::SetBackground (const sLibRayMarchingVector Background, const LibRayMarching_double dDistanceStart, const LibRayMarching_double dDistanceEnd)
+{
+	Lightning* lighning = m_Shader.GetLightning();
+	lighning->background = LibVecToVector(Background);
+	lighning->min_dist_background = dDistanceStart;
+	lighning->max_dist_background = dDistanceEnd;
+}
+
+void CLibRayMarchingRayMarching::SetRenderProperties (const LibRayMarching_uint32 nOversampling, const LibRayMarching_uint32 nMaxBouncing)
+{
+	Lightning* lighning = m_Shader.GetLightning();
+	lighning->oversampling = nOversampling;
+	m_Shader.SetMaxBouncing(nMaxBouncing);
 }
 

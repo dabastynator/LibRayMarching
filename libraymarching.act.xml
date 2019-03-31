@@ -265,6 +265,15 @@
 			<param name="Up" type="struct" class="Vector" pass="in" description="Direction of up vector" />
 			<param name="FOV" type="double" pass="in" description="Field of view angle in radian" />
 		</method>
+		<method name="SetBackground" description="Set special properties">
+			<param name="Background" type="struct" class="Vector" pass="in" description="Background color" />
+			<param name="DistanceStart" type="double" pass="in" description="Distance where the background shading starts" />
+			<param name="DistanceEnd" type="double" pass="in" description="Distance where the background shading ends" />
+		</method>
+		<method name="SetRenderProperties" description="Set special properties">
+			<param name="Oversampling" type="uint32" pass="in" description="Oversampling of one pixel" />
+			<param name="MaxBouncing" type="uint32" pass="in" description="Maximal tray bouncing for transparent and reflecting surfaces" />
+		</method>
 
 		<method name="RenderScene" description="Renders the current scene">
 		</method>

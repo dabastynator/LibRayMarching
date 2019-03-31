@@ -95,6 +95,9 @@ public:
 
 	void SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback);
 
+	void SetBackground (const sLibRayMarchingVector Background, const LibRayMarching_double dDistanceStart, const LibRayMarching_double dDistanceEnd);
+
+	void SetRenderProperties (const LibRayMarching_uint32 nOversampling, const LibRayMarching_uint32 nMaxBouncing);
 };
 
 } // namespace Impl
