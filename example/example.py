@@ -21,6 +21,10 @@ from LibRayMarching import *
 from PIL import Image
 import math
 
+def Progress(Percentage, ShouldAbort):
+	print(("=" * math.ceil(Percentage)) + "> " + str(Percentage) + "%", end="\r");
+	sys.stdout.flush();
+
 class RayMarching:
 
 	def __init__(self, width, height):
@@ -31,6 +35,7 @@ class RayMarching:
 		self.Scene = self.Wrapper.CreateRayMarching();
 		print("Set size")
 		self.Scene.SetScreenSize(width, height);
+		self.Scene.SetProgressCallback(LibRayMarchingProgressCallback(Progress));
 		self.Width = width;
 		self.Height = height;
 
@@ -39,6 +44,10 @@ class RayMarching:
 			LibRayMarchingVector(x = 6.5, y = -16, z = 4),
 			LibRayMarchingVector(x = -0.3, y = 1, z = -0.2),
 			LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
+
+		print("Set properties");
+		self.Scene.SetRenderProperties(1, 5);
+		self.Scene.SetBackground(LibRayMarchingVector(x = 0.05, y = 0, z = 0.2), 30, 40);
 
 	def BuildScene(self):
 		print ("Create light")
@@ -148,15 +157,15 @@ class RayMarching:
 		GBox = self.Wrapper.CreateBox(
 			LibRayMarchingVector(x = 1, y = 1, z = 1)
 		);
-		GCylinder = self.Wrapper.CreateCylinder(0.4, 100);
-		GCylinder.Rotate(LibRayMarchingVector(x = 1, y = 0, z = 0), math.pi/2);
+		GSphere2 = self.Wrapper.CreateSphere(1.1);
+		GSphere2.Rotate(LibRayMarchingVector(x = 1, y = 0, z = 0), math.pi/2);
 		GroupRCube = self.Wrapper.CreatePrimitiveGroup(LibRayMarchingGroupAction.Intersect);
 		GroupRCube.AddPrimitive(GSphere);
 		GroupRCube.AddPrimitive(GBox);
 
 		GroupM = self.Wrapper.CreatePrimitiveGroup(LibRayMarchingGroupAction.Subtract);
 		GroupM.AddPrimitive(GroupRCube);
-		GroupM.AddPrimitive(GCylinder);
+		GroupM.AddPrimitive(GSphere2);
 		GroupM.Translate(LibRayMarchingVector(x = 6, y = -6, z = 2));
 		GroupM.SetMaterial(LibRayMarchingMaterial(
 			Green = 0.5, Blue = 0.5, Red = 0.1,
@@ -188,6 +197,7 @@ class RayMarching:
 	def Render(self):
 		print ("Render scene")
 		self.Scene.RenderScene();
+		print ("")
 
 		print ("Get buffer")
 		color_buffer = self.Scene.GetColorBuffer();
@@ -206,7 +216,7 @@ class RayMarching:
 def main():
 	RM = RayMarching(600, 400);
 	RM.BuildScene();
-	RM.RenderPixel(70, 300);
+	RM.RenderPixel(225, 172);
 	RM.Render();
 	
 
