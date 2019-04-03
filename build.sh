@@ -18,7 +18,6 @@ compile)
 	cd $Build
 	cmake ..
 	make
-	mv liblibraymarching.so libraymarching.so
 ;;
 package)
   echo "push button"
