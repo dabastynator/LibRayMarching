@@ -110,14 +110,12 @@ double Box::InternSignedDistance (const Vector& vPoint) const
 
 void Plane::Initialize()
 {
-	m_Origin = m_ModelToWorld * VectorNull;
-	m_TransformedNormal = m_ModelToWorld * m_Normal;
+
 }
 
 double Plane::InternSignedDistance (const Vector& vPoint) const
 {
-	Vector p = vPoint - m_Origin;
-	return std::abs(p.dot(m_TransformedNormal));
+	return std::abs(vPoint.dot(m_Normal));
 }
 
 void Cylinder::Initialize()

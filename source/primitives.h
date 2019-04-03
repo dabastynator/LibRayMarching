@@ -151,10 +151,6 @@ namespace LibRayMarching
 	{
 
 		private:
-
-			Vector m_Origin;
-
-			Vector m_TransformedNormal;
 			
 			Vector m_Normal;
 

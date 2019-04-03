@@ -7,10 +7,10 @@ using namespace LibRayMarching;
 
 Shader::Shader()
 {
-	m_MaxIteration = 100;
+	m_MaxIteration = 300;
 	m_MaxDistance = 100;
-	m_MinDistance = 0.001;
-	m_Epsilon = 0.008;
+	m_MinDistance = 0.00001;
+	m_Epsilon = 0.005;
 	m_Bouncing = 10;
 	m_Lightning.background = Vector(0, 0, 0);
 	m_Lightning.min_dist_background = m_MaxDistance;
@@ -71,7 +71,7 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 		Vector colReflected(0, 0, 0), colTransparent(0, 0, 0);
 		if (material->reflection > 0 && bouncing > 0)
 		{
-			colReflected = PhongShading(hitPosOffset, reflectedRay, bouncing - 1);
+			colReflected = PhongShading(hitPosOffset, reflectedRay, bouncing - 1) * material->reflection;
 		}
 		if (material->transparency > 0 && bouncing > 0)
 		{			
@@ -83,7 +83,7 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 			CalcNormal(resultInside);
 			Vector refractedOut = RefractRay(refractedIn * -1, resultInside.normal, 1 / material->refraction) * -1;
 			Vector hitPosOut = resultInside.position + resultInside.normal * m_Epsilon;
-			colReflected = PhongShading(hitPosOut, refractedOut, bouncing - 1) * material->transparency;
+			colTransparent = PhongShading(hitPosOut, refractedOut, bouncing - 1) * material->transparency;
 		}
 		Vector colFinal = colAmbient + colDiffuse + colSpecular + colReflected + colTransparent;
 		if (result.distance > m_Lightning.min_dist_background)
