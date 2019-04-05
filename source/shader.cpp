@@ -36,13 +36,13 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 {
 	MarcheResult result;
 	RayMarche(position, ray, result);
-	CalcNormal(position, ray, result);
 	if (result.primitive != NULL)
 	{
 		if (result.distance > m_Lightning.max_dist_background)
 		{
 			return m_Lightning.background;
 		}
+		CalcNormal(position, ray, result);
 		Material* material = result.primitive->GetMaterial();
 		Vector colAmbient = material->color * material->ambient;
 		Vector colDiffuse(0, 0, 0);
