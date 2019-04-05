@@ -482,11 +482,10 @@ public:
 	virtual void SetBackground (const sLibRayMarchingVector Background, const LibRayMarching_double dDistanceStart, const LibRayMarching_double dDistanceEnd) = 0;
 
 	/**
-	* IRayMarching::SetRenderProperties - Set special properties
-	* @param[in] nOversampling - Oversampling of one pixel
-	* @param[in] nMaxBouncing - Maximal tray bouncing for transparent and reflecting surfaces
+	* IRayMarching::SetShaderProperties - Set shader properties
+	* @param[in] ShaderProperties - Shader properties
 	*/
-	virtual void SetRenderProperties (const LibRayMarching_uint32 nOversampling, const LibRayMarching_uint32 nMaxBouncing) = 0;
+	virtual void SetShaderProperties (const sLibRayMarchingShaderProperties ShaderProperties) = 0;
 
 	/**
 	* IRayMarching::RenderScene - Renders the current scene

@@ -31,7 +31,7 @@ using namespace LibRayMarching::Impl;
 **************************************************************************************************************************/
 
 CLibRayMarchingRayMarching::CLibRayMarchingRayMarching():
-	m_ColorBuffer(NULL)
+	m_ColorBuffer(NULL), m_ProgressCallback(NULL)
 {
 
 }
@@ -210,10 +210,11 @@ void CLibRayMarchingRayMarching::SetBackground (const sLibRayMarchingVector Back
 	lighning->max_dist_background = dDistanceEnd;
 }
 
-void CLibRayMarchingRayMarching::SetRenderProperties (const LibRayMarching_uint32 nOversampling, const LibRayMarching_uint32 nMaxBouncing)
+void CLibRayMarchingRayMarching::SetShaderProperties (const sLibRayMarchingShaderProperties ShaderProperties)
 {
 	Lightning* lighning = m_Shader.GetLightning();
-	lighning->oversampling = nOversampling;
-	m_Shader.SetMaxBouncing(nMaxBouncing);
+	lighning->oversampling = ShaderProperties.m_Oversampling;
+	lighning->soft_shadow = ShaderProperties.m_SoftShadow;
+	m_Shader.SetMaxBouncing(ShaderProperties.m_MaxBouncing);
 }
 

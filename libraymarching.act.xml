@@ -7,6 +7,8 @@
 	</license>
 	
 	<bindings>
+		<binding language="C" indentation="tabs" />
+		<binding language="CDynamic" indentation="tabs" />
 		<binding language="Cpp" indentation="tabs" />
 		<binding language="CppDynamic" indentation="tabs" />
 		<binding language="Pascal" indentation="4spaces" />
@@ -51,6 +53,12 @@
 		<member name="Reflection" type="double" />
 		<member name="Transparency" type="double" />
 		<member name="Refraction" type="double" />
+	</struct>
+
+	<struct name="ShaderProperties">
+		<member name="Oversampling" type="uint32" />
+		<member name="MaxBouncing" type="uint32" />
+		<member name="SoftShadow" type="double" />
 	</struct>
 	
 	<functiontype name="ProgressCallback" description="Callback to report calculation progress and query whether it should be aborted">
@@ -270,9 +278,8 @@
 			<param name="DistanceStart" type="double" pass="in" description="Distance where the background shading starts" />
 			<param name="DistanceEnd" type="double" pass="in" description="Distance where the background shading ends" />
 		</method>
-		<method name="SetRenderProperties" description="Set special properties">
-			<param name="Oversampling" type="uint32" pass="in" description="Oversampling of one pixel" />
-			<param name="MaxBouncing" type="uint32" pass="in" description="Maximal tray bouncing for transparent and reflecting surfaces" />
+		<method name="SetShaderProperties" description="Set shader properties">			
+			<param name="ShaderProperties" type="struct" class="ShaderProperties" pass="in" description="Shader properties" />
 		</method>
 
 		<method name="RenderScene" description="Renders the current scene">

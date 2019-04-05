@@ -141,6 +141,12 @@ typedef struct {
     LibRayMarching_double m_Refraction;
 } sLibRayMarchingMaterial;
 
+typedef struct {
+    LibRayMarching_uint32 m_Oversampling;
+    LibRayMarching_uint32 m_MaxBouncing;
+    LibRayMarching_double m_SoftShadow;
+} sLibRayMarchingShaderProperties;
+
 #pragma pack ()
 
 /*************************************************************************************************************************

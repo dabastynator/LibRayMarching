@@ -1483,7 +1483,7 @@ LibRayMarchingResult libraymarching_raymarching_setbackground (LibRayMarching_Ra
 	}
 }
 
-LibRayMarchingResult libraymarching_raymarching_setrenderproperties (LibRayMarching_RayMarching pRayMarching, LibRayMarching_uint32 nOversampling, LibRayMarching_uint32 nMaxBouncing)
+LibRayMarchingResult libraymarching_raymarching_setshaderproperties (LibRayMarching_RayMarching pRayMarching, const sLibRayMarchingShaderProperties * pShaderProperties)
 {
 	ILibRayMarchingBaseClass* pIBaseClass = (ILibRayMarchingBaseClass *)pRayMarching;
 
@@ -1494,7 +1494,7 @@ LibRayMarchingResult libraymarching_raymarching_setrenderproperties (LibRayMarch
 			throw ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDCAST);
 
 
-		pIRayMarching->SetRenderProperties(nOversampling, nMaxBouncing);
+		pIRayMarching->SetShaderProperties(*pShaderProperties);
 
 
 		return LIBRAYMARCHING_SUCCESS;
