@@ -215,6 +215,7 @@ void CLibRayMarchingRayMarching::SetShaderProperties (const sLibRayMarchingShade
 	Lightning* lighning = m_Shader.GetLightning();
 	lighning->oversampling = ShaderProperties.m_Oversampling;
 	lighning->soft_shadow = ShaderProperties.m_SoftShadow;
+	lighning->normal_by_environment = ShaderProperties.m_FastNormalCalculation;
 	m_Shader.SetMaxBouncing(ShaderProperties.m_MaxBouncing);
 }
 

@@ -145,6 +145,7 @@ typedef struct {
     LibRayMarching_uint32 m_Oversampling;
     LibRayMarching_uint32 m_MaxBouncing;
     LibRayMarching_double m_SoftShadow;
+    bool m_FastNormalCalculation;
 } sLibRayMarchingShaderProperties;
 
 #pragma pack ()

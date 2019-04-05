@@ -59,6 +59,7 @@
 		<member name="Oversampling" type="uint32" />
 		<member name="MaxBouncing" type="uint32" />
 		<member name="SoftShadow" type="double" />
+		<member name="FastNormalCalculation" type="bool" />
 	</struct>
 	
 	<functiontype name="ProgressCallback" description="Callback to report calculation progress and query whether it should be aborted">
