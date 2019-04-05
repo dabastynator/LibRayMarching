@@ -18,14 +18,15 @@ Shader::Shader()
 	m_Lightning.soft_shadow = 50;
 	m_Lightning.minimal_shadow = 0.1;
 	m_Lightning.oversampling = 1;
+	m_Lightning.normal_by_environment = false;
 	m_Bouncing = 8;
 }
 
-Vector Shader::RefractRay(const Vector& ray, const Vector& normal, double refraction)
+Vector Shader::RefractRay(const Vector& ray, const Vector& normal, float refraction)
 {
-	double dot = -ray.dot(normal);
-	double alpha = acos(EnsureRange(dot, -1., 1.));
-	double beta = alpha / refraction;
+	float dot = -ray.dot(normal);
+	float alpha = acos(EnsureRange(dot, -1.f, 1.f));
+	float beta = alpha / refraction;
 	Vector cross = normal.cross(ray);
 	Vector comp = cross.cross(normal);
 	return normal * -cos(beta) + comp * (sin(beta) / comp.length());
@@ -35,7 +36,7 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 {
 	MarcheResult result;
 	RayMarche(position, ray, result);
-	CalcNormal(result);
+	CalcNormal(position, ray, result);
 	if (result.primitive != NULL)
 	{
 		if (result.distance > m_Lightning.max_dist_background)
@@ -52,16 +53,16 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 		{
 			Light light = m_Lights[i];
 			Vector toLight = (light.position - result.position).normalized();
-			double toLightDot = toLight.dot(result.normal);
+			float toLightDot = toLight.dot(result.normal);
 			if (toLightDot > 0)
 			{
 				MarcheResult resultLigth;
 				RayMarche(hitPosOffset, toLight, resultLigth);
 
-				double diffFactor = toLightDot * material->diffuse * resultLigth.shadow_factor;
+				float diffFactor = toLightDot * material->diffuse * resultLigth.shadow_factor;
 				colDiffuse += material->color * diffFactor;
 
-				double specFactor = material->specular * 
+				float specFactor = material->specular * 
 					std::pow(reflectedRay.dot(toLight), material->specular_alpha) * 
 					resultLigth.shadow_factor;
 				if (specFactor > 0)
@@ -80,7 +81,7 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 			MarcheResult resultInside;
 			resultInside.primitive = result.primitive;
 			RayMarcheInside(result.primitive, hitPosInside, refractedIn, resultInside);
-			CalcNormal(resultInside);
+			CalcNormal(hitPosInside, refractedIn, resultInside);
 			Vector refractedOut = RefractRay(refractedIn * -1, resultInside.normal, 1 / material->refraction) * -1;
 			Vector hitPosOut = resultInside.position + resultInside.normal * m_Epsilon;
 			colTransparent = PhongShading(hitPosOut, refractedOut, bouncing - 1) * material->transparency;
@@ -88,7 +89,7 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 		Vector colFinal = colAmbient + colDiffuse + colSpecular + colReflected + colTransparent;
 		if (result.distance > m_Lightning.min_dist_background)
 		{
-			double ratio = (result.distance - m_Lightning.max_dist_background) / 
+			float ratio = (result.distance - m_Lightning.max_dist_background) / 
 				(m_Lightning.min_dist_background - m_Lightning.max_dist_background);
 			colFinal = colFinal * ratio + m_Lightning.background * (1 - ratio);
 		}
@@ -99,27 +100,52 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 	}
 }
 
-double Shader::CalcNormal(MarcheResult& result)
+float Shader::CalcNormal(Vector pos, Vector ray, MarcheResult& result)
 {
 	if (result.primitive != NULL)
 	{
-		Vector dX(m_Epsilon, 0, 0), dY(0, m_Epsilon, 0), dZ(0, 0, m_Epsilon);
-		Vector p = result.position;
 		Primitive* primitive = result.primitive;
-		result.normal.x = primitive->SignedDistance(p + dX) - primitive->SignedDistance(p - dX);
-		result.normal.y = primitive->SignedDistance(p + dY) - primitive->SignedDistance(p - dY);
-		result.normal.z = primitive->SignedDistance(p + dZ) - primitive->SignedDistance(p - dZ);
-		result.normal.normalize();
+		if (m_Lightning.normal_by_environment)
+		{
+			Vector dX(m_Epsilon, 0, 0), dY(0, m_Epsilon, 0), dZ(0, 0, m_Epsilon);
+			Vector p = result.position;			
+			result.normal.x = primitive->SignedDistance(p + dX) - primitive->SignedDistance(p - dX);
+			result.normal.y = primitive->SignedDistance(p + dY) - primitive->SignedDistance(p - dY);
+			result.normal.z = primitive->SignedDistance(p + dZ) - primitive->SignedDistance(p - dZ);
+			result.normal.normalize();
+		}
+		else{
+			// Additional ray marche to get right normal
+			MarcheResult e1, e2;
+			Vector r1 = ray.cross(VectorX);
+			if (r1.length() < m_Epsilon) {
+				r1 = ray.cross(VectorY);
+			}
+			r1.normalize();
+			Vector r2 = ray.cross(r1).normalized();
+			Vector p1 = pos + r1 * m_Epsilon;
+			Vector p2 = pos + r2 * m_Epsilon;
+			RayMarchePrimitive(primitive, p1, ray, e1);
+			RayMarchePrimitive(primitive, p2, ray, e2);
+
+			// Calculate normal
+			Vector v1 = e1.position - result.position;
+			Vector v2 = e2.position - result.position;
+			result.normal = v2.cross(v1).normalized();
+			if (result.normal.dot(ray) > 0) {
+				result.normal = result.normal * -1;
+			}
+		}
 	}
 }
 
-double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult& result)
+float Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult& result)
 {
-	double distance = 0;
+	float distance = 0;
 	result.shadow_factor = 1;
 	result.position = position + ray * distance;	
 	for (int i = 0; i < m_MaxIteration; i++) {
-		double d = GetDistance(result.position, result);
+		float d = GetDistance(result.position, result);
 		if (distance > 0) {
 			result.shadow_factor = std::min(result.shadow_factor, m_Lightning.soft_shadow * d / distance);
 			result.shadow_factor = std::max(result.shadow_factor, m_Lightning.minimal_shadow);
@@ -142,10 +168,10 @@ double Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult
 
 void Shader::RayMarcheInside(const Primitive* primitive, const Vector& position, const Vector& ray, MarcheResult& result)
 {
-	double distance = 0;
+	float distance = 0;
 	result.position = position + ray * distance;	
 	for (int i = 0; i < m_MaxIteration; i++) {
-		double d = -primitive->SignedDistance(result.position);
+		float d = -primitive->SignedDistance(result.position);
 		distance += d;
 		result.position = position + ray * distance;		
 		if (distance > m_MaxDistance) {
@@ -158,15 +184,36 @@ void Shader::RayMarcheInside(const Primitive* primitive, const Vector& position,
 			return;
 		}
 	}
+	result.distance = distance;
 }
 
-double Shader::GetDistance(const Vector& position, MarcheResult& result)
+void Shader::RayMarchePrimitive(const Primitive* primitive, const Vector& position, const Vector& ray, MarcheResult& result)
 {
-	double minDist = m_MaxDistance;
+	float distance = 0;
+	result.shadow_factor = 1;
+	result.position = position + ray * distance;	
+	for (int i = 0; i < m_MaxIteration; i++) {
+		float d = primitive->SignedDistance(result.position);
+		distance += d;
+		result.position = position + ray * distance;		
+		if (distance > m_MaxDistance) {
+			result.primitive = NULL;
+			result.distance = distance;
+		}
+		if (d < m_MinDistance) {
+			result.distance = distance;
+		}
+	}
+	result.distance = distance;
+}
+
+float Shader::GetDistance(const Vector& position, MarcheResult& result)
+{
+	float minDist = m_MaxDistance;
 	for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 	{		
 		PrimitivePtr primitive = *p;
-		double distance = primitive->SignedDistance(position);
+		float distance = primitive->SignedDistance(position);
 		if (distance < minDist)
 		{
 			minDist = distance;
@@ -183,7 +230,7 @@ unsigned int Shader::RenderPixel(int x, int y)
 	Vector color;
 	int oversampling = std::max(1, m_Lightning.oversampling);	
 	for (int i = 0; i < oversampling; i++) {
-		double offset = i / (double) oversampling;
+		float offset = i / oversampling;
 		m_Camera.CalculateRay(x + offset, y + offset, pos, ray);		
 		color += PhongShading(pos, ray, m_Bouncing);
 	}

@@ -12,43 +12,43 @@ namespace LibRayMarching
 
 	struct Vector
 	{
-		double x;
-		double y;
-		double z;
+		float x;
+		float y;
+		float z;
 
 		Vector();
 		Vector(const Vector& vector);
-		Vector(const double& val);
-		Vector(const double& x, const double& y, const double& z);
+		Vector(const float& val);
+		Vector(const float& x, const float& y, const float& z);
 
 		Vector operator+(const Vector& vec) const;
-		Vector operator+(const double& val) const;
+		Vector operator+(const float& val) const;
 		Vector operator-(const Vector& vec) const;
-		Vector operator-(const double& val) const;
+		Vector operator-(const float& val) const;
 		Vector operator*(const Vector& vec) const;
-		Vector operator*(const double& val) const;
+		Vector operator*(const float& val) const;
 		Vector operator/(const Vector& vec) const;
-		Vector operator/(const double& val) const;
+		Vector operator/(const float& val) const;
 		Vector operator%(const Vector& vec) const;
-		Vector operator%(const double& val) const;
+		Vector operator%(const float& val) const;
 
 		Vector operator+=(const Vector& vec);
-		Vector operator+=(const double& val);
+		Vector operator+=(const float& val);
 		Vector operator-=(const Vector& vec);
-		Vector operator-=(const double& val);
+		Vector operator-=(const float& val);
 		Vector operator*=(const Vector& vec);
-		Vector operator*=(const double& val);
+		Vector operator*=(const float& val);
 		Vector operator/=(const Vector& vec);
-		Vector operator/=(const double& val);
+		Vector operator/=(const float& val);
 		Vector operator%=(const Vector& vec);
-		Vector operator%=(const double& val);
+		Vector operator%=(const float& val);
 
-		double length() const;
-		double lengthSquare() const;
-		double dot(const Vector& vec) const;
+		float length() const;
+		float lengthSquare() const;
+		float dot(const Vector& vec) const;
 		Vector cross(const Vector& vec) const;
-		double min() const;
-		double max() const;
+		float min() const;
+		float max() const;
 		Vector abs() const;
 		void normalize();
 		Vector normalized() const;		

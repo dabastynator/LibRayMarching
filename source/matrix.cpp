@@ -109,10 +109,10 @@ Vector Matrix::operator*(const Vector& vec) const
 	);
 }
 
-Matrix LibRayMarching::MatrixRotate(const Vector& axis, const double& angle_radian)
+Matrix LibRayMarching::MatrixRotate(const Vector& axis, const float& angle_radian)
 {
-	double s = std::sin(angle_radian);
-	double c = std::cos(angle_radian);
+	float s = std::sin(angle_radian);
+	float c = std::cos(angle_radian);
 
 	Matrix mx;
 	mx.field[0]  = c + axis.x * axis.x * (1 - c);
@@ -152,7 +152,7 @@ Matrix LibRayMarching::MatrixScale(const Vector& scale)
 	return result;
 }
 
-Matrix LibRayMarching::MatrixScale(const double& scale)
+Matrix LibRayMarching::MatrixScale(const float& scale)
 {
 	Matrix result;
 	result.field[0]  = scale;

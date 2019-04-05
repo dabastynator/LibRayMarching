@@ -19,9 +19,9 @@ namespace LibRayMarching
 			std::vector<PrimitivePtr> m_Primitives;
 
 			int m_MaxIteration;
-			double m_MaxDistance;
-			double m_MinDistance;
-			double m_Epsilon;
+			float m_MaxDistance;
+			float m_MinDistance;
+			float m_Epsilon;
 			int m_Bouncing;
 			Lightning m_Lightning;
 
@@ -29,18 +29,20 @@ namespace LibRayMarching
 			*  Calculation methods
 			*/
 
-			Vector RefractRay(const Vector& ray, const Vector& normal, double refraction);
+			Vector RefractRay(const Vector& ray, const Vector& normal, float refraction);
 
 			void RayMarcheInside(const Primitive* primitive, const Vector& position, const Vector& ray, MarcheResult& result);			
+
+			void RayMarchePrimitive(const Primitive* primitive, const Vector& position, const Vector& ray, MarcheResult& result);
 
 			// Calculate color along ray by phong shading
 			Vector PhongShading(const Vector& position, const Vector& ray, int bouncing);
 			// Calculate the normal for given marche result
-			double CalcNormal(MarcheResult& result);
+			float CalcNormal(Vector pos, Vector ray, MarcheResult& result);
 			// Ray marche along given ray and set result
-			double RayMarche(const Vector& position, const Vector& ray, MarcheResult& result);
+			float RayMarche(const Vector& position, const Vector& ray, MarcheResult& result);
 			// Find nearest primitive and set distance and material
-			double GetDistance(const Vector& position, MarcheResult& result);
+			float GetDistance(const Vector& position, MarcheResult& result);
 
 		public:
 

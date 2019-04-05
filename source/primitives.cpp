@@ -23,7 +23,7 @@ void Primitive::Translate (const Vector& vTranslation)
 	m_Inverse = MatrixTranslate(vTranslation * -1) * m_Inverse;
 }
 
-void Primitive::Rotate (const Vector& vAxis, const double dRadian)
+void Primitive::Rotate (const Vector& vAxis, const float dRadian)
 {
 	m_ModelToWorld *= MatrixRotate(vAxis, dRadian);
 	m_Inverse = MatrixRotate(vAxis, -dRadian) * m_Inverse;
@@ -40,17 +40,17 @@ void Primitive::SetMaterial (const Material& Material)
 	m_Material = Material;
 }
 
-void Primitive::SetDistortionSinus(double factor, double size)
+void Primitive::SetDistortionSinus(float factor, float size)
 {
 	m_Distortion = pdSinus;
 	m_DistSinSize = size;
 	m_DistSinFactor = factor;
 }
 
-double Primitive::SignedDistance (const Vector& vPoint) const
+float Primitive::SignedDistance (const Vector& vPoint) const
 {
 	Vector p = m_Inverse * vPoint;
-	double sd = InternSignedDistance(p);
+	float sd = InternSignedDistance(p);
 	switch(m_Distortion){
 		case pdSinus:
 			//std::cout << " has sin distortion " << sd << std::endl;
@@ -67,7 +67,7 @@ void Sphere::Initialize()
 	
 }
 
-double Sphere::InternSignedDistance (const Vector& vPoint) const
+float Sphere::InternSignedDistance (const Vector& vPoint) const
 {
 	return vPoint.length() - m_Radius;
 }
@@ -78,12 +78,12 @@ void Capsule::Initialize()
 	m_Length = m_P1P2.length();
 }
 
-double Capsule::InternSignedDistance (const Vector& vPoint) const
+float Capsule::InternSignedDistance (const Vector& vPoint) const
 {	
 	Vector p = vPoint - m_Point1;
 	if (m_Length > 0)
 	{
-		double dot = EnsureRange(p.dot(m_P1P2) / (m_Length * m_Length), 0., 1.);
+		float dot = EnsureRange(p.dot(m_P1P2) / (m_Length * m_Length), 0.f, 1.f);
 		Vector onLine = m_P1P2 * dot;
 		return (p - onLine).length() - m_Radius;
 	}
@@ -95,16 +95,16 @@ void Box::Initialize()
 
 }
 
-double Box::InternSignedDistance (const Vector& vPoint) const
+float Box::InternSignedDistance (const Vector& vPoint) const
 {
 	Vector d = vPoint;
 	d.x = std::abs(d.x);
 	d.y = std::abs(d.y);
 	d.z = std::abs(d.z);
 	d -= m_Dimensions;
-	d.x = std::max(0., d.x);
-	d.y = std::max(0., d.y);
-	d.z = std::max(0., d.z);
+	d.x = std::max(0.f, d.x);
+	d.y = std::max(0.f, d.y);
+	d.z = std::max(0.f, d.z);
 	return d.length();
 }
 
@@ -113,7 +113,7 @@ void Plane::Initialize()
 
 }
 
-double Plane::InternSignedDistance (const Vector& vPoint) const
+float Plane::InternSignedDistance (const Vector& vPoint) const
 {
 	return std::abs(vPoint.dot(m_Normal));
 }
@@ -123,17 +123,17 @@ void Cylinder::Initialize()
 
 }
 
-double Cylinder::InternSignedDistance (const Vector& vPoint) const
+float Cylinder::InternSignedDistance (const Vector& vPoint) const
 {
-	double distCircle = sqrt(vPoint.x * vPoint.x + vPoint.y * vPoint.y) - m_Radius;
-	double distHeight = std::abs(vPoint.z) - m_Height / 2;
+	float distCircle = sqrt(vPoint.x * vPoint.x + vPoint.y * vPoint.y) - m_Radius;
+	float distHeight = std::abs(vPoint.z) - m_Height / 2;
 	if (distCircle < 0 && distHeight < 0)
 	{
 		return std::max(distCircle, distHeight);
 	} else 
 	{
-		distCircle = std::max(distCircle, 0.);
-		distHeight = std::max(distHeight, 0.);
+		distCircle = std::max(distCircle, 0.f);
+		distHeight = std::max(distHeight, 0.f);
 		return sqrt(distCircle * distCircle + distHeight * distHeight);
 	}
 }
@@ -143,10 +143,10 @@ void Torus::Initialize()
 
 }
 
-double Torus::InternSignedDistance (const Vector& vPoint) const
+float Torus::InternSignedDistance (const Vector& vPoint) const
 {
-	double distBig = sqrt(vPoint.x * vPoint.x + vPoint.y * vPoint.y) - m_RadiusBig;
-	double dist = sqrt(distBig * distBig  + vPoint.z * vPoint.z);
+	float distBig = sqrt(vPoint.x * vPoint.x + vPoint.y * vPoint.y) - m_RadiusBig;
+	float dist = sqrt(distBig * distBig  + vPoint.z * vPoint.z);
 	return dist - m_RadiusSmall;
 }
 
@@ -155,13 +155,13 @@ void MengerSponge::Initialize()
 
 }
 
-double MengerSponge::InternSignedDistance (const Vector& vPoint) const
+float MengerSponge::InternSignedDistance (const Vector& vPoint) const
 {
 	// SDF box
 	Vector box(
-		std::max(0., std::abs(vPoint.x) - 1),
-		std::max(0., std::abs(vPoint.y) - 1),
-		std::max(0., std::abs(vPoint.z) - 1));
+		std::max(0.f, std::abs(vPoint.x) - 1),
+		std::max(0.f, std::abs(vPoint.y) - 1),
+		std::max(0.f, std::abs(vPoint.z) - 1));
 	float sdBox = box.length();
 
 	// SDF inside crosses
@@ -183,11 +183,11 @@ void QuaternionFractal::Initialize()
 
 }
 
-double QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
+float QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
 {
 	Quaternion z(vPoint.x, vPoint.y, vPoint.z, 0);
-	double md2 = 1.0;
-	double mz2 = z.dot(z);
+	float md2 = 1.0;
+	float mz2 = z.dot(z);
 	for (int i = 0; i < m_Iterations; i++) {
 		md2 *= 4.0 * mz2;
 		z = z.squared() + m_Quaternion;
@@ -203,16 +203,16 @@ void PrimitiveGroup::Initialize()
 	
 }
 
-double PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
+float PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
 {
-	double sd;
+	float sd;
 	switch(m_CombineAction){
 		case caUnify:
 			sd = 10e10;
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
-				double distance = primitive->SignedDistance(vPoint);
+				float distance = primitive->SignedDistance(vPoint);
 				sd = std::min(sd, distance);
 			}
 			return sd;
@@ -221,7 +221,7 @@ double PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
-				double distance = primitive->SignedDistance(vPoint);
+				float distance = primitive->SignedDistance(vPoint);
 				sd = std::max(sd, distance);
 			}
 			return sd;
@@ -230,7 +230,7 @@ double PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
-				double distance = primitive->SignedDistance(vPoint);
+				float distance = primitive->SignedDistance(vPoint);
 				if (p == m_Primitives.begin())
 				{
 					sd = distance;

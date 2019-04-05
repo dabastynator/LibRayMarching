@@ -18,14 +18,14 @@ Vector::Vector(const Vector& vector)
 	z = vector.z;
 }
 
-Vector::Vector(const double& val)
+Vector::Vector(const float& val)
 {
 	x = val;
 	y = val;
 	z = val;
 }
 
-Vector::Vector(const double& x, const double& y, const double& z)
+Vector::Vector(const float& x, const float& y, const float& z)
 {
 	this->x = x;
 	this->y = y;
@@ -37,7 +37,7 @@ Vector Vector::operator+(const Vector& vec) const
 	return Vector(x+vec.x, y+vec.y, z+vec.z);
 }
 
-Vector Vector::operator+(const double& val) const
+Vector Vector::operator+(const float& val) const
 {
 	return Vector(x+val, y+val, z+val);
 }
@@ -47,7 +47,7 @@ Vector Vector::operator-(const Vector& vec) const
 	return Vector(x-vec.x, y-vec.y, z-vec.z);
 }
 
-Vector Vector::operator-(const double& val) const
+Vector Vector::operator-(const float& val) const
 {
 	return Vector(x-val, y-val, z-val);
 }
@@ -57,7 +57,7 @@ Vector Vector::operator*(const Vector& vec) const
 	return Vector(x*vec.x, y*vec.y, z*vec.z);
 }
 
-Vector Vector::operator*(const double& val) const
+Vector Vector::operator*(const float& val) const
 {
 	return Vector(x*val, y*val, z*val);
 }
@@ -67,7 +67,7 @@ Vector Vector::operator/(const Vector& vec) const
 	return Vector(x/vec.x, y/vec.y, z/vec.z);
 }
 
-Vector Vector::operator/(const double& val) const
+Vector Vector::operator/(const float& val) const
 {
 	return Vector(x/val, y/val, z/val);
 }
@@ -77,7 +77,7 @@ Vector Vector::operator%(const Vector& vec) const
 	return Vector(std::fmod(x, vec.x), std::fmod(y, vec.y), std::fmod(z, vec.z));
 }
 
-Vector Vector::operator%(const double& val) const
+Vector Vector::operator%(const float& val) const
 {
 	return Vector(std::fmod(x, val), std::fmod(y, val), std::fmod(z, val));
 }
@@ -90,7 +90,7 @@ Vector Vector::operator+=(const Vector& vec)
 	return *this;
 }
 
-Vector Vector::operator+=(const double& val)
+Vector Vector::operator+=(const float& val)
 {
 	x += val;
 	y += val;
@@ -106,7 +106,7 @@ Vector Vector::operator-=(const Vector& vec)
 	return *this;
 }
 
-Vector Vector::operator-=(const double& val)
+Vector Vector::operator-=(const float& val)
 {
 	x -= val;
 	y -= val;
@@ -122,7 +122,7 @@ Vector Vector::operator*=(const Vector& vec)
 	return *this;
 }
 
-Vector Vector::operator*=(const double& val)
+Vector Vector::operator*=(const float& val)
 {
 	x *= val;
 	y *= val;
@@ -138,7 +138,7 @@ Vector Vector::operator/=(const Vector& vec)
 	return *this;
 }
 
-Vector Vector::operator/=(const double& val)
+Vector Vector::operator/=(const float& val)
 {
 	x /= val;
 	y /= val;
@@ -154,7 +154,7 @@ Vector Vector::operator%=(const Vector& vec)
 	return *this;
 }
 
-Vector Vector::operator%=(const double& val)
+Vector Vector::operator%=(const float& val)
 {
 	x = std::fmod(x, val);
 	y = std::fmod(y, val);
@@ -162,17 +162,17 @@ Vector Vector::operator%=(const double& val)
 	return *this;
 }
 
-double Vector::length() const
+float Vector::length() const
 {
 	return sqrt(x*x + y*y + z*z);
 }
 
-double Vector::lengthSquare() const
+float Vector::lengthSquare() const
 {
 	return x*x + y*y + z*z;
 }
 
-double Vector::dot(const Vector& vec) const
+float Vector::dot(const Vector& vec) const
 {
 	return x*vec.x + y*vec.y + z*vec.z;
 }
@@ -186,12 +186,12 @@ Vector Vector::cross(const Vector& vec) const
 	);
 }
 
-double Vector::min() const
+float Vector::min() const
 {
 	return std::min(std::min(x, y), z);
 }
 
-double Vector::max() const
+float Vector::max() const
 {
 	return std::max(std::max(x, y), z);
 }
@@ -203,7 +203,7 @@ Vector Vector::abs() const
 
 void Vector::normalize()
 {
-	double l = length();
+	float l = length();
 	if (l != 0)
 	{
 		x /= l;
@@ -214,7 +214,7 @@ void Vector::normalize()
 
 Vector Vector::normalized() const
 {
-	double l = length();
+	float l = length();
 	if (l != 0)
 	{
 		return Vector(x/l, y/l, z/l);

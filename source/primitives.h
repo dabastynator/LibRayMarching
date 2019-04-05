@@ -23,11 +23,11 @@ namespace LibRayMarching
 
 			Distortion m_Distortion;
 
-			double m_DistSinFactor;
+			float m_DistSinFactor;
 
-			double m_DistSinSize;
+			float m_DistSinSize;
 
-			virtual double InternSignedDistance (const Vector& vPoint) const = 0;
+			virtual float InternSignedDistance (const Vector& vPoint) const = 0;
 
 		public:
 
@@ -37,7 +37,7 @@ namespace LibRayMarching
 
 			void Translate (const Vector& vTranslation);
 
-			void Rotate (const Vector& vAxis, const double dRadian);
+			void Rotate (const Vector& vAxis, const float dRadian);
 
 			void Scale (const Vector& vScale);
 
@@ -45,13 +45,13 @@ namespace LibRayMarching
 
 			Material* GetMaterial() { return &m_Material; };
 
-			void SetDistortionSinus(double factor, double size);
+			void SetDistortionSinus(float factor, float size);
 
 			virtual PrimitiveType GetType () = 0;
 
 			virtual void Initialize() {};
 
-			double SignedDistance (const Vector& vPoint) const;
+			float SignedDistance (const Vector& vPoint) const;
 			
 	};
 
@@ -62,19 +62,19 @@ namespace LibRayMarching
 
 		private:
 
-			double m_Radius;
+			float m_Radius;
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
-			Sphere(double radius): m_Radius(radius) {};
+			Sphere(float radius): m_Radius(radius) {};
 
-			double GetRadius () { return m_Radius; };
+			float GetRadius () { return m_Radius; };
 
-			void SetRadius (const double dRadius) { m_Radius = dRadius; };
+			void SetRadius (const float dRadius) { m_Radius = dRadius; };
 
 			PrimitiveType GetType () { return ptSphere; };
 
@@ -89,23 +89,23 @@ namespace LibRayMarching
 
 		private:
 
-			double m_Radius;
+			float m_Radius;
 
 			Vector m_Point1, m_Point2, m_P1P2;
 
-			double m_Length;
+			float m_Length;
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;			
+			float InternSignedDistance (const Vector& vPoint) const;			
 
 		public:
 
-			Capsule(double radius): m_Radius(radius) {};
+			Capsule(float radius): m_Radius(radius) {};
 
-			double GetRadius () { return m_Radius; };
+			float GetRadius () { return m_Radius; };
 
-			void SetRadius (const double dRadius) { m_Radius = dRadius; };
+			void SetRadius (const float dRadius) { m_Radius = dRadius; };
 
 			void SetPoint1 (const Vector& vPoint1) { m_Point1 = vPoint1; };
 
@@ -132,7 +132,7 @@ namespace LibRayMarching
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
@@ -156,7 +156,7 @@ namespace LibRayMarching
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
@@ -177,23 +177,23 @@ namespace LibRayMarching
 
 		private:
 
-			double m_Radius;
+			float m_Radius;
 
-			double m_Height;
+			float m_Height;
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
-			double GetRadius () { return m_Radius; };
+			float GetRadius () { return m_Radius; };
 
-			void SetRadius(double radius) {m_Radius = radius; };
+			void SetRadius(float radius) {m_Radius = radius; };
 
-			double GetHeight () { return m_Height; };
+			float GetHeight () { return m_Height; };
 
-			void SetHeight(double height) {m_Height = height; };
+			void SetHeight(float height) {m_Height = height; };
 
 			PrimitiveType GetType () { return ptCylinder; };
 
@@ -208,23 +208,23 @@ namespace LibRayMarching
 
 		private:
 
-			double m_RadiusBig;
+			float m_RadiusBig;
 
-			double m_RadiusSmall;
+			float m_RadiusSmall;
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
-			double GetRadiusBig () { return m_RadiusBig; };
+			float GetRadiusBig () { return m_RadiusBig; };
 
-			void SetRadiusBig(double radiusBig) {m_RadiusBig = radiusBig; };
+			void SetRadiusBig(float radiusBig) {m_RadiusBig = radiusBig; };
 
-			double GetRadiusSmall () { return m_RadiusSmall; };
+			float GetRadiusSmall () { return m_RadiusSmall; };
 
-			void SetRadiusSmall(double radiusSmall) {m_RadiusSmall = radiusSmall; };
+			void SetRadiusSmall(float radiusSmall) {m_RadiusSmall = radiusSmall; };
 			
 			PrimitiveType GetType () { return ptTorus; };
 
@@ -242,13 +242,13 @@ namespace LibRayMarching
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
-			double GetSetpCount () { return m_SetpCount; };
+			float GetSetpCount () { return m_SetpCount; };
 
-			void SetSetpCount(double setpcount) {m_SetpCount = setpcount; };
+			void SetSetpCount(float setpcount) {m_SetpCount = setpcount; };
 
 			PrimitiveType GetType () { return ptMengerSponge; };
 
@@ -269,13 +269,13 @@ namespace LibRayMarching
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 
-			double GetIterations () { return m_Iterations; };
+			float GetIterations () { return m_Iterations; };
 
-			void SetIterations(double iterations) {m_Iterations = iterations; };
+			void SetIterations(float iterations) {m_Iterations = iterations; };
 
 			Quaternion GetQuaternion () { return m_Quaternion; };
 
@@ -299,7 +299,7 @@ namespace LibRayMarching
 
 		protected:
 
-			double InternSignedDistance (const Vector& vPoint) const;
+			float InternSignedDistance (const Vector& vPoint) const;
 
 		public:
 

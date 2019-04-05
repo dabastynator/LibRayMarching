@@ -14,23 +14,24 @@ namespace LibRayMarching
 	struct Material
 	{
 		Vector color;
-		double ambient;
-		double diffuse;
-		double specular;
-		double specular_alpha;
-		double reflection;
-		double transparency;
-		double refraction;
+		float ambient;
+		float diffuse;
+		float specular;
+		float specular_alpha;
+		float reflection;
+		float transparency;
+		float refraction;
 	};
 
 	struct Lightning
 	{
 		Vector background;
 		int oversampling;
-		double soft_shadow;
-		double minimal_shadow;
-		double max_dist_background;
-		double min_dist_background;
+		float soft_shadow;
+		float minimal_shadow;
+		float max_dist_background;
+		float min_dist_background;
+		bool normal_by_environment;
 	};
 
 	enum CombineAction
@@ -59,7 +60,7 @@ namespace LibRayMarching
 		Primitive* primitive;
 		Vector position;
 		Vector normal;
-		double distance;
-		double shadow_factor;
+		float distance;
+		float shadow_factor;
 	};
 }
