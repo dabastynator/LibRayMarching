@@ -20,13 +20,27 @@ compile)
 	make
 ;;
 package)
-  echo "push button"
-  gpio -g write $light 1
-  gpio -g write $off 1
-  sleep 1
-  echo "release button"
-  gpio -g write $light 0
-  gpio -g write $off 0
+	Package=$Build'/package'
+	Artifact=$Build'/libraymarching.zip'
+	Bin=$Package'/bin'
+	BinWin=$Bin'/win'
+	BinLinux=$Bin'/linux'
+	Bindings=$Package'/bindings'
+	Lib=$Package'/lib/win'
+  
+	rm -rf $Package
+	mkdir -p $Package
+	mkdir -p $Bin
+	mkdir -p $BinWin
+	mkdir -p $BinLinux
+	mkdir -p $Bindings
+	mkdir -p $Lib
+
+	cp $Build'/libraymarching.so' $BinLinux
+	cp -r $ACTResult/Bindings/* $Bindings
+
+	cd $Package
+	zip -r $Artifact .
 ;;
 *)
   echo "Useage: build (act|compile|package)"
