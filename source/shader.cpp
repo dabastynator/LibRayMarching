@@ -35,7 +35,7 @@ Vector Shader::RefractRay(const Vector& ray, const Vector& normal, float refract
 Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bouncing)
 {
 	MarcheResult result;
-	RayMarche(position, ray, result);
+	RayMarche(position, ray, result, m_MaxDistance);
 	if (result.primitive != NULL)
 	{
 		if (result.distance > m_Lightning.max_dist_background)
@@ -52,15 +52,16 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 		for (int i = 0; i < m_Lights.size(); i++)
 		{
 			Light light = m_Lights[i];
-			Vector toLight = (light.position - result.position).normalized();
+			Vector toLightReal = light.position - result.position;
+			Vector toLight = toLightReal.normalized();
 			float toLightDot = toLight.dot(result.normal);
 			if (toLightDot > 0)
 			{
 				MarcheResult resultLigth;
-				RayMarche(hitPosOffset, toLight, resultLigth);
+				RayMarche(hitPosOffset, toLight, resultLigth, toLightReal.length());
 
 				float diffFactor = toLightDot * material->diffuse * resultLigth.shadow_factor;
-				colDiffuse += material->color * diffFactor;
+				colDiffuse += material->color * light.color * diffFactor;
 
 				float specFactor = material->specular * 
 					std::pow(reflectedRay.dot(toLight), material->specular_alpha) * 
@@ -139,7 +140,7 @@ float Shader::CalcNormal(Vector pos, Vector ray, MarcheResult& result)
 	}
 }
 
-float Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult& result)
+float Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult& result, double max_distance)
 {
 	float distance = 0;
 	result.shadow_factor = 1;
@@ -152,9 +153,10 @@ float Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult&
 		}
 		distance += d;
 		result.position = position + ray * distance;		
-		if (distance > m_MaxDistance) {
+		if (distance > max_distance) {
 			result.primitive = NULL;
 			result.distance = distance;
+			result.shadow_factor = 1;
 			return distance;
 		}
 		if (d < m_MinDistance) {
@@ -228,7 +230,7 @@ unsigned int Shader::RenderPixel(int x, int y)
 	Vector pos;
 	Vector ray;
 	Vector color;
-	int oversampling = std::max(1, m_Lightning.oversampling);	
+	float oversampling = std::max(1, m_Lightning.oversampling);
 	for (int i = 0; i < oversampling; i++) {
 		float offset = i / oversampling;
 		m_Camera.CalculateRay(x + offset, y + offset, pos, ray);		

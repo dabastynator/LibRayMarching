@@ -40,7 +40,7 @@ namespace LibRayMarching
 			// Calculate the normal for given marche result
 			float CalcNormal(Vector pos, Vector ray, MarcheResult& result);
 			// Ray marche along given ray and set result
-			float RayMarche(const Vector& position, const Vector& ray, MarcheResult& result);
+			float RayMarche(const Vector& position, const Vector& ray, MarcheResult& result, double max_distance);
 			// Find nearest primitive and set distance and material
 			float GetDistance(const Vector& position, MarcheResult& result);
 
