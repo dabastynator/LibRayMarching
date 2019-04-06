@@ -67,7 +67,9 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 					std::pow(reflectedRay.dot(toLight), material->specular_alpha) * 
 					resultLigth.shadow_factor;
 				if (specFactor > 0)
+				{
 					colSpecular += light.color * specFactor;
+				}
 			}
 		}
 		Vector colReflected(0, 0, 0), colTransparent(0, 0, 0);
@@ -156,11 +158,11 @@ float Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult&
 		if (distance > max_distance) {
 			result.primitive = NULL;
 			result.distance = distance;
-			result.shadow_factor = 1;
 			return distance;
 		}
 		if (d < m_MinDistance) {
 			result.distance = distance;
+			result.shadow_factor = m_Lightning.minimal_shadow;
 			return distance;
 		}
 	}
