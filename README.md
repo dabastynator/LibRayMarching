@@ -1,5 +1,5 @@
 # LibRayMarching
-The LibRayMarching is a library that implements ray marching. It supports scene handling and implements several primitives as well as grouping.
+The LibRayMarching is a library that implements ray marching and rendering by Phong Shading. It supports scene handling and implements several primitives as well as grouping.
 
 ### Primitives
 The library supports following primitives
@@ -17,10 +17,17 @@ Primitives can be merged into groups. Therefore a group supports folling merging
 - Intersect all primitives
 - Take first primitives and subtract all following primitives
 
+### Materials
+The user can specify a material for a primitive. The material supports following material properties
+- Color
+- Ambient, Diffuse, Specular and SpecularAlpha for Phong Shading
+- Reflection
+- Transparency
+
 ### Language Bindings
 The API is defined by and ACT xml. This allows powerfull binding generation for following languages
-- C
-- C++
+- C (dynamic and static)
+- C++ (dynamic and static)
 - Python3
 - Pascal
 
@@ -66,3 +73,9 @@ Img.show()
 ```
 
 ![](example/sphere.png)
+
+### Demo
+
+This youtube video demonstrates features of LibRayMarching v1
+
+[![LibRayMarching v1 Demo](https://img.youtube.com/vi/yYpzFb8Q8nE/0.jpg)](https://www.youtube.com/watch?v=yYpzFb8Q8nE)
