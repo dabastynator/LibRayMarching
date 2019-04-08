@@ -43,8 +43,8 @@ void CLibRayMarchingWrapper::ReleaseInstance (ILibRayMarchingBaseClass* pInstanc
 
 void CLibRayMarchingWrapper::GetLibraryVersion (LibRayMarching_uint32 & nMajor, LibRayMarching_uint32 & nMinor, LibRayMarching_uint32 & nMicro)
 {
-	nMajor = 0;
-	nMinor = 9;
+	nMajor = 1;
+	nMinor = 0;
 	nMicro = 0;
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns="http://schemas.autodesk.com/netfabb/automaticcomponenttoolkit/2018" 
 	libraryname="Ray Marching Library" namespace="LibRayMarching" copyright="PrimeDevelopers" year="2019" basename="libraymarching"
-	version="0.9.0">
+	version="1.0.0">
 	<license>
 		<line value="All rights reserved." />
 	</license>
