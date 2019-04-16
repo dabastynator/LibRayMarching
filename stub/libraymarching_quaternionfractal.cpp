@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CLibRayMarchingQuaternionFractal
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -37,7 +37,7 @@ void CLibRayMarchingQuaternionFractal::GetQuaternion (LibRayMarching_double & dR
 void CLibRayMarchingQuaternionFractal::SetQuaternion (const LibRayMarching_double dR, const LibRayMarching_double dI, const LibRayMarching_double dJ, const LibRayMarching_double dK)
 {
 	m_Fractal->SetQuaternion(Quaternion(
-		dR, dI, dJ, dK
+		(float)dR, (float)dI, (float)dJ, (float)dK
 	));
 }
 

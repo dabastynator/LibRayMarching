@@ -20,7 +20,7 @@ Quaternion::Quaternion(const Quaternion& quat)
 	k = quat.k;
 }
 
-Quaternion::Quaternion(const double& r, const double& i, const double& j, const double& k)
+Quaternion::Quaternion(const float& r, const float& i, const float& j, const float& k)
 {
 	this->r = r;
 	this->i = i;
@@ -47,12 +47,12 @@ Quaternion Quaternion::operator*(const Quaternion& quat) const
 		r * quat.k + i * quat.j - j * quat.i + k * quat.r);
 }
 
-Quaternion Quaternion::operator*(const double& val) const
+Quaternion Quaternion::operator*(const float& val) const
 {
 	return Quaternion(r*val, i*val, j*val, k*val);
 }
 
-Quaternion Quaternion::operator/(const double& val) const
+Quaternion Quaternion::operator/(const float& val) const
 {
 	return Quaternion(r/val, i/val, j/val, k/val);
 }
@@ -77,10 +77,10 @@ Quaternion Quaternion::operator-=(const Quaternion& quat)
 
 Quaternion Quaternion::operator*=(const Quaternion& quat)
 {
-	double r_new = r * quat.r - i * quat.i - j * quat.j - k * quat.k;
-	double i_new = r * quat.i + i * quat.r + j * quat.k - k * quat.j;
-	double j_new = r * quat.j - i * quat.k + j * quat.r + k * quat.i;
-	double k_new = r * quat.k + i * quat.j - j * quat.i + k * quat.r;
+	float r_new = r * quat.r - i * quat.i - j * quat.j - k * quat.k;
+	float i_new = r * quat.i + i * quat.r + j * quat.k - k * quat.j;
+	float j_new = r * quat.j - i * quat.k + j * quat.r + k * quat.i;
+	float k_new = r * quat.k + i * quat.j - j * quat.i + k * quat.r;
 	r = r_new;
 	i = i_new;
 	j = j_new;
@@ -88,7 +88,7 @@ Quaternion Quaternion::operator*=(const Quaternion& quat)
 	return *this;
 }
 
-Quaternion Quaternion::operator*=(const double& val)
+Quaternion Quaternion::operator*=(const float& val)
 {
 	r *= val;
 	i *= val;
@@ -97,7 +97,7 @@ Quaternion Quaternion::operator*=(const double& val)
 	return *this;
 }
 
-Quaternion Quaternion::operator/=(const double& val)
+Quaternion Quaternion::operator/=(const float& val)
 {
 	r /= val;
 	i /= val;
@@ -106,17 +106,17 @@ Quaternion Quaternion::operator/=(const double& val)
 	return *this;
 }
 
-double Quaternion::length() const
+float Quaternion::length() const
 {
 	return sqrt(r*r + i*i + j*j + k*k);
 }
 
-double Quaternion::norm() const
+float Quaternion::norm() const
 {
 	return r*r + i*i + j*j + k*k;
 }
 
-double Quaternion::dot(const Quaternion& quat) const
+float Quaternion::dot(const Quaternion& quat) const
 {
 	return r * quat.r + i * quat.i + j * quat.j + k * quat.k;
 }
@@ -132,7 +132,7 @@ Quaternion Quaternion::cross(const Quaternion& quat) const
 
 void Quaternion::normalize()
 {
-	double l = length();
+	float l = length();
 	if (l != 0)
 	{
 		r /= l;
@@ -144,7 +144,7 @@ void Quaternion::normalize()
 
 Quaternion Quaternion::normalized() const
 {
-	double l = length();
+	float l = length();
 	if (l != 0)
 	{
 		return Quaternion(r/l, i/l, j/l, k/l);

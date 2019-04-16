@@ -14,7 +14,7 @@ Abstract: This is a stub class definition of CLibRayMarchingCapsule
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -33,7 +33,7 @@ LibRayMarching_double CLibRayMarchingCapsule::GetRadius ()
 
 void CLibRayMarchingCapsule::SetRadius (const LibRayMarching_double dRadius)
 {
-	m_Capsule->SetRadius(dRadius);
+	m_Capsule->SetRadius((float)dRadius);
 }
 
 sLibRayMarchingVector CLibRayMarchingCapsule::GetPoint1 ()

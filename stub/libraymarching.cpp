@@ -32,7 +32,7 @@ using namespace LibRayMarching::Impl;
 
 bool CLibRayMarchingWrapper::GetLastError (ILibRayMarchingBaseClass* pInstance, std::string & sErrorMessage)
 {
-	pInstance->GetLastErrorMessage(sErrorMessage);
+	return pInstance->GetLastErrorMessage(sErrorMessage);
 }
 
 
@@ -55,13 +55,13 @@ ILibRayMarchingRayMarching * CLibRayMarchingWrapper::CreateRayMarching ()
 
 ILibRayMarchingSphere * CLibRayMarchingWrapper::CreateSphere (const LibRayMarching_double dRadius)
 {
-	SpherePtr sphere (new Sphere(dRadius));
+	SpherePtr sphere (new Sphere((float)dRadius));
 	return new CLibRayMarchingSphere(sphere);
 }
 
 ILibRayMarchingCapsule * CLibRayMarchingWrapper::CreateCapsule (const LibRayMarching_double dRadius, const sLibRayMarchingVector Point1, const sLibRayMarchingVector Point2)
 {
-	CapsulePtr capsule (new Capsule(dRadius));
+	CapsulePtr capsule (new Capsule((float)dRadius));
 	capsule->SetPoint1(LibVecToVector(Point1));
 	capsule->SetPoint2(LibVecToVector(Point2));
 	return new CLibRayMarchingCapsule(capsule);
@@ -85,16 +85,16 @@ ILibRayMarchingPlane * CLibRayMarchingWrapper::CreatePlane (const sLibRayMarchin
 ILibRayMarchingCylinder * CLibRayMarchingWrapper::CreateCylinder (const LibRayMarching_double dRadius, const LibRayMarching_double dHeight)
 {
 	CylinderPtr cylinder (new Cylinder());
-	cylinder->SetRadius(dRadius);
-	cylinder->SetHeight(dHeight);
+	cylinder->SetRadius((float)dRadius);
+	cylinder->SetHeight((float)dHeight);
 	return new CLibRayMarchingCylinder(cylinder);
 }
 
 ILibRayMarchingTorus * CLibRayMarchingWrapper::CreateTorus (const LibRayMarching_double dBigRadius, const LibRayMarching_double dSmallRadius)
 {
 	TorusPtr torus (new Torus());
-	torus->SetRadiusBig(dBigRadius);
-	torus->SetRadiusSmall(dSmallRadius);
+	torus->SetRadiusBig((float)dBigRadius);
+	torus->SetRadiusSmall((float)dSmallRadius);
 	return new CLibRayMarchingTorus(torus);
 }
 

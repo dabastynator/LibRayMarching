@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CLibRayMarchingPrimitiveGroup
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************

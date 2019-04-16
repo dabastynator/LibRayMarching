@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CLibRayMarchingTorus
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -33,7 +33,7 @@ LibRayMarching_double CLibRayMarchingTorus::GetBigRadius ()
 
 void CLibRayMarchingTorus::SetBigRadius (const LibRayMarching_double dBigRadius)
 {
-	m_Torus->SetRadiusBig(dBigRadius);
+	m_Torus->SetRadiusBig((float)dBigRadius);
 }
 
 LibRayMarching_double CLibRayMarchingTorus::GetSmallRadius ()
@@ -43,6 +43,6 @@ LibRayMarching_double CLibRayMarchingTorus::GetSmallRadius ()
 
 void CLibRayMarchingTorus::SetSmallRadius (const LibRayMarching_double dSmallRadius)
 {
-	m_Torus->SetRadiusSmall(dSmallRadius);
+	m_Torus->SetRadiusSmall((float)dSmallRadius);
 }
 

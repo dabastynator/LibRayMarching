@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CLibRayMarchingPrimitive
 #include "libraymarching_utils.hpp"
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -38,7 +38,7 @@ void CLibRayMarchingPrimitive::Translate (const sLibRayMarchingVector Translatio
 
 void CLibRayMarchingPrimitive::Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian)
 {
-	m_Primitive->Rotate(LibVecToVector(Axis), dRadian);
+	m_Primitive->Rotate(LibVecToVector(Axis), (float)dRadian);
 }
 
 void CLibRayMarchingPrimitive::Scale (const sLibRayMarchingVector Scale)
@@ -53,5 +53,5 @@ void CLibRayMarchingPrimitive::SetMaterial (const sLibRayMarchingMaterial Materi
 
 void CLibRayMarchingPrimitive::SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval)
 {
-	m_Primitive->SetDistortionSinus(dDistortionFactor, dInterval);
+	m_Primitive->SetDistortionSinus((float)dDistortionFactor, (float)dInterval);
 }

@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CLibRayMarchingSphere
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -32,5 +32,5 @@ LibRayMarching_double CLibRayMarchingSphere::GetRadius ()
 
 void CLibRayMarchingSphere::SetRadius (const LibRayMarching_double dRadius)
 {
-	m_Sphere->SetRadius(dRadius);
+	m_Sphere->SetRadius((float)dRadius);
 }

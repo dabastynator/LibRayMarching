@@ -6,7 +6,7 @@ using namespace LibRayMarching;
 
 Vector LibRayMarching::LibVecToVector(const sLibRayMarchingVector& libVec)
 {
-	return Vector(libVec.m_x, libVec.m_y, libVec.m_z);
+	return Vector((float)libVec.m_x, (float)libVec.m_y, (float)libVec.m_z);
 }
 
 sLibRayMarchingVector LibRayMarching::VectorToLibVec(const Vector& vector)
@@ -21,14 +21,14 @@ sLibRayMarchingVector LibRayMarching::VectorToLibVec(const Vector& vector)
 Material LibRayMarching::LibMaterialToMaterial(const sLibRayMarchingMaterial& libMaterial)
 {
 	Material result;
-	result.color = Vector(libMaterial.m_Red, libMaterial.m_Green, libMaterial.m_Blue);
-	result.ambient = libMaterial.m_Ambient;
-	result.diffuse = libMaterial.m_Diffuse;
-	result.specular = libMaterial.m_Specular;
-	result.specular_alpha = libMaterial.m_SpecularAlpha;
-	result.reflection = libMaterial.m_Reflection;
-	result.transparency = libMaterial.m_Transparency;
-	result.refraction = libMaterial.m_Refraction;
+	result.color = Vector((float)libMaterial.m_Red, (float)libMaterial.m_Green, (float)libMaterial.m_Blue);
+	result.ambient = (float)libMaterial.m_Ambient;
+	result.diffuse = (float)libMaterial.m_Diffuse;
+	result.specular = (float)libMaterial.m_Specular;
+	result.specular_alpha = (float)libMaterial.m_SpecularAlpha;
+	result.reflection = (float)libMaterial.m_Reflection;
+	result.transparency = (float)libMaterial.m_Transparency;
+	result.refraction = (float) libMaterial.m_Refraction;
 	return result;
 }
 
@@ -66,4 +66,5 @@ eLibRayMarchingGroupAction LibRayMarching::CAToLibCA (const CombineAction& actio
 		case caUnify: return eGroupActionUnify;
 		case caSubtract: return eGroupActionSubtract;
 	}
+	return eGroupActionUnify;
 }

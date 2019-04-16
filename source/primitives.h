@@ -246,9 +246,9 @@ namespace LibRayMarching
 
 		public:
 
-			float GetSetpCount () { return m_SetpCount; };
+			int GetSetpCount () { return m_SetpCount; };
 
-			void SetSetpCount(float setpcount) {m_SetpCount = setpcount; };
+			void SetSetpCount(int setpcount) {m_SetpCount = setpcount; };
 
 			PrimitiveType GetType () { return ptMengerSponge; };
 
@@ -273,9 +273,9 @@ namespace LibRayMarching
 
 		public:
 
-			float GetIterations () { return m_Iterations; };
+			int GetIterations () { return m_Iterations; };
 
-			void SetIterations(float iterations) {m_Iterations = iterations; };
+			void SetIterations(int iterations) {m_Iterations = iterations; };
 
 			Quaternion GetQuaternion () { return m_Quaternion; };
 
@@ -305,7 +305,7 @@ namespace LibRayMarching
 
 			PrimitiveType GetType () { return ptGroup; };
 
-			int GetCount() { return m_Primitives.size(); };
+			size_t GetCount() { return m_Primitives.size(); };
 
 			void AddPrimitive(PrimitivePtr p) { m_Primitives.push_back(p); };
 

@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include <cmath>
+#include <algorithm>
 
 #include "primitives.h"
 
@@ -172,7 +174,7 @@ float MengerSponge::InternSignedDistance (const Vector& vPoint) const
 		Vector a = ((vPoint.abs() * size + size) % 2 - 1).abs();
 		Vector d(std::max(a.x, a.y), std::max(a.y, a.z), std::max(a.z, a.x));
 		size *= 3;
-		float sdCross = (d.min() - 1./3.) / size;
+		float sdCross = (d.min() - 1.f/3.f) / size;
 		sdMS = std::max(sdMS, -sdCross);		
 	}
 	return sdMS;
@@ -186,16 +188,16 @@ void QuaternionFractal::Initialize()
 float QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
 {
 	Quaternion z(vPoint.x, vPoint.y, vPoint.z, 0);
-	float md2 = 1.0;
+	float md2 = 1.0f;
 	float mz2 = z.dot(z);
 	for (int i = 0; i < m_Iterations; i++) {
-		md2 *= 4.0 * mz2;
+		md2 *= 4.0f * mz2;
 		z = z.squared() + m_Quaternion;
 		mz2 = z.dot(z);
 		if (mz2 > 10.0)
 			break;
 	}
-	return 0.25 * sqrt(mz2 / md2) * log(mz2);
+	return 0.25f * sqrt(mz2 / md2) * log(mz2);
 }
 
 void PrimitiveGroup::Initialize()
@@ -208,7 +210,7 @@ float PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
 	float sd;
 	switch(m_CombineAction){
 		case caUnify:
-			sd = 10e10;
+			sd = (float) 10e10;
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;
@@ -217,7 +219,7 @@ float PrimitiveGroup::InternSignedDistance (const Vector& vPoint) const
 			}
 			return sd;
 		case caIntersect:
-			sd = -10e10;
+			sd = (float) -10e10;
 			for(auto p = m_Primitives.begin(); p != m_Primitives.end(); ++p)
 			{		
 				PrimitivePtr primitive = *p;

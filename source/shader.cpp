@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <algorithm>
+
 #include "shader.h"
 #include "primitives.h"
 
@@ -9,14 +11,14 @@ Shader::Shader()
 {
 	m_MaxIteration = 300;
 	m_MaxDistance = 100;
-	m_MinDistance = 0.00001;
-	m_Epsilon = 0.005;
+	m_MinDistance = 0.00001f;
+	m_Epsilon = 0.005f;
 	m_Bouncing = 10;
 	m_Lightning.background = Vector(0, 0, 0);
 	m_Lightning.min_dist_background = m_MaxDistance;
 	m_Lightning.max_dist_background = m_MaxDistance;
-	m_Lightning.soft_shadow = 50;
-	m_Lightning.minimal_shadow = 0.1;
+	m_Lightning.soft_shadow = 50.f;
+	m_Lightning.minimal_shadow = 0.1f;
 	m_Lightning.oversampling = 1;
 	m_Lightning.normal_by_environment = false;
 	m_Bouncing = 8;
@@ -103,7 +105,7 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 	}
 }
 
-float Shader::CalcNormal(Vector pos, Vector ray, MarcheResult& result)
+void Shader::CalcNormal(Vector pos, Vector ray, MarcheResult& result)
 {
 	if (result.primitive != NULL)
 	{
@@ -227,7 +229,7 @@ float Shader::GetDistance(const Vector& position, MarcheResult& result)
 	return minDist;
 } 
 
-unsigned int Shader::RenderPixel(int x, int y)
+unsigned int Shader::RenderPixel(float x, float y)
 {
 	Vector pos;
 	Vector ray;
@@ -238,7 +240,7 @@ unsigned int Shader::RenderPixel(int x, int y)
 		m_Camera.CalculateRay(x + offset, y + offset, pos, ray);		
 		color += PhongShading(pos, ray, m_Bouncing);
 	}
-	color *= 255. / oversampling;
+	color *= 255.f / oversampling;
 	int red = EnsureRange((int)color.x, 0, 255);
 	int green = EnsureRange((int)color.y, 0, 255);
 	int blue = EnsureRange((int)color.z, 0, 255);
