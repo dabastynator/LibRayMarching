@@ -22,7 +22,7 @@ from PIL import Image
 import math
 
 def Progress(Percentage, ShouldAbort):
-	print(("=" * math.ceil(Percentage)) + "> " + str(Percentage) + "%", end="\r")
+	print(("=" * math.ceil(Percentage)) + "> " + str(math.ceil(Percentage)) + "%", end="\r")
 	sys.stdout.flush();
 
 class RayMarching:
@@ -41,9 +41,9 @@ class RayMarching:
 
 		print("Set viewport")
 		self.Scene.SetViewport(
-			LibRayMarching.Vector(x = 3 + 14 * dx, y = -3 + 14 * dy, z = 4),
-			LibRayMarching.Vector(x = -dx, y = -dy, z = -0.2),
-			LibRayMarching.Vector(x = 0, y = 0, z = 1), math.pi*20/180);
+			LibRayMarching.Vector(X = 3 + 14 * dx, Y = -3 + 14 * dy, Z = 4),
+			LibRayMarching.Vector(X = -dx, Y = -dy, Z = -0.2),
+			LibRayMarching.Vector(X = 0, Y = 0, Z = 1), math.pi*20/180);
 
 		print("Set properties");
 		self.Scene.SetShaderProperties(LibRayMarching.ShaderProperties(
@@ -51,7 +51,7 @@ class RayMarching:
 			MaxBouncing = 5,
 			SoftShadow = 50,
 			FastNormalCalculation = True));
-		self.Scene.SetBackground(LibRayMarching.Vector(x = 0.05, y = 0, z = 0.2), 30, 40);
+		self.Scene.SetBackground(LibRayMarching.Vector(X = 0.05, Y = 0, Z = 0.2), 30, 40);
 
 	def BuildScene(self):
 		print ("Create light")
@@ -66,12 +66,12 @@ class RayMarching:
 			Specular = 1,
 			SpecularAlpha = 15));
 		Sphere.SetSinusDistortion(0.06, 0.6);
-		Sphere.Translate(LibRayMarching.Vector(x = 0, y = 0, z = 2));
+		Sphere.Translate(LibRayMarching.Vector(X = 0, Y = 0, Z = 2));
 		self.Scene.AddPrimitive(Sphere);
 		
 		print ("Create box")
 		Box = self.Wrapper.CreateBox(
-			LibRayMarching.Vector(x = 0.5, y = 0.5, z = 0.5)
+			LibRayMarching.Vector(X = 0.5, Y = 0.5, Z = 0.5)
 		);
 		Box.SetMaterial(LibRayMarching.Material(
 			Red = 0.5, Blue = 0.1, Green = 0.3,
@@ -79,14 +79,14 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
-		Box.Translate(LibRayMarching.Vector(x = 3, y = -3, z = 2));
+		Box.Translate(LibRayMarching.Vector(X = 3, Y = -3, Z = 2));
 		self.Scene.AddPrimitive(Box);
 
 		print ("Create capsule")
 		Capsule = self.Wrapper.CreateCapsule(
 			0.5,
-			LibRayMarching.Vector(x = -0.5, y = -0.5, z = -0.5),
-			LibRayMarching.Vector(x = 0.5, y = 0.5, z = 0.5)
+			LibRayMarching.Vector(X = -0.5, Y = -0.5, Z = -0.5),
+			LibRayMarching.Vector(X = 0.5, Y = 0.5, Z = 0.5)
 		);
 		Capsule.SetMaterial(LibRayMarching.Material(
 			Blue = 0.5, Green = 0.1, Red = 0.3,
@@ -94,7 +94,7 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
-		Capsule.Translate(LibRayMarching.Vector(x = 6, y = 0, z = 2));
+		Capsule.Translate(LibRayMarching.Vector(X = 6, Y = 0, Z = 2));
 		self.Scene.AddPrimitive(Capsule);
 
 		print ("Create cylinder")
@@ -105,7 +105,7 @@ class RayMarching:
 			Diffuse = 1,
 			Specular = 1,
 			SpecularAlpha = 15));
-		Cylinder.Translate(LibRayMarching.Vector(x = 0, y = -3, z = 2));		
+		Cylinder.Translate(LibRayMarching.Vector(X = 0, Y = -3, Z = 2));		
 		self.Scene.AddPrimitive(Cylinder);
 
 		print ("Create torus")
@@ -117,8 +117,8 @@ class RayMarching:
 			Specular = 0.3,
 			SpecularAlpha = 15,
 			Reflection = 0.6));
-		Torus.Rotate(LibRayMarching.Vector(x = 1, y = 0, z = 0), math.pi/2);
-		Torus.Translate(LibRayMarching.Vector(x = 3, y = 0, z = 2));		
+		Torus.Rotate(LibRayMarching.Vector(X = 1, Y = 0, Z = 0), math.pi/2);
+		Torus.Translate(LibRayMarching.Vector(X = 3, Y = 0, Z = 2));		
 		self.Scene.AddPrimitive(Torus);
 
 		print ("Create transparent sphere")
@@ -129,9 +129,9 @@ class RayMarching:
 			Diffuse = 0.2,
 			Specular = 0.4,
 			SpecularAlpha = 15,
-			Transparency = 0.5,
+			TransparencY = 0.5,
 			Refraction = 1.33));
-		Sphere.Translate(LibRayMarching.Vector(x = 6, y = -3, z = 2));
+		Sphere.Translate(LibRayMarching.Vector(X = 6, Y = -3, Z = 2));
 		self.Scene.AddPrimitive(Sphere);
 		
 		print ("Create menger sponge")
@@ -142,7 +142,7 @@ class RayMarching:
 			Diffuse = 0.5,
 			Specular = 0.4,
 			SpecularAlpha = 15));
-		MengerSponge.Translate(LibRayMarching.Vector(x = 0, y = -6, z = 2));
+		MengerSponge.Translate(LibRayMarching.Vector(X = 0, Y = -6, Z = 2));
 		self.Scene.AddPrimitive(MengerSponge);
 
 		print ("Create julia quaternion fractal")
@@ -154,15 +154,15 @@ class RayMarching:
 			Diffuse = 0.5,
 			Specular = 0.4,
 			SpecularAlpha = 15));
-		QuaternionFractal.Translate(LibRayMarching.Vector(x = 3, y = -6, z = 2));
+		QuaternionFractal.Translate(LibRayMarching.Vector(X = 3, Y = -6, Z = 2));
 		self.Scene.AddPrimitive(QuaternionFractal);
 		
 		GSphere = self.Wrapper.CreateSphere(1.25);
 		GBox = self.Wrapper.CreateBox(
-			LibRayMarching.Vector(x = 1, y = 1, z = 1)
+			LibRayMarching.Vector(X = 1, Y = 1, Z = 1)
 		);
 		GSphere2 = self.Wrapper.CreateSphere(1.1);
-		GSphere2.Rotate(LibRayMarching.Vector(x = 1, y = 0, z = 0), math.pi/2);
+		GSphere2.Rotate(LibRayMarching.Vector(X = 1, Y = 0, Z = 0), math.pi/2);
 		GroupRCube = self.Wrapper.CreatePrimitiveGroup(LibRayMarching.GroupAction.Intersect);
 		GroupRCube.AddPrimitive(GSphere);
 		GroupRCube.AddPrimitive(GBox);
@@ -170,7 +170,7 @@ class RayMarching:
 		GroupM = self.Wrapper.CreatePrimitiveGroup(LibRayMarching.GroupAction.Subtract);
 		GroupM.AddPrimitive(GroupRCube);
 		GroupM.AddPrimitive(GSphere2);
-		GroupM.Translate(LibRayMarching.Vector(x = 6, y = -6, z = 2));
+		GroupM.Translate(LibRayMarching.Vector(X = 6, Y = -6, Z = 2));
 		GroupM.SetMaterial(LibRayMarching.Material(
 			Green = 0.5, Blue = 0.5, Red = 0.1,
 			Ambient = 0.3,
@@ -181,8 +181,8 @@ class RayMarching:
 		
 		print ("Create pane")
 		Plane = self.Wrapper.CreatePlane(
-			LibRayMarching.Vector(x = 0, y = 0, z = 0),
-			LibRayMarching.Vector(x = 0, y = 0, z = 1)
+			LibRayMarching.Vector(X = 0, Y = 0, Z = 0),
+			LibRayMarching.Vector(X = 0, Y = 0, Z = 1)
 		);
 		Plane.SetMaterial(LibRayMarching.Material(
 			Red = 0.2, Green = 0.2, Blue = 0.2,
@@ -222,9 +222,9 @@ def main():
 	#Radian = 2 * math.pi * 27 / 401;
 	#RM = RayMarching(600, 400, math.sin(Radian), math.cos(Radian));
 	#RM.BuildScene();
-	#RM.RenderPixel(225, 172);
+	#RM.RenderPixel(50, 50);
 	#RM.Render('ray_marching', True);
-	
+
 	for i in range(0, 400):
 		if not os.path.isfile('round/frame_'+str(i)+'.png'):
 			Radian = 2 * math.pi * i / 400;
@@ -236,5 +236,5 @@ def main():
 if __name__ == "__main__":
 	try:
 		main()
-	except ELibRayMarching.Exception as e:
+	except Exception as e:
 		print(e)
