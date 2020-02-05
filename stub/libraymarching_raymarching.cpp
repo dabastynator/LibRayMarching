@@ -46,7 +46,7 @@ CRayMarching::~CRayMarching()
 
 LibRayMarching_uint32 CRayMarching::GetLightCount ()
 {
-	m_Shader.GetLightCount();
+	return m_Shader.GetLightCount();
 }
 
 void CRayMarching::GetLight (const LibRayMarching_uint32 nIndex, sLibRayMarchingVector & sPosition, sLibRayMarchingVector & sColor)
@@ -167,7 +167,7 @@ void CRayMarching::RenderScene ()
 		}
 		if (m_ProgressCallback != NULL)
 		{
-			m_ProgressCallback(100 * x / width, &running);
+			m_ProgressCallback(100.f * x / width, &running);
 		}
 	}
 }
@@ -180,7 +180,7 @@ void CRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize,
 	*pColorBufferNeededCount = size;
 	if (nColorBufferBufferSize >= size && m_ColorBuffer != NULL)
 	{
-		for (int i = 0; i < size; i++)
+		for (unsigned long i = 0; i < size; i++)
 		{
 			*pColorBufferBuffer = m_ColorBuffer[i];
 			pColorBufferBuffer++;
@@ -194,7 +194,7 @@ LibRayMarching_uint32 CRayMarching::RenderPixel (const LibRayMarching_double dX,
 	{
 		m_Shader.GetPrimitive(i)->Initialize();
 	}
-	return m_Shader.RenderPixel(dX, dY);
+	return m_Shader.RenderPixel((float)dX, (float)dY);
 }
 
 void CRayMarching::SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback)
@@ -206,15 +206,15 @@ void CRayMarching::SetBackground (const sLibRayMarchingVector Background, const 
 {
 	Lightning* lighning = m_Shader.GetLightning();
 	lighning->background = LibVecToVector(Background);
-	lighning->min_dist_background = dDistanceStart;
-	lighning->max_dist_background = dDistanceEnd;
+	lighning->min_dist_background = (float) dDistanceStart;
+	lighning->max_dist_background = (float) dDistanceEnd;
 }
 
 void CRayMarching::SetShaderProperties (const sLibRayMarchingShaderProperties ShaderProperties)
 {
 	Lightning* lighning = m_Shader.GetLightning();
 	lighning->oversampling = ShaderProperties.m_Oversampling;
-	lighning->soft_shadow = ShaderProperties.m_SoftShadow;
+	lighning->soft_shadow = (float) ShaderProperties.m_SoftShadow;
 	lighning->normal_by_environment = ShaderProperties.m_FastNormalCalculation;
 	m_Shader.SetMaxBouncing(ShaderProperties.m_MaxBouncing);
 }

@@ -14,7 +14,7 @@ Abstract: This is a stub class definition of CBox
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************

@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CPrimitive
 #include "libraymarching_utils.hpp"
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -38,7 +38,7 @@ void CPrimitive::Translate (const LibRayMarching::sVector Translation)
 
 void CPrimitive::Rotate (const LibRayMarching::sVector Axis, const LibRayMarching_double dRadian)
 {
-	m_Primitive->Rotate(LibVecToVector(Axis), dRadian);
+	m_Primitive->Rotate(LibVecToVector(Axis), (float)dRadian);
 }
 
 void CPrimitive::Scale (const LibRayMarching::sVector Scale)
@@ -53,5 +53,5 @@ void CPrimitive::SetMaterial (const LibRayMarching::sMaterial Material)
 
 void CPrimitive::SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval)
 {
-	m_Primitive->SetDistortionSinus(dDistortionFactor, dInterval);
+	m_Primitive->SetDistortionSinus((float)dDistortionFactor, (float)dInterval);
 }

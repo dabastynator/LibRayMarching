@@ -38,7 +38,7 @@ namespace LibRayMarching
 			// Calculate color along ray by phong shading
 			Vector PhongShading(const Vector& position, const Vector& ray, int bouncing);
 			// Calculate the normal for given marche result
-			float CalcNormal(Vector pos, Vector ray, MarcheResult& result);
+			void CalcNormal(Vector pos, Vector ray, MarcheResult& result);
 			// Ray marche along given ray and set result
 			float RayMarche(const Vector& position, const Vector& ray, MarcheResult& result, double max_distance);
 			// Find nearest primitive and set distance and material
@@ -56,7 +56,7 @@ namespace LibRayMarching
 
 			PrimitivePtr GetPrimitive(int index) { return m_Primitives.at(index); };
 
-			int GetPrimitiveCount() { return m_Primitives.size(); };
+			size_t GetPrimitiveCount() { return m_Primitives.size(); };
 
 			void DeletePrimitive(int index){ m_Primitives.erase(m_Primitives.begin() + index); };
 			
@@ -64,11 +64,11 @@ namespace LibRayMarching
 
 			Light GetLight(int index) { return m_Lights.at(index); };
 
-			int GetLightCount() { return m_Lights.size(); };
+			size_t GetLightCount() { return m_Lights.size(); };
 			
 			void DeleteLight(int index) { m_Lights.erase(m_Lights.begin() + index); };
 
-			unsigned int RenderPixel(int x, int y);
+			unsigned int RenderPixel(float x, float y);
 
 			void SetMaxBouncing(int bouncing) { m_Bouncing = bouncing; };
 	};

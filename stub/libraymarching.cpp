@@ -31,7 +31,7 @@ using namespace LibRayMarching::Impl;
 
 bool CWrapper::GetLastError (IBaseClass* pInstance, std::string & sErrorMessage)
 {
-	pInstance->GetLastErrorMessage(sErrorMessage);
+	return pInstance->GetLastErrorMessage(sErrorMessage);
 }
 
 
@@ -59,13 +59,13 @@ IRayMarching * CWrapper::CreateRayMarching ()
 
 ISphere * CWrapper::CreateSphere (const LibRayMarching_double dRadius)
 {
-	SpherePtr sphere (new Sphere(dRadius));
+	SpherePtr sphere (new Sphere((float)dRadius));
 	return new CSphere(sphere);
 }
 
 ICapsule * CWrapper::CreateCapsule (const LibRayMarching_double dRadius, const sLibRayMarchingVector Point1, const sLibRayMarchingVector Point2)
 {
-	CapsulePtr capsule (new Capsule(dRadius));
+	CapsulePtr capsule (new Capsule((float)dRadius));
 	capsule->SetPoint1(LibVecToVector(Point1));
 	capsule->SetPoint2(LibVecToVector(Point2));
 	return new CCapsule(capsule);
@@ -89,16 +89,16 @@ IPlane * CWrapper::CreatePlane (const sLibRayMarchingVector Origin, const sLibRa
 ICylinder * CWrapper::CreateCylinder (const LibRayMarching_double dRadius, const LibRayMarching_double dHeight)
 {
 	CylinderPtr cylinder (new Cylinder());
-	cylinder->SetRadius(dRadius);
-	cylinder->SetHeight(dHeight);
+	cylinder->SetRadius((float)dRadius);
+	cylinder->SetHeight((float)dHeight);
 	return new CCylinder(cylinder);
 }
 
 ITorus * CWrapper::CreateTorus (const LibRayMarching_double dBigRadius, const LibRayMarching_double dSmallRadius)
 {
 	TorusPtr torus (new Torus());
-	torus->SetRadiusBig(dBigRadius);
-	torus->SetRadiusSmall(dSmallRadius);
+	torus->SetRadiusBig((float)dBigRadius);
+	torus->SetRadiusSmall((float)dSmallRadius);
 	return new CTorus(torus);
 }
 

@@ -12,8 +12,8 @@ namespace LibRayMarching
 			int m_ScreenSizeY;
 
 			int m_ScreenMaxSize;
-			double m_DirectionComponent;
-			double m_UpRightComponent;
+			float m_DirectionComponent;
+			float m_UpRightComponent;
 
 			Vector m_Up;
 			Vector m_Dir;

@@ -14,7 +14,7 @@ Abstract: This is a stub class definition of CCapsule
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -33,7 +33,7 @@ LibRayMarching_double CCapsule::GetRadius ()
 
 void CCapsule::SetRadius (const LibRayMarching_double dRadius)
 {
-	m_Capsule->SetRadius(dRadius);
+	m_Capsule->SetRadius((float)dRadius);
 }
 
 sLibRayMarchingVector CCapsule::GetPoint1 ()

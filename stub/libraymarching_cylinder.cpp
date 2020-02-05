@@ -13,7 +13,7 @@ Abstract: This is a stub class definition of CCylinder
 
 // Include custom headers here.
 
-
+using namespace LibRayMarching;
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
@@ -33,7 +33,7 @@ LibRayMarching_double CCylinder::GetRadius ()
 
 void CCylinder::SetRadius (const LibRayMarching_double dRadius)
 {
-	m_Cylinder->SetRadius(dRadius);
+	m_Cylinder->SetRadius((float)dRadius);
 }
 
 LibRayMarching_double CCylinder::GetHeight ()
@@ -43,6 +43,6 @@ LibRayMarching_double CCylinder::GetHeight ()
 
 void CCylinder::SetHeight (const LibRayMarching_double dHeight)
 {
-	m_Cylinder->SetHeight(dHeight);
+	m_Cylinder->SetHeight((float)dHeight);
 }
 
