@@ -6,11 +6,7 @@ using namespace LibRayMarching;
 
 Vector LibRayMarching::LibVecToVector(const LibRayMarching::sVector& libVec)
 {
-<<<<<<< HEAD
-	return Vector(libVec.m_X, libVec.m_Y, libVec.m_Z);
-=======
-	return Vector((float)libVec.m_x, (float)libVec.m_y, (float)libVec.m_z);
->>>>>>> fc2619b712968377c311d79879a477fd8a2487d3
+	return Vector((float)libVec.m_X, (float)libVec.m_Y, (float)libVec.m_Z);
 }
 
 LibRayMarching::sVector LibRayMarching::VectorToLibVec(const Vector& vector)
@@ -70,5 +66,5 @@ LibRayMarching::eGroupAction LibRayMarching::CAToLibCA (const CombineAction& act
 		case caUnify: return LibRayMarching::eGroupAction::Unify;
 		case caSubtract: return LibRayMarching::eGroupAction::Subtract;
 	}
-	return eGroupActionUnify;
+	return LibRayMarching::eGroupAction::Unify;
 }
