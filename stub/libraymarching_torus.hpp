@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingTorus
+Abstract: This is the class declaration of CTorus
 
 */
 
@@ -27,10 +27,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingTorus 
+ Class declaration of CTorus 
 **************************************************************************************************************************/
 
-class CLibRayMarchingTorus : public virtual ILibRayMarchingTorus, public virtual CLibRayMarchingPrimitive {
+class CTorus : public virtual ITorus, public virtual CPrimitive {
 private:
 
 	/**
@@ -55,7 +55,7 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingTorus(TorusPtr torus);
+	CTorus(TorusPtr torus);
 
 	LibRayMarching_double GetBigRadius ();
 

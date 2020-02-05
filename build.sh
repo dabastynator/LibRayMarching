@@ -9,7 +9,9 @@ ACTResult=$ScriptPath'/LibRayMarching_component'
 case $1 in
 act)
 	cd $ScriptPath
+	rm -rf $ACTResult/
 	act libraymarching.act.xml
+	rm interface/*
 	cp $ACTResult/Implementations/Cpp/Interfaces/libraymarching* interface/
 	cp $ACTResult/Bindings/Python/LibRayMarching.py example/
 ;;
@@ -20,6 +22,9 @@ compile)
 	make
 ;;
 package)
+	rm -rf $ACTResult/
+	act libraymarching.act.xml
+	
 	Package=$Build'/package'
 	Artifact=$Build'/libraymarching.zip'
 	Bin=$Package'/bin'

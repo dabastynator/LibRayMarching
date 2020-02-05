@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingCylinder
+Abstract: This is a stub class definition of CCylinder
 
 */
 
@@ -17,31 +17,31 @@ Abstract: This is a stub class definition of CLibRayMarchingCylinder
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingCylinder 
+ Class definition of CCylinder 
 **************************************************************************************************************************/
 
-CLibRayMarchingCylinder::CLibRayMarchingCylinder(CylinderPtr cylinder):
-	CLibRayMarchingPrimitive(cylinder), m_Cylinder(cylinder)
+CCylinder::CCylinder(CylinderPtr cylinder):
+	CPrimitive(cylinder), m_Cylinder(cylinder)
 {
 
 }
 
-LibRayMarching_double CLibRayMarchingCylinder::GetRadius ()
+LibRayMarching_double CCylinder::GetRadius ()
 {
 	return m_Cylinder->GetRadius();
 }
 
-void CLibRayMarchingCylinder::SetRadius (const LibRayMarching_double dRadius)
+void CCylinder::SetRadius (const LibRayMarching_double dRadius)
 {
 	m_Cylinder->SetRadius(dRadius);
 }
 
-LibRayMarching_double CLibRayMarchingCylinder::GetHeight ()
+LibRayMarching_double CCylinder::GetHeight ()
 {
 	return m_Cylinder->GetHeight();
 }
 
-void CLibRayMarchingCylinder::SetHeight (const LibRayMarching_double dHeight)
+void CCylinder::SetHeight (const LibRayMarching_double dHeight)
 {
 	m_Cylinder->SetHeight(dHeight);
 }

@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingRayMarching
+Abstract: This is a stub class definition of CRayMarching
 
 */
 
@@ -27,16 +27,16 @@ Abstract: This is a stub class definition of CLibRayMarchingRayMarching
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingRayMarching 
+ Class definition of CRayMarching 
 **************************************************************************************************************************/
 
-CLibRayMarchingRayMarching::CLibRayMarchingRayMarching():
+CRayMarching::CRayMarching():
 	m_ColorBuffer(NULL), m_ProgressCallback(NULL)
 {
 
 }
 
-CLibRayMarchingRayMarching::~CLibRayMarchingRayMarching()
+CRayMarching::~CRayMarching()
 {
 	if (m_ColorBuffer != NULL)
 	{
@@ -44,95 +44,95 @@ CLibRayMarchingRayMarching::~CLibRayMarchingRayMarching()
 	}
 }
 
-LibRayMarching_uint32 CLibRayMarchingRayMarching::GetLightCount ()
+LibRayMarching_uint32 CRayMarching::GetLightCount ()
 {
 	m_Shader.GetLightCount();
 }
 
-void CLibRayMarchingRayMarching::GetLight (const LibRayMarching_uint32 nIndex, sLibRayMarchingVector & sPosition, sLibRayMarchingVector & sColor)
+void CRayMarching::GetLight (const LibRayMarching_uint32 nIndex, sLibRayMarchingVector & sPosition, sLibRayMarchingVector & sColor)
 {
 	Light light = m_Shader.GetLight(nIndex);
 	sPosition = VectorToLibVec(light.position);
 	sColor = VectorToLibVec(light.color);
 }
 
-void CLibRayMarchingRayMarching::AddLight (const sLibRayMarchingVector Position, const sLibRayMarchingVector Color)
+void CRayMarching::AddLight (const sLibRayMarchingVector Position, const sLibRayMarchingVector Color)
 {
 	Vector pos = LibVecToVector(Position);
 	Vector col = LibVecToVector(Color);
 	m_Shader.AddLight(Light(pos, col));
 }
 
-void CLibRayMarchingRayMarching::DeleteLight (const LibRayMarching_uint32 nIndex)
+void CRayMarching::DeleteLight (const LibRayMarching_uint32 nIndex)
 {
 	m_Shader.DeleteLight(nIndex);
 }
 
-LibRayMarching_uint32 CLibRayMarchingRayMarching::GetPrimitiveCount ()
+LibRayMarching_uint32 CRayMarching::GetPrimitiveCount ()
 {
 	return m_Shader.GetPrimitiveCount();
 }
 
-ILibRayMarchingPrimitive * CLibRayMarchingRayMarching::GetPrimitive (const LibRayMarching_uint32 nIndex)
+IPrimitive * CRayMarching::GetPrimitive (const LibRayMarching_uint32 nIndex)
 {
 	PrimitivePtr primitive = m_Shader.GetPrimitive(nIndex);
 	switch(primitive->GetType()){
 		case ptBox:
 		{
 			BoxPtr box( std::dynamic_pointer_cast<Box> (primitive) );
-			return new CLibRayMarchingBox(box);
+			return new CBox(box);
 		}
 		case ptSphere:
 		{
 			SpherePtr sphere( std::dynamic_pointer_cast<Sphere> (primitive) );
-			return new CLibRayMarchingSphere(sphere);
+			return new CSphere(sphere);
 		}
 		case ptPlane:
 		{
 			PlanePtr plane( std::dynamic_pointer_cast<Plane> (primitive) );
-			return new CLibRayMarchingPlane(plane);
+			return new CPlane(plane);
 		}
 		case ptCapsule:
 		{
 			CapsulePtr capsule( std::dynamic_pointer_cast<Capsule> (primitive) );
-			return new CLibRayMarchingCapsule(capsule);
+			return new CCapsule(capsule);
 		}
 		case ptTorus:
 		{
 			TorusPtr torus( std::dynamic_pointer_cast<Torus> (primitive) );
-			return new CLibRayMarchingTorus(torus);
+			return new CTorus(torus);
 		}
 		case ptMengerSponge:
 		{
 			MengerSpongePtr ms( std::dynamic_pointer_cast<MengerSponge> (primitive) );
-			return new CLibRayMarchingMengerSponge(ms);
+			return new CMengerSponge(ms);
 		}
 		case ptQuaternion:
 		{
 			QuaternionFractalPtr ms( std::dynamic_pointer_cast<QuaternionFractal> (primitive) );
-			return new CLibRayMarchingQuaternionFractal(ms);
+			return new CQuaternionFractal(ms);
 		}
 		case ptGroup:
 		{
 			PrimitiveGroupPtr ms( std::dynamic_pointer_cast<PrimitiveGroup> (primitive) );
-			return new CLibRayMarchingPrimitiveGroup(ms);
+			return new CPrimitiveGroup(ms);
 		}
 	}
 	throw new ELibRayMarchingInterfaceException(LIBRAYMARCHING_ERROR_INVALIDPARAM);
 }
 
-void CLibRayMarchingRayMarching::AddPrimitive (ILibRayMarchingPrimitive* pPrimitive)
+void CRayMarching::AddPrimitive (IPrimitive* pPrimitive)
 {
-	CLibRayMarchingPrimitive* pPrimitiveImpl = dynamic_cast < CLibRayMarchingPrimitive* >(pPrimitive);
+	CPrimitive* pPrimitiveImpl = dynamic_cast < CPrimitive* >(pPrimitive);
 	m_Shader.AddPrimitive(pPrimitiveImpl->GetPrimitive());
 }
 
-void CLibRayMarchingRayMarching::RemovePrimitive (const LibRayMarching_uint32 nIndex)
+void CRayMarching::RemovePrimitive (const LibRayMarching_uint32 nIndex)
 {
 	m_Shader.DeletePrimitive(nIndex);
 }
 
-void CLibRayMarchingRayMarching::SetScreenSize (const LibRayMarching_uint32 nWidth, const LibRayMarching_uint32 nHeight)
+void CRayMarching::SetScreenSize (const LibRayMarching_uint32 nWidth, const LibRayMarching_uint32 nHeight)
 {
 	m_Shader.GetCamera()->SetScreen(nWidth, nHeight);
 	if (m_ColorBuffer != NULL)
@@ -142,7 +142,7 @@ void CLibRayMarchingRayMarching::SetScreenSize (const LibRayMarching_uint32 nWid
 	m_ColorBuffer = new unsigned int[nWidth * nHeight];
 }
 
-void CLibRayMarchingRayMarching::SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV)
+void CRayMarching::SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV)
 {
 	Vector eye = LibVecToVector(Eye);
 	Vector dir = LibVecToVector(Dir);
@@ -150,7 +150,7 @@ void CLibRayMarchingRayMarching::SetViewport (const sLibRayMarchingVector Eye, c
 	m_Shader.GetCamera()->SetViewPort(eye, dir, up, dFOV);
 }
 
-void CLibRayMarchingRayMarching::RenderScene ()
+void CRayMarching::RenderScene ()
 {
 	for (int i=0; i < m_Shader.GetPrimitiveCount(); i++)
 	{
@@ -172,7 +172,7 @@ void CLibRayMarchingRayMarching::RenderScene ()
 	}
 }
 
-void CLibRayMarchingRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching_uint64 * pColorBufferBuffer)
+void CRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching_uint64 * pColorBufferBuffer)
 {
 	int width = m_Shader.GetCamera()->GetWidth();
 	int height = m_Shader.GetCamera()->GetHeight();
@@ -188,7 +188,7 @@ void CLibRayMarchingRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBuf
 	}
 }
 
-LibRayMarching_uint32 CLibRayMarchingRayMarching::RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY)
+LibRayMarching_uint32 CRayMarching::RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY)
 {
 	for (int i=0; i < m_Shader.GetPrimitiveCount(); i++)
 	{
@@ -197,12 +197,12 @@ LibRayMarching_uint32 CLibRayMarchingRayMarching::RenderPixel (const LibRayMarch
 	return m_Shader.RenderPixel(dX, dY);
 }
 
-void CLibRayMarchingRayMarching::SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback)
+void CRayMarching::SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback)
 {
 	m_ProgressCallback = pProgressCallback;
 }
 
-void CLibRayMarchingRayMarching::SetBackground (const sLibRayMarchingVector Background, const LibRayMarching_double dDistanceStart, const LibRayMarching_double dDistanceEnd)
+void CRayMarching::SetBackground (const sLibRayMarchingVector Background, const LibRayMarching_double dDistanceStart, const LibRayMarching_double dDistanceEnd)
 {
 	Lightning* lighning = m_Shader.GetLightning();
 	lighning->background = LibVecToVector(Background);
@@ -210,7 +210,7 @@ void CLibRayMarchingRayMarching::SetBackground (const sLibRayMarchingVector Back
 	lighning->max_dist_background = dDistanceEnd;
 }
 
-void CLibRayMarchingRayMarching::SetShaderProperties (const sLibRayMarchingShaderProperties ShaderProperties)
+void CRayMarching::SetShaderProperties (const sLibRayMarchingShaderProperties ShaderProperties)
 {
 	Lightning* lighning = m_Shader.GetLightning();
 	lighning->oversampling = ShaderProperties.m_Oversampling;

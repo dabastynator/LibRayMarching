@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingSphere
+Abstract: This is the class declaration of CSphere
 
 */
 
@@ -28,10 +28,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingSphere 
+ Class declaration of CSphere 
 **************************************************************************************************************************/
 
-class CLibRayMarchingSphere : public virtual ILibRayMarchingSphere, public virtual CLibRayMarchingPrimitive {
+class CSphere : public virtual ISphere, public virtual CPrimitive {
 private:
 
 	/**
@@ -56,7 +56,7 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingSphere(SpherePtr sphere);
+	CSphere(SpherePtr sphere);
 
 	LibRayMarching_double GetRadius ();
 

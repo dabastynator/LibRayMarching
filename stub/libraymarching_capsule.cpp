@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingCapsule
+Abstract: This is a stub class definition of CCapsule
 
 */
 
@@ -18,40 +18,40 @@ Abstract: This is a stub class definition of CLibRayMarchingCapsule
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingCapsule 
+ Class definition of CCapsule 
 **************************************************************************************************************************/
 
-CLibRayMarchingCapsule::CLibRayMarchingCapsule(CapsulePtr capsule): CLibRayMarchingPrimitive(capsule), m_Capsule(capsule)
+CCapsule::CCapsule(CapsulePtr capsule): CPrimitive(capsule), m_Capsule(capsule)
 {
 
 }
 
-LibRayMarching_double CLibRayMarchingCapsule::GetRadius ()
+LibRayMarching_double CCapsule::GetRadius ()
 {
 	return m_Capsule->GetRadius();
 }
 
-void CLibRayMarchingCapsule::SetRadius (const LibRayMarching_double dRadius)
+void CCapsule::SetRadius (const LibRayMarching_double dRadius)
 {
 	m_Capsule->SetRadius(dRadius);
 }
 
-sLibRayMarchingVector CLibRayMarchingCapsule::GetPoint1 ()
+sLibRayMarchingVector CCapsule::GetPoint1 ()
 {
 	return VectorToLibVec(m_Capsule->GetPoint1());
 }
 
-void CLibRayMarchingCapsule::SetPoint1 (const sLibRayMarchingVector Point1)
+void CCapsule::SetPoint1 (const sLibRayMarchingVector Point1)
 {
 	m_Capsule->SetPoint1(LibVecToVector(Point1));
 }
 
-sLibRayMarchingVector CLibRayMarchingCapsule::GetPoint2 ()
+sLibRayMarchingVector CCapsule::GetPoint2 ()
 {
 	return VectorToLibVec(m_Capsule->GetPoint2());
 }
 
-void CLibRayMarchingCapsule::SetPoint2 (const sLibRayMarchingVector Point2)
+void CCapsule::SetPoint2 (const sLibRayMarchingVector Point2)
 {
 	m_Capsule->SetPoint2(LibVecToVector(Point2));
 }

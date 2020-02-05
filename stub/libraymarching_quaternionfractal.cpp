@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingQuaternionFractal
+Abstract: This is a stub class definition of CQuaternionFractal
 
 */
 
@@ -17,15 +17,15 @@ Abstract: This is a stub class definition of CLibRayMarchingQuaternionFractal
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingQuaternionFractal 
+ Class definition of CQuaternionFractal 
 **************************************************************************************************************************/
-CLibRayMarchingQuaternionFractal::CLibRayMarchingQuaternionFractal(QuaternionFractalPtr fractal):
-	CLibRayMarchingPrimitive(fractal), m_Fractal(fractal)
+CQuaternionFractal::CQuaternionFractal(QuaternionFractalPtr fractal):
+	CPrimitive(fractal), m_Fractal(fractal)
 {
 
 }
 
-void CLibRayMarchingQuaternionFractal::GetQuaternion (LibRayMarching_double & dR, LibRayMarching_double & dI, LibRayMarching_double & dJ, LibRayMarching_double & dK)
+void CQuaternionFractal::GetQuaternion (LibRayMarching_double & dR, LibRayMarching_double & dI, LibRayMarching_double & dJ, LibRayMarching_double & dK)
 {
 	Quaternion q = m_Fractal->GetQuaternion();
 	dR = q.r;
@@ -34,19 +34,19 @@ void CLibRayMarchingQuaternionFractal::GetQuaternion (LibRayMarching_double & dR
 	dK = q.k;
 }
 
-void CLibRayMarchingQuaternionFractal::SetQuaternion (const LibRayMarching_double dR, const LibRayMarching_double dI, const LibRayMarching_double dJ, const LibRayMarching_double dK)
+void CQuaternionFractal::SetQuaternion (const LibRayMarching_double dR, const LibRayMarching_double dI, const LibRayMarching_double dJ, const LibRayMarching_double dK)
 {
 	m_Fractal->SetQuaternion(Quaternion(
 		dR, dI, dJ, dK
 	));
 }
 
-LibRayMarching_uint32 CLibRayMarchingQuaternionFractal::GetIterations ()
+LibRayMarching_uint32 CQuaternionFractal::GetIterations ()
 {
 	return m_Fractal->GetIterations();
 }
 
-void CLibRayMarchingQuaternionFractal::SetIterations (const LibRayMarching_uint32 nIterations)
+void CQuaternionFractal::SetIterations (const LibRayMarching_uint32 nIterations)
 {
 	m_Fractal->SetIterations(nIterations);
 }

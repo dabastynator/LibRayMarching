@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingMengerSponge
+Abstract: This is a stub class definition of CMengerSponge
 
 */
 
@@ -17,20 +17,20 @@ Abstract: This is a stub class definition of CLibRayMarchingMengerSponge
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingMengerSponge 
+ Class definition of CMengerSponge 
 **************************************************************************************************************************/
-CLibRayMarchingMengerSponge::CLibRayMarchingMengerSponge(MengerSpongePtr mengerSonge):
-	CLibRayMarchingPrimitive(mengerSonge), m_MengerSonge(mengerSonge)
+CMengerSponge::CMengerSponge(MengerSpongePtr mengerSonge):
+	CPrimitive(mengerSonge), m_MengerSonge(mengerSonge)
 {
 
 }
 
-LibRayMarching_uint32 CLibRayMarchingMengerSponge::GetStepCount ()
+LibRayMarching_uint32 CMengerSponge::GetStepCount ()
 {
 	return m_MengerSonge->GetSetpCount();
 }
 
-void CLibRayMarchingMengerSponge::SetStepCount (const LibRayMarching_uint32 nStepCount)
+void CMengerSponge::SetStepCount (const LibRayMarching_uint32 nStepCount)
 {
 	m_MengerSonge->SetSetpCount(nStepCount);
 }

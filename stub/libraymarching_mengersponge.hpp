@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingMengerSponge
+Abstract: This is the class declaration of CMengerSponge
 
 */
 
@@ -28,10 +28,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingMengerSponge 
+ Class declaration of CMengerSponge 
 **************************************************************************************************************************/
 
-class CLibRayMarchingMengerSponge : public virtual ILibRayMarchingMengerSponge, public virtual CLibRayMarchingPrimitive {
+class CMengerSponge : public virtual IMengerSponge, public virtual CPrimitive {
 private:
 
 	/**
@@ -55,7 +55,7 @@ public:
 	/**
 	* Public member functions to implement.
 	*/
-	CLibRayMarchingMengerSponge(MengerSpongePtr mengerSonge);
+	CMengerSponge(MengerSpongePtr mengerSonge);
 
 	LibRayMarching_uint32 GetStepCount ();
 

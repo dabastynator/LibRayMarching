@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingRayMarching
+Abstract: This is the class declaration of CRayMarching
 
 */
 
@@ -29,10 +29,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingRayMarching 
+ Class declaration of CRayMarching 
 **************************************************************************************************************************/
 
-class CLibRayMarchingRayMarching : public virtual ILibRayMarchingRayMarching, public virtual CLibRayMarchingBaseClass{
+class CRayMarching : public virtual IRayMarching, public virtual CBaseClass{
 private:
 
 	/**
@@ -62,9 +62,9 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingRayMarching();
+	CRayMarching();
 
-	~CLibRayMarchingRayMarching();
+	~CRayMarching();
 
 	LibRayMarching_uint32 GetLightCount ();
 
@@ -76,9 +76,9 @@ public:
 
 	LibRayMarching_uint32 GetPrimitiveCount ();
 
-	ILibRayMarchingPrimitive * GetPrimitive (const LibRayMarching_uint32 nIndex);
+	IPrimitive * GetPrimitive (const LibRayMarching_uint32 nIndex);
 
-	void AddPrimitive (ILibRayMarchingPrimitive* pPrimitive);
+	void AddPrimitive (IPrimitive* pPrimitive);
 
 	void RemovePrimitive (const LibRayMarching_uint32 nIndex);
 

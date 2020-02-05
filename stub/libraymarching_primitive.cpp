@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingPrimitive
+Abstract: This is a stub class definition of CPrimitive
 
 */
 
@@ -17,41 +17,41 @@ Abstract: This is a stub class definition of CLibRayMarchingPrimitive
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingPrimitive 
+ Class definition of CPrimitive 
 **************************************************************************************************************************/
 
-CLibRayMarchingPrimitive::CLibRayMarchingPrimitive(PrimitivePtr sPrimitive):
+CPrimitive::CPrimitive(PrimitivePtr sPrimitive):
 	m_Primitive(sPrimitive)
 {
 
 }
 
-void CLibRayMarchingPrimitive::IdentityPosition ()
+void CPrimitive::IdentityPosition ()
 {
 	m_Primitive->IdentityPosition();
 }
 
-void CLibRayMarchingPrimitive::Translate (const sLibRayMarchingVector Translation)
+void CPrimitive::Translate (const LibRayMarching::sVector Translation)
 {
 	m_Primitive->Translate(LibVecToVector(Translation));
 }
 
-void CLibRayMarchingPrimitive::Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian)
+void CPrimitive::Rotate (const LibRayMarching::sVector Axis, const LibRayMarching_double dRadian)
 {
 	m_Primitive->Rotate(LibVecToVector(Axis), dRadian);
 }
 
-void CLibRayMarchingPrimitive::Scale (const sLibRayMarchingVector Scale)
+void CPrimitive::Scale (const LibRayMarching::sVector Scale)
 {
 	m_Primitive->Scale(LibVecToVector(Scale));
 }
 
-void CLibRayMarchingPrimitive::SetMaterial (const sLibRayMarchingMaterial Material)
+void CPrimitive::SetMaterial (const LibRayMarching::sMaterial Material)
 {
 	m_Primitive->SetMaterial(LibMaterialToMaterial(Material));
 }
 
-void CLibRayMarchingPrimitive::SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval)
+void CPrimitive::SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval)
 {
 	m_Primitive->SetDistortionSinus(dDistortionFactor, dInterval);
 }

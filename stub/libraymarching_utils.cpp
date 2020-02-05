@@ -4,21 +4,21 @@
 
 using namespace LibRayMarching;
 
-Vector LibRayMarching::LibVecToVector(const sLibRayMarchingVector& libVec)
+Vector LibRayMarching::LibVecToVector(const LibRayMarching::sVector& libVec)
 {
-	return Vector(libVec.m_x, libVec.m_y, libVec.m_z);
+	return Vector(libVec.m_X, libVec.m_Y, libVec.m_Z);
 }
 
-sLibRayMarchingVector LibRayMarching::VectorToLibVec(const Vector& vector)
+LibRayMarching::sVector LibRayMarching::VectorToLibVec(const Vector& vector)
 {
-	sLibRayMarchingVector libVec;
-	libVec.m_x = vector.x;
-	libVec.m_y = vector.y;
-	libVec.m_z = vector.z;
+	LibRayMarching::sVector libVec;
+	libVec.m_X = vector.x;
+	libVec.m_Y = vector.y;
+	libVec.m_Z = vector.z;
 	return libVec;
 }
 
-Material LibRayMarching::LibMaterialToMaterial(const sLibRayMarchingMaterial& libMaterial)
+Material LibRayMarching::LibMaterialToMaterial(const LibRayMarching::sMaterial& libMaterial)
 {
 	Material result;
 	result.color = Vector(libMaterial.m_Red, libMaterial.m_Green, libMaterial.m_Blue);
@@ -32,9 +32,9 @@ Material LibRayMarching::LibMaterialToMaterial(const sLibRayMarchingMaterial& li
 	return result;
 }
 
-sLibRayMarchingMaterial LibRayMarching::MaterialToLibMaterial(const Material& Material)
+LibRayMarching::sMaterial LibRayMarching::MaterialToLibMaterial(const Material& Material)
 {
-	sLibRayMarchingMaterial result;
+	LibRayMarching::sMaterial result;
 	result.m_Red = Material.color.x;
 	result.m_Green = Material.color.x;
 	result.m_Blue = Material.color.x;
@@ -48,22 +48,22 @@ sLibRayMarchingMaterial LibRayMarching::MaterialToLibMaterial(const Material& Ma
 	return result;
 }
 
-CombineAction LibRayMarching::LibCAToCA (const eLibRayMarchingGroupAction& action)
+CombineAction LibRayMarching::LibCAToCA (const LibRayMarching::eGroupAction& action)
 {
 	switch(action)
 	{
-		case eGroupActionIntersect: return caIntersect;
-		case eGroupActionUnify: return caUnify;
-		case eGroupActionSubtract: return caSubtract;
+		case LibRayMarching::eGroupAction::Intersect: return caIntersect;
+		case LibRayMarching::eGroupAction::Unify: return caUnify;
+		case LibRayMarching::eGroupAction::Subtract: return caSubtract;
 	}
 }
 
-eLibRayMarchingGroupAction LibRayMarching::CAToLibCA (const CombineAction& action)
+LibRayMarching::eGroupAction LibRayMarching::CAToLibCA (const CombineAction& action)
 {
 	switch(action)
 	{
-		case caIntersect: return eGroupActionIntersect;
-		case caUnify: return eGroupActionUnify;
-		case caSubtract: return eGroupActionSubtract;
+		case caIntersect: return LibRayMarching::eGroupAction::Intersect;
+		case caUnify: return LibRayMarching::eGroupAction::Unify;
+		case caSubtract: return LibRayMarching::eGroupAction::Subtract;
 	}
 }

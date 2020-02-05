@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingPrimitive
+Abstract: This is the class declaration of CPrimitive
 
 */
 
@@ -31,10 +31,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingPrimitive 
+ Class declaration of CPrimitive 
 **************************************************************************************************************************/
 
-class CLibRayMarchingPrimitive : public virtual ILibRayMarchingPrimitive, public virtual CLibRayMarchingBaseClass {
+class CPrimitive : public virtual IPrimitive, public virtual CBaseClass {
 private:
 
 	/**
@@ -60,17 +60,17 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingPrimitive(PrimitivePtr sPrimitive);
+	CPrimitive(PrimitivePtr sPrimitive);
 
 	void IdentityPosition ();
 
-	void Translate (const sLibRayMarchingVector Translation);
+	void Translate (const LibRayMarching::sVector Translation);
 
-	void Rotate (const sLibRayMarchingVector Axis, const LibRayMarching_double dRadian);
+	void Rotate (const LibRayMarching::sVector Axis, const LibRayMarching_double dRadian);
 
-	void Scale (const sLibRayMarchingVector Scale);
+	void Scale (const LibRayMarching::sVector Scale);
 
-	void SetMaterial (const sLibRayMarchingMaterial Material);
+	void SetMaterial (const  LibRayMarching::sMaterial Material);
 
 	Material* GetMaterial() { return m_Primitive->GetMaterial(); };
 

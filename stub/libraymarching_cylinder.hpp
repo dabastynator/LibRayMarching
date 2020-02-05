@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingCylinder
+Abstract: This is the class declaration of CCylinder
 
 */
 
@@ -28,10 +28,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingCylinder 
+ Class declaration of CCylinder 
 **************************************************************************************************************************/
 
-class CLibRayMarchingCylinder : public virtual ILibRayMarchingCylinder, public virtual CLibRayMarchingPrimitive {
+class CCylinder : public virtual ICylinder, public virtual CPrimitive {
 private:
 
 	/**
@@ -56,7 +56,7 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingCylinder(CylinderPtr cylinder);
+	CCylinder(CylinderPtr cylinder);
 
 	LibRayMarching_double GetRadius ();
 

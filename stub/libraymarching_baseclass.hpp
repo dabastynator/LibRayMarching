@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingBaseClass
+Abstract: This is the class declaration of CBaseClass
 
 */
 
@@ -24,14 +24,15 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingBaseClass 
+ Class declaration of CBaseClass 
 **************************************************************************************************************************/
 
-class CLibRayMarchingBaseClass : public virtual ILibRayMarchingBaseClass {
+class CBaseClass : public virtual IBaseClass {
 private:
 
 	std::vector<std::string> m_errors;
 
+	int m_refcount = 1;
 	/**
 	* Put private members here.
 	*/
@@ -54,6 +55,9 @@ public:
 
 	void RegisterErrorMessage (const std::string & sErrorMessage);
 
+	void IncRefCount();
+
+	bool DecRefCount();
 
 	/**
 	* Public member functions to implement.

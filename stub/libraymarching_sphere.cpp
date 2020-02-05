@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingSphere
+Abstract: This is a stub class definition of CSphere
 
 */
 
@@ -17,20 +17,20 @@ Abstract: This is a stub class definition of CLibRayMarchingSphere
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingSphere 
+ Class definition of CSphere 
 **************************************************************************************************************************/
 
-CLibRayMarchingSphere::CLibRayMarchingSphere(SpherePtr sphere): CLibRayMarchingPrimitive(sphere), m_Sphere(sphere)
+CSphere::CSphere(SpherePtr sphere): CPrimitive(sphere), m_Sphere(sphere)
 {
 
 }
 
-LibRayMarching_double CLibRayMarchingSphere::GetRadius ()
+LibRayMarching_double CSphere::GetRadius ()
 {
 	return m_Sphere->GetRadius();
 }
 
-void CLibRayMarchingSphere::SetRadius (const LibRayMarching_double dRadius)
+void CSphere::SetRadius (const LibRayMarching_double dRadius)
 {
 	m_Sphere->SetRadius(dRadius);
 }

@@ -3,18 +3,18 @@
 #include "primitives.h"
 #include "vector.h"
 #include "types.h"
-#include "libraymarching_types.h"
+#include "libraymarching_types.hpp"
 
 namespace LibRayMarching
 {
 
-    Vector LibVecToVector(const sLibRayMarchingVector& libVec);
+    Vector LibVecToVector(const LibRayMarching::sVector& libVec);
 
-    sLibRayMarchingVector VectorToLibVec(const Vector& libVec);
+    LibRayMarching::sVector VectorToLibVec(const Vector& libVec);
 
-    Material LibMaterialToMaterial(const sLibRayMarchingMaterial& libMaterial);
+    Material LibMaterialToMaterial(const LibRayMarching::sMaterial& libMaterial);
 
-    sLibRayMarchingMaterial MaterialToLibMaterial(const Material& material);
+    LibRayMarching::sMaterial MaterialToLibMaterial(const Material& material);
 
     CombineAction LibCAToCA (const eLibRayMarchingGroupAction& action);
 

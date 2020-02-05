@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingCapsule
+Abstract: This is the class declaration of CCapsule
 
 */
 
@@ -26,10 +26,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingCapsule 
+ Class declaration of CCapsule 
 **************************************************************************************************************************/
 
-class CLibRayMarchingCapsule : public virtual ILibRayMarchingCapsule, public virtual CLibRayMarchingPrimitive {
+class CCapsule : public virtual ICapsule, public virtual CPrimitive {
 private:
 
 	/**
@@ -53,7 +53,7 @@ public:
 	/**
 	* Public member functions to implement.
 	*/
-	CLibRayMarchingCapsule(CapsulePtr capsule);
+	CCapsule(CapsulePtr capsule);
 
 	LibRayMarching_double GetRadius ();
 

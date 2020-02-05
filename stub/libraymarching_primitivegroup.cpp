@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingPrimitiveGroup
+Abstract: This is a stub class definition of CPrimitiveGroup
 
 */
 
@@ -17,42 +17,42 @@ Abstract: This is a stub class definition of CLibRayMarchingPrimitiveGroup
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingPrimitiveGroup 
+ Class definition of CPrimitiveGroup 
 **************************************************************************************************************************/
 
-CLibRayMarchingPrimitiveGroup::CLibRayMarchingPrimitiveGroup(PrimitiveGroupPtr group):
-	CLibRayMarchingPrimitive(group), m_Group(group)
+CPrimitiveGroup::CPrimitiveGroup(PrimitiveGroupPtr group):
+	CPrimitive(group), m_Group(group)
 {
 
 }
 
-LibRayMarching_uint32 CLibRayMarchingPrimitiveGroup::GetPrimitiveCount ()
+LibRayMarching_uint32 CPrimitiveGroup::GetPrimitiveCount ()
 {
 	return m_Group->GetCount();
 }
 
-ILibRayMarchingPrimitive * CLibRayMarchingPrimitiveGroup::GetPrimitive (const LibRayMarching_uint32 nIndex)
+IPrimitive * CPrimitiveGroup::GetPrimitive (const LibRayMarching_uint32 nIndex)
 {
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
 
-void CLibRayMarchingPrimitiveGroup::AddPrimitive (ILibRayMarchingPrimitive* pPrimitive)
+void CPrimitiveGroup::AddPrimitive (IPrimitive* pPrimitive)
 {
-	CLibRayMarchingPrimitive* pPrimitiveImpl = dynamic_cast < CLibRayMarchingPrimitive* >(pPrimitive);
+	CPrimitive* pPrimitiveImpl = dynamic_cast < CPrimitive* >(pPrimitive);
 	m_Group->AddPrimitive(pPrimitiveImpl->GetPrimitive());
 }
 
-void CLibRayMarchingPrimitiveGroup::RemovePrimitive (const LibRayMarching_uint32 nIndex)
+void CPrimitiveGroup::RemovePrimitive (const LibRayMarching_uint32 nIndex)
 {
 	throw ELibRayMarchingInterfaceException (LIBRAYMARCHING_ERROR_NOTIMPLEMENTED);
 }
 
-void CLibRayMarchingPrimitiveGroup::SetGroupAction (const eLibRayMarchingGroupAction eGroupAction)
+void CPrimitiveGroup::SetGroupAction (const eLibRayMarchingGroupAction eGroupAction)
 {
 	m_Group->SetCombineAction(LibCAToCA(eGroupAction));
 }
 
-eLibRayMarchingGroupAction CLibRayMarchingPrimitiveGroup::GetGroupAction ()
+eLibRayMarchingGroupAction CPrimitiveGroup::GetGroupAction ()
 {
 	return CAToLibCA(m_Group->GetCombineAction());
 }

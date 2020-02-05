@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingPlane
+Abstract: This is the class declaration of CPlane
 
 */
 
@@ -27,10 +27,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingPlane 
+ Class declaration of CPlane 
 **************************************************************************************************************************/
 
-class CLibRayMarchingPlane : public virtual ILibRayMarchingPlane, public virtual CLibRayMarchingPrimitive {
+class CPlane : public virtual IPlane, public virtual CPrimitive {
 private:
 
 	/**
@@ -56,7 +56,7 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingPlane(PlanePtr plane);
+	CPlane(PlanePtr plane);
 
 	sLibRayMarchingVector GetNormal ();
 

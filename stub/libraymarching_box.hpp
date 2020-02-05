@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingBox
+Abstract: This is the class declaration of CBox
 
 */
 
@@ -28,10 +28,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingBox 
+ Class declaration of CBox 
 **************************************************************************************************************************/
 
-class CLibRayMarchingBox : public virtual ILibRayMarchingBox, public virtual CLibRayMarchingPrimitive {
+class CBox : public virtual IBox, public virtual CPrimitive {
 private:
 
 	/**
@@ -56,7 +56,7 @@ public:
 	* Public member functions to implement.
 	*/
 
-	CLibRayMarchingBox(BoxPtr box);
+	CBox(BoxPtr box);
 
 	sLibRayMarchingVector GetDimensions ();
 

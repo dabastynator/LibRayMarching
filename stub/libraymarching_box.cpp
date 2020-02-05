@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingBox
+Abstract: This is a stub class definition of CBox
 
 */
 
@@ -18,21 +18,21 @@ Abstract: This is a stub class definition of CLibRayMarchingBox
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingBox 
+ Class definition of CBox 
 **************************************************************************************************************************/
 
-CLibRayMarchingBox::CLibRayMarchingBox(BoxPtr box):
-	CLibRayMarchingPrimitive(box), m_Box(box)
+CBox::CBox(BoxPtr box):
+	CPrimitive(box), m_Box(box)
 {
 
 }
 
-sLibRayMarchingVector CLibRayMarchingBox::GetDimensions ()
+sLibRayMarchingVector CBox::GetDimensions ()
 {
 	return VectorToLibVec(m_Box->GetDimensions());
 }
 
-void CLibRayMarchingBox::SetDimensions (const sLibRayMarchingVector Dimensions)
+void CBox::SetDimensions (const sLibRayMarchingVector Dimensions)
 {
 	m_Box->SetDimensions(LibVecToVector(Dimensions));
 }

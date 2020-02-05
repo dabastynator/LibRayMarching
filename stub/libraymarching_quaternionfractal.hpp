@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is the class declaration of CLibRayMarchingQuaternionFractal
+Abstract: This is the class declaration of CQuaternionFractal
 
 */
 
@@ -28,10 +28,10 @@ namespace Impl {
 
 
 /*************************************************************************************************************************
- Class declaration of CLibRayMarchingQuaternionFractal 
+ Class declaration of CQuaternionFractal 
 **************************************************************************************************************************/
 
-class CLibRayMarchingQuaternionFractal : public virtual ILibRayMarchingQuaternionFractal, public virtual CLibRayMarchingPrimitive {
+class CQuaternionFractal : public virtual IQuaternionFractal, public virtual CPrimitive {
 private:
 
 	/**
@@ -55,7 +55,7 @@ public:
 	/**
 	* Public member functions to implement.
 	*/
-	CLibRayMarchingQuaternionFractal(QuaternionFractalPtr fractal);
+	CQuaternionFractal(QuaternionFractalPtr fractal);
 
 	void GetQuaternion (LibRayMarching_double & dR, LibRayMarching_double & dI, LibRayMarching_double & dJ, LibRayMarching_double & dK);
 

@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingTorus
+Abstract: This is a stub class definition of CTorus
 
 */
 
@@ -17,31 +17,31 @@ Abstract: This is a stub class definition of CLibRayMarchingTorus
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingTorus 
+ Class definition of CTorus 
 **************************************************************************************************************************/
 
-CLibRayMarchingTorus::CLibRayMarchingTorus(TorusPtr torus):
-	CLibRayMarchingPrimitive(torus), m_Torus(torus)
+CTorus::CTorus(TorusPtr torus):
+	CPrimitive(torus), m_Torus(torus)
 {
 
 }
 
-LibRayMarching_double CLibRayMarchingTorus::GetBigRadius ()
+LibRayMarching_double CTorus::GetBigRadius ()
 {
 	return m_Torus->GetRadiusBig();
 }
 
-void CLibRayMarchingTorus::SetBigRadius (const LibRayMarching_double dBigRadius)
+void CTorus::SetBigRadius (const LibRayMarching_double dBigRadius)
 {
 	m_Torus->SetRadiusBig(dBigRadius);
 }
 
-LibRayMarching_double CLibRayMarchingTorus::GetSmallRadius ()
+LibRayMarching_double CTorus::GetSmallRadius ()
 {
 	return m_Torus->GetRadiusSmall();
 }
 
-void CLibRayMarchingTorus::SetSmallRadius (const LibRayMarching_double dSmallRadius)
+void CTorus::SetSmallRadius (const LibRayMarching_double dSmallRadius)
 {
 	m_Torus->SetRadiusSmall(dSmallRadius);
 }

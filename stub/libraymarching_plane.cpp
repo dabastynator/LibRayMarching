@@ -4,7 +4,7 @@ Copyright (C) 2019 PrimeDevelopers
 
 All rights reserved.
 
-Abstract: This is a stub class definition of CLibRayMarchingPlane
+Abstract: This is a stub class definition of CPlane
 
 */
 
@@ -18,21 +18,21 @@ Abstract: This is a stub class definition of CLibRayMarchingPlane
 using namespace LibRayMarching::Impl;
 
 /*************************************************************************************************************************
- Class definition of CLibRayMarchingPlane 
+ Class definition of CPlane 
 **************************************************************************************************************************/
 
-CLibRayMarchingPlane::CLibRayMarchingPlane(PlanePtr plane):
-	CLibRayMarchingPrimitive(plane), m_Plane(plane)
+CPlane::CPlane(PlanePtr plane):
+	CPrimitive(plane), m_Plane(plane)
 {
 
 }
 
-sLibRayMarchingVector CLibRayMarchingPlane::GetNormal ()
+sLibRayMarchingVector CPlane::GetNormal ()
 {
 	return VectorToLibVec(m_Plane->GetNormal());
 }
 
-void CLibRayMarchingPlane::SetNormal (const sLibRayMarchingVector Normal)
+void CPlane::SetNormal (const sLibRayMarchingVector Normal)
 {
 	m_Plane->SetNormal(LibVecToVector(Normal));
 }
