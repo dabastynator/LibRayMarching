@@ -34,24 +34,24 @@ The API is defined by and ACT xml. This allows powerfull binding generation for 
 ### Python example
 Following Python listing shows how to render a scene that contains a sphere
 ```python
-from LibRayMarching import *
+import LibRayMarching
 from PIL import Image
 import math
 
 Width = 300;
 Height = 200;
-# LibRayMarching access
-Wrapper = LibRayMarchingWrapper("libraymarching");
+# LibRayMarching. access
+Wrapper = LibRayMarching.Wrapper("libraymarching");
 Scene = Wrapper.CreateRayMarching();
 Scene.SetScreenSize(Width, Height);
 Scene.SetViewport(
-	LibRayMarchingVector(x = 0, y = -6, z = 0),
-	LibRayMarchingVector(x = 0, y = 1, z = 0),
-	LibRayMarchingVector(x = 0, y = 0, z = 1), math.pi*20/180);
-Scene.SetBackground(LibRayMarchingVector(x = 0.05, y = 0, z = 0.2), 30, 40);
-Scene.AddLight(LibRayMarchingVector(0, -20, 25), LibRayMarchingVector(1, 1, 1));
+	LibRayMarching.Vector(0, -6, 0),
+	LibRayMarching.Vector(0, 1, 0),
+	LibRayMarching.Vector(0, 0, 1), math.pi*20/180);
+Scene.SetBackground(LibRayMarching.Vector(0.05, 0, 0.2), 30, 40);
+Scene.AddLight(LibRayMarching.Vector(0, -20, 25), LibRayMarching.Vector(1, 1, 1));
 Sphere = Wrapper.CreateSphere(1);
-Sphere.SetMaterial(LibRayMarchingMaterial(
+Sphere.SetMaterial(LibRayMarching.Material(
 	Red = 0.5, Green = 0.1, Blue = 0.3,
 	Ambient = 0.3,
 	Diffuse = 1,
@@ -68,7 +68,7 @@ for i in range(Img.size[0]):    # for every col:
 	for j in range(Img.size[1]):    # For every row
 		color = ColorBuffer[i + j * Img.size[0]];		
 		Pixels[i,j] = ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF) # set the colour accordingly
-Img.save('sphere.png')
+Img.save('ray_marching.png')
 Img.show()
 ```
 
