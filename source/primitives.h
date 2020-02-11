@@ -21,6 +21,8 @@ namespace LibRayMarching
 
 			Material m_Material;
 
+			Glow m_Glow;
+
 			Distortion m_Distortion;
 
 			float m_DistSinFactor;
@@ -44,6 +46,10 @@ namespace LibRayMarching
 			void SetMaterial (const Material& Material);
 
 			Material* GetMaterial() { return &m_Material; };
+
+			void SetGlow (const Glow& Glow);
+
+			Glow* GetGlow() { return &m_Glow; };
 
 			void SetDistortionSinus(float factor, float size);
 

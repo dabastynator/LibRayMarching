@@ -49,7 +49,7 @@ protected:
 
 	LibRayMarchingProgressCallback m_ProgressCallback;
 
-	unsigned int *m_ColorBuffer;
+	LibRayMarching::sColor *m_ColorBuffer;
 
 public:
 
@@ -89,9 +89,9 @@ public:
 	void RenderScene ();
 
 	
-	void GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching_uint64 * pColorBufferBuffer);
+	void GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching::sColor * pColorBufferBuffer);
 
-	LibRayMarching_uint32 RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY);
+	LibRayMarching::sColor RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY);
 
 	void SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback);
 

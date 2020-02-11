@@ -15,12 +15,19 @@ namespace LibRayMarching
 	{
 		Vector color;
 		float ambient;
+		float ambient_occlusion;
 		float diffuse;
 		float specular;
 		float specular_alpha;
 		float reflection;
 		float transparency;
 		float refraction;
+	};
+
+	struct Glow
+	{
+		Vector color;
+		float intensity;
 	};
 
 	struct Lightning

@@ -42,6 +42,11 @@ void Primitive::SetMaterial (const Material& Material)
 	m_Material = Material;
 }
 
+void Primitive::SetGlow (const Glow& Glow)
+{
+	m_Glow = Glow;
+}
+
 void Primitive::SetDistortionSinus(float factor, float size)
 {
 	m_Distortion = pdSinus;

@@ -229,22 +229,22 @@ float Shader::GetDistance(const Vector& position, MarcheResult& result)
 	return minDist;
 } 
 
-unsigned int Shader::RenderPixel(float x, float y)
+Vector Shader::RenderPixel(float x, float y)
 {
 	Vector pos;
 	Vector ray;
 	Vector color;
 	float oversampling = std::max(1, m_Lightning.oversampling);
-	for (int i = 0; i < oversampling; i++) {
-		float offset = i / oversampling;
-		m_Camera.CalculateRay(x + offset, y + offset, pos, ray);		
+	float oversqrt = sqrt(oversampling);
+	for (float i = 0; i < oversampling; i++) {
+		float offset_x = fmod(i / oversqrt, 1.f);
+		float offset_y = floor(i / oversqrt) / oversqrt;
+		m_Camera.CalculateRay(x + offset_x, y + offset_y, pos, ray);		
 		color += PhongShading(pos, ray, m_Bouncing);
 	}
-	color *= 255.f / oversampling;
-	int red = EnsureRange((int)color.x, 0, 255);
-	int green = EnsureRange((int)color.y, 0, 255);
-	int blue = EnsureRange((int)color.z, 0, 255);
-	return 	(red << 16) |
-			(green << 8) |
-			(blue);
+	return color;
+	color.x = EnsureRange(color.x / oversampling, 0.f, 1.f);
+	color.y = EnsureRange(color.y / oversampling, 0.f, 1.f);
+	color.z = EnsureRange(color.z / oversampling, 0.f, 1.f);
+	return color;
 }

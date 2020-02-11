@@ -68,7 +68,7 @@ namespace LibRayMarching
 			
 			void DeleteLight(int index) { m_Lights.erase(m_Lights.begin() + index); };
 
-			unsigned int RenderPixel(float x, float y);
+			Vector RenderPixel(float x, float y);
 
 			void SetMaxBouncing(int bouncing) { m_Bouncing = bouncing; };
 	};

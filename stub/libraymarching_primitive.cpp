@@ -51,6 +51,11 @@ void CPrimitive::SetMaterial (const LibRayMarching::sMaterial Material)
 	m_Primitive->SetMaterial(LibMaterialToMaterial(Material));
 }
 
+void CPrimitive::SetGlow(const LibRayMarching::sGlow Glow)
+{
+	m_Primitive->SetGlow(LibGlowToGlow(Glow));
+}
+
 void CPrimitive::SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval)
 {
 	m_Primitive->SetDistortionSinus((float)dDistortionFactor, (float)dInterval);

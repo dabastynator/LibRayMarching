@@ -74,6 +74,8 @@ public:
 
 	Material* GetMaterial() { return m_Primitive->GetMaterial(); };
 
+	void SetGlow(const LibRayMarching::sGlow Glow);
+
 	void SetSinusDistortion (const LibRayMarching_double dDistortionFactor, const LibRayMarching_double dInterval);
 
 	PrimitivePtr GetPrimitive() { return m_Primitive; };

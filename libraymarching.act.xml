@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns="http://schemas.autodesk.com/netfabb/automaticcomponenttoolkit/2018" 
 	libraryname="Ray Marching Library" namespace="LibRayMarching" copyright="PrimeDevelopers" year="2019" basename="libraymarching"
-	version="1.1.0-beta">
+	version="2.0.0-beta">
 	<license>
 		<line value="All rights reserved." />
 	</license>
@@ -42,17 +42,31 @@
 		<member name="Z" type="double" />
 	</struct>
 
+	<struct name="Color">
+		<member name="Red" type="single" />
+		<member name="Green" type="single" />
+		<member name="Blue" type="single" />
+	</struct>
+
 	<struct name="Material">
 		<member name="Red" type="double" />
 		<member name="Green" type="double" />
 		<member name="Blue" type="double" />
 		<member name="Ambient" type="double" />
+		<member name="AmbientOcclusion" type="double" />
 		<member name="Diffuse" type="double" />
 		<member name="Specular" type="double" />
 		<member name="SpecularAlpha" type="double" />
 		<member name="Reflection" type="double" />
 		<member name="Transparency" type="double" />
 		<member name="Refraction" type="double" />
+	</struct>
+
+	<struct name="Glow">
+		<member name="Red" type="double" />
+		<member name="Green" type="double" />
+		<member name="Blue" type="double" />
+		<member name="Intensity" type="double" />
 	</struct>
 
 	<struct name="ShaderProperties">
@@ -86,6 +100,9 @@
 		</method>
 		<method name="SetMaterial" description="Set material for this primitive">
 			<param name="Material" type="struct" class="Material" pass="in" description="Material for this primitive" />
+		</method>
+		<method name="SetGlow" description="Set glow for this primitive">
+			<param name="Glow" type="struct" class="Glow" pass="in" description="Glow for this primitive" />
 		</method>
 		<method name="SetSinusDistortion" description="Set distortion by sinus addition of signed distance">
 			<param name="DistortionFactor" type="double" pass="in" description="Maximal distortion value" />
@@ -287,13 +304,13 @@
 		</method>
 
 		<method name="GetColorBuffer" description="Return the color buffer">
-			<param name="ColorBuffer" type="basicarray" class="uint64" pass="out" description="Field of colors. One integer represents color as RGBA value of the pixel" />
+			<param name="ColorBuffer" type="structarray" class="Color" pass="out" description="Field of colors. One integer represents color as RGBA value of the pixel" />
 		</method>
 
 		<method name="RenderPixel" description="Renders one single pixel">
 			<param name="X" type="double" pass="in" description="X position of the pixel" />
 			<param name="Y" type="double" pass="in" description="Y position of the pixel" />
-			<param name="Color" type="uint32" pass="return" description="RGBA value of the pixel" />
+			<param name="Color" type="struct" class="Color" pass="return" description="RGBA value of the pixel" />
 		</method>
 
 		<method name="SetProgressCallback" description="Sets the progress callback function">

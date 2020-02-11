@@ -139,7 +139,7 @@ void CRayMarching::SetScreenSize (const LibRayMarching_uint32 nWidth, const LibR
 	{
 		delete m_ColorBuffer;
 	}
-	m_ColorBuffer = new unsigned int[nWidth * nHeight];
+	m_ColorBuffer = new LibRayMarching::sColor[nWidth * nHeight];
 }
 
 void CRayMarching::SetViewport (const sLibRayMarchingVector Eye, const sLibRayMarchingVector Dir, const sLibRayMarchingVector Up, const LibRayMarching_double dFOV)
@@ -163,7 +163,7 @@ void CRayMarching::RenderScene ()
 	{
 		for (int y = 0; y < height; y++)
 		{
-			m_ColorBuffer[x + y * width] = m_Shader.RenderPixel(x, y);
+			m_ColorBuffer[x + y * width] = VectorToColor(m_Shader.RenderPixel(x, y));
 		}
 		if (m_ProgressCallback != NULL)
 		{
@@ -172,7 +172,7 @@ void CRayMarching::RenderScene ()
 	}
 }
 
-void CRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching_uint64 * pColorBufferBuffer)
+void CRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize, LibRayMarching_uint64* pColorBufferNeededCount, LibRayMarching::sColor * pColorBufferBuffer)
 {
 	int width = m_Shader.GetCamera()->GetWidth();
 	int height = m_Shader.GetCamera()->GetHeight();
@@ -188,13 +188,13 @@ void CRayMarching::GetColorBuffer (LibRayMarching_uint64 nColorBufferBufferSize,
 	}
 }
 
-LibRayMarching_uint32 CRayMarching::RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY)
+LibRayMarching::sColor CRayMarching::RenderPixel (const LibRayMarching_double dX, const LibRayMarching_double dY)
 {
 	for (int i=0; i < m_Shader.GetPrimitiveCount(); i++)
 	{
 		m_Shader.GetPrimitive(i)->Initialize();
 	}
-	return m_Shader.RenderPixel((float)dX, (float)dY);
+	return VectorToColor(m_Shader.RenderPixel((float)dX, (float)dY));
 }
 
 void CRayMarching::SetProgressCallback (const LibRayMarchingProgressCallback pProgressCallback)
