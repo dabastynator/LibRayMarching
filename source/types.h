@@ -67,6 +67,8 @@ namespace LibRayMarching
 		Primitive* primitive;
 		Vector position;
 		Vector normal;
+		Vector glow;
+		float glow_factor;
 		float distance;
 		float shadow_factor;
 	};

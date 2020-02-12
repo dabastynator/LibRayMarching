@@ -38,11 +38,18 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 {
 	MarcheResult result;
 	RayMarche(position, ray, result, m_MaxDistance);
+	Vector colBackground = m_Lightning.background;
+	if (result.glow_factor > 0)
+	{
+		result.glow *= 1 / result.glow_factor;
+		result.glow_factor = std::min(1.f, result.glow_factor);
+		colBackground = colBackground * (1 - result.glow_factor) + result.glow * result.glow_factor;
+	}
 	if (result.primitive != NULL)
 	{
 		if (result.distance > m_Lightning.max_dist_background)
 		{
-			return m_Lightning.background;
+			return colBackground;
 		}
 		CalcNormal(position, ray, result);
 		Material* material = result.primitive->GetMaterial();
@@ -98,10 +105,11 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 				(m_Lightning.min_dist_background - m_Lightning.max_dist_background);
 			colFinal = colFinal * ratio + m_Lightning.background * (1 - ratio);
 		}
+		colFinal = colFinal * (1 - result.glow_factor) + result.glow * result.glow_factor;
 		return colFinal;
 	} else
 	{
-		return m_Lightning.background;
+		return colBackground;
 	}
 }
 
@@ -197,6 +205,8 @@ void Shader::RayMarchePrimitive(const Primitive* primitive, const Vector& positi
 {
 	float distance = 0;
 	result.shadow_factor = 1;
+	result.glow_factor = 0;
+	result.glow = VectorNull;
 	result.position = position + ray * distance;	
 	for (int i = 0; i < m_MaxIteration; i++) {
 		float d = primitive->SignedDistance(result.position);
@@ -220,6 +230,10 @@ float Shader::GetDistance(const Vector& position, MarcheResult& result)
 	{		
 		PrimitivePtr primitive = *p;
 		float distance = primitive->SignedDistance(position);
+		Glow *glow = primitive->GetGlow();
+		float glow_factor = glow->intensity * (1.f / (1.f + distance));
+		result.glow_factor += glow_factor;
+		result.glow += glow->color * glow_factor;
 		if (distance < minDist)
 		{
 			minDist = distance;
