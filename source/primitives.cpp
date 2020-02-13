@@ -11,6 +11,7 @@ Primitive::Primitive()
 	m_Distortion = pdNone;
 	m_DistSinSize = 0;
 	m_DistSinFactor = 0;
+	m_Glow.intensity = 0;
 }
 
 void Primitive::IdentityPosition ()

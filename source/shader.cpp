@@ -98,6 +98,10 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 			Vector hitPosOut = resultInside.position + resultInside.normal * m_Epsilon;
 			colTransparent = PhongShading(hitPosOut, refractedOut, bouncing - 1) * material->transparency;
 		}
+		if (material->ambient_occlusion > 0)
+		{
+			colAmbient *= CalcAmbientOcclusion(result, material->ambient_occlusion);
+		}
 		Vector colFinal = colAmbient + colDiffuse + colSpecular + colReflected + colTransparent;
 		if (result.distance > m_Lightning.min_dist_background)
 		{
@@ -111,6 +115,24 @@ Vector Shader::PhongShading(const Vector& position, const Vector& ray, int bounc
 	{
 		return colBackground;
 	}
+}
+
+float Shader::CalcAmbientOcclusion(MarcheResult& result, float intensity)
+{
+	float finalOcclusion = 0;
+    float scale = 1.0;
+	MarcheResult dummy;
+    for (int i = 0; i < 5; i++)
+    {
+        float rayDistance = 0.01f + 0.02f * float(i * i);
+        Vector position = result.position + result.normal * rayDistance;
+        float sceneDistance = GetDistance(position, dummy);
+        float occlusion = EnsureRange(rayDistance - sceneDistance, 0.f, 1.f);
+        finalOcclusion += occlusion * scale;
+        scale *= 0.75;
+    }
+    finalOcclusion = 1.f - EnsureRange(intensity * finalOcclusion, 0.f, 1.f);
+    return finalOcclusion;
 }
 
 void Shader::CalcNormal(Vector pos, Vector ray, MarcheResult& result)
@@ -156,7 +178,9 @@ float Shader::RayMarche(const Vector& position, const Vector& ray, MarcheResult&
 {
 	float distance = 0;
 	result.shadow_factor = 1;
-	result.position = position + ray * distance;	
+	result.position = position + ray * distance;
+	result.glow = VectorNull;
+	result.glow_factor = 0.f;
 	for (int i = 0; i < m_MaxIteration; i++) {
 		float d = GetDistance(result.position, result);
 		if (distance > 0) {
@@ -231,7 +255,7 @@ float Shader::GetDistance(const Vector& position, MarcheResult& result)
 		PrimitivePtr primitive = *p;
 		float distance = primitive->SignedDistance(position);
 		Glow *glow = primitive->GetGlow();
-		float glow_factor = glow->intensity * (1.f / (1.f + distance));
+		float glow_factor = glow->intensity * (1.f / (1.f + distance*distance));
 		result.glow_factor += glow_factor;
 		result.glow += glow->color * glow_factor;
 		if (distance < minDist)

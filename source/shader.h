@@ -35,6 +35,8 @@ namespace LibRayMarching
 
 			void RayMarchePrimitive(const Primitive* primitive, const Vector& position, const Vector& ray, MarcheResult& result);
 
+			float CalcAmbientOcclusion(MarcheResult& result, float intensity);
+
 			// Calculate color along ray by phong shading
 			Vector PhongShading(const Vector& position, const Vector& ray, int bouncing);
 			// Calculate the normal for given marche result
