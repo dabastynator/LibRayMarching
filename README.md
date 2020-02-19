@@ -23,6 +23,7 @@ The user can specify a material for a primitive. The material supports following
 - Ambient, Diffuse, Specular and SpecularAlpha for Phong Shading
 - Reflection
 - Transparency
+Primitives also support a glowing property. Set a glow color and intensity to blend a glowing near to the primitive.
 
 ### Language Bindings
 The API is defined by and ACT xml. This allows powerfull binding generation for following languages
@@ -32,7 +33,7 @@ The API is defined by and ACT xml. This allows powerfull binding generation for 
 - Pascal
 
 ### Python example
-Following Python listing shows how to render a scene that contains a sphere
+Following Python listing shows how to render a scene that contains a torus
 ```python
 import LibRayMarching
 from PIL import Image
@@ -45,34 +46,44 @@ Wrapper = LibRayMarching.Wrapper("libraymarching");
 Scene = Wrapper.CreateRayMarching();
 Scene.SetScreenSize(Width, Height);
 Scene.SetViewport(
-	LibRayMarching.Vector(0, -6, 0),
-	LibRayMarching.Vector(0, 1, 0),
+	LibRayMarching.Vector(0, -6, 2),
+	LibRayMarching.Vector(0, 1, -0.35),
 	LibRayMarching.Vector(0, 0, 1), math.pi*20/180);
-Scene.SetBackground(LibRayMarching.Vector(0.05, 0, 0.2), 30, 40);
-Scene.AddLight(LibRayMarching.Vector(0, -20, 25), LibRayMarching.Vector(1, 1, 1));
-Sphere = Wrapper.CreateSphere(1);
-Sphere.SetMaterial(LibRayMarching.Material(
-	Red = 0.5, Green = 0.1, Blue = 0.3,
+Scene.SetBackground(LibRayMarching.Vector(0.1, 0.1, 0.1), 30, 40);
+Scene.AddLight(LibRayMarching.Vector(20, -20, 25), LibRayMarching.Vector(1, 1, 1));
+Torus = Wrapper.CreateTorus(1, 0.3);
+Torus.SetMaterial(LibRayMarching.Material(
+	Red = 1, Green = 0.5, Blue = 0.5,
 	Ambient = 0.3,
-	Diffuse = 1,
+	Diffuse = 0.5,
 	Specular = 1,
+	SpecularAlpha = 50));
+Torus.SetGlow(LibRayMarching.Glow(Red = 1, Green = 0, Blue = 0., Intensity = 0.02))
+Scene.AddPrimitive(Torus);
+Plane = Wrapper.CreatePlane(LibRayMarching.Vector(0,0,-0.5),LibRayMarching.Vector(0,0,1))
+Plane.SetMaterial(LibRayMarching.Material(
+	Red = 0.5, Green = 0.5, Blue = 0.5,
+	Ambient = 0,#.5,
+	AmbientOcclusion = 5,
+	Diffuse = 0.2,
+	Specular = 0.2,
 	SpecularAlpha = 15));
-Scene.AddPrimitive(Sphere);
+Scene.AddPrimitive(Plane);
 Scene.RenderScene();
 ColorBuffer = Scene.GetColorBuffer();
 
 # Save image as png with PIL
 Img = Image.new('RGB', (Width, Height))
 Pixels = Img.load()
-for i in range(Img.size[0]):    # for every col:
+for i in range(Img.size[0]):    # For every col
 	for j in range(Img.size[1]):    # For every row
 		color = ColorBuffer[i + j * Img.size[0]];		
-		Pixels[i,j] = ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF) # set the colour accordingly
-Img.save('ray_marching.png')
+		Pixels[i,j] = (int(color.Red*255), int(color.Green*255), int(color.Blue*255))
+Img.save('torus.png')
 Img.show()
 ```
 
-![](example/sphere.png)
+![](example/torus.png)
 
 ### Demo
 
