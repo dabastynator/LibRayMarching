@@ -11,7 +11,7 @@ Shader::Shader()
 {
 	m_MaxIteration = 300;
 	m_MaxDistance = 100;
-	m_MinDistance = 0.00001f;
+	m_MinDistance = 0.0001f;
 	m_Epsilon = 0.005f;
 	m_Bouncing = 10;
 	m_Lightning.background = Vector(0, 0, 0);
