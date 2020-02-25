@@ -280,7 +280,6 @@ Vector Shader::RenderPixel(float x, float y)
 		m_Camera.CalculateRay(x + offset_x, y + offset_y, pos, ray);		
 		color += PhongShading(pos, ray, m_Bouncing);
 	}
-	return color;
 	color.x = EnsureRange(color.x / oversampling, 0.f, 1.f);
 	color.y = EnsureRange(color.y / oversampling, 0.f, 1.f);
 	color.z = EnsureRange(color.z / oversampling, 0.f, 1.f);
