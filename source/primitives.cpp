@@ -196,14 +196,17 @@ float QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
 	Quaternion z(vPoint.x, vPoint.y, vPoint.z, 0);
 	float md2 = 1.0f;
 	float mz2 = z.dot(z);
+	float sign = -1;
 	for (int i = 0; i < m_Iterations; i++) {
 		md2 *= 4.0f * mz2;
 		z = z.squared() + m_Quaternion;
 		mz2 = z.dot(z);
-		if (mz2 > 10.0)
+		if (mz2 > 10.0) {
+			sign = 1;
 			break;
+		}
 	}
-	return 0.25f * sqrt(mz2 / md2) * log(mz2);
+	return 0.25f * sqrt(mz2 / md2) * log(mz2) * sign;
 }
 
 void PrimitiveGroup::Initialize()
