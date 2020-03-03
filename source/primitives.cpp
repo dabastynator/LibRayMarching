@@ -123,7 +123,7 @@ void Plane::Initialize()
 
 float Plane::InternSignedDistance (const Vector& vPoint) const
 {
-	return std::abs(vPoint.dot(m_Normal));
+	return vPoint.dot(m_Normal);
 }
 
 void Cylinder::Initialize()
@@ -194,19 +194,19 @@ void QuaternionFractal::Initialize()
 float QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
 {
 	Quaternion z(vPoint.x, vPoint.y, vPoint.z, 0);
-	float md2 = 1.0f;
-	float mz2 = z.dot(z);
+	Quaternion dz(1, 0, 0, 0);
+	float m2;
 	float sign = -1;
 	for (int i = 0; i < m_Iterations; i++) {
-		md2 *= 4.0f * mz2;
+		dz = z * dz * 2.f;
 		z = z.squared() + m_Quaternion;
-		mz2 = z.dot(z);
-		if (mz2 > 10.0) {
+		m2 = z.dot(z);
+		if (m2 > 10.0) {
 			sign = 1;
 			break;
 		}
 	}
-	return 0.25f * sqrt(mz2 / md2) * log(mz2) * sign;
+	return 0.5f * sqrt(m2 / dz.dot(dz)) * std::abs(log(m2)) * sign;
 }
 
 void PrimitiveGroup::Initialize()
