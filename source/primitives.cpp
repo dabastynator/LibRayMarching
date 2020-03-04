@@ -206,7 +206,7 @@ float QuaternionFractal::InternSignedDistance (const Vector& vPoint) const
 			break;
 		}
 	}
-	return 0.5f * sqrt(m2 / dz.dot(dz)) * std::abs(log(m2)) * sign;
+	return 0.25f * sqrt(m2 / dz.dot(dz)) * std::abs(log(m2)) * sign;
 }
 
 void PrimitiveGroup::Initialize()
