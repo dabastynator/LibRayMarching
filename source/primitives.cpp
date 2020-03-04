@@ -12,6 +12,7 @@ Primitive::Primitive()
 	m_DistSinSize = 0;
 	m_DistSinFactor = 0;
 	m_Glow.intensity = 0;
+	m_ScaleSDFFactor = 1.f;
 }
 
 void Primitive::IdentityPosition ()
@@ -36,6 +37,7 @@ void Primitive::Scale (const Vector& vScale)
 {
 	m_ModelToWorld *= MatrixScale(vScale);
 	m_Inverse = MatrixScale(Vector(1, 1, 1) / vScale) * m_Inverse;
+	m_ScaleSDFFactor *= vScale.max();
 }
 
 void Primitive::SetMaterial (const Material& Material)
@@ -67,7 +69,7 @@ float Primitive::SignedDistance (const Vector& vPoint) const
 			//std::cout << " result " << sd << std::endl;
 			break;
 	}
-	return sd;
+	return sd / m_ScaleSDFFactor;
 }
 
 void Sphere::Initialize()

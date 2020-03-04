@@ -29,6 +29,8 @@ namespace LibRayMarching
 
 			float m_DistSinSize;
 
+			float m_ScaleSDFFactor;
+
 			virtual float InternSignedDistance (const Vector& vPoint) const = 0;
 
 		public:
